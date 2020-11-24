@@ -1,3 +1,4 @@
 export default {
-  REACT_APP_GOOGLE_MAP_TOKEN: null,
+  API_URL: null,
+  SENTRY_DNS: null,
 };
