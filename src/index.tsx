@@ -2,30 +2,24 @@ import React from 'react';
 import './config/reactotronConfig';
 import { StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
-import {
-  Nunito_400Regular,
-  Nunito_700Bold,
-  useFonts,
-} from '@expo-google-fonts/nunito';
+import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
+
 import Routes from './routes';
-import AppProvider from './hooks';
+import Header from './components/Header';
 
 const Main: React.FC = () => {
   const [fontsLoaded] = useFonts({
-    Nunito_400Regular,
-    Nunito_700Bold,
+    Redressed_400Regular,
   });
 
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#312e38" />
-      <AppProvider>
-        <Routes />
-      </AppProvider>
+      <Header />
+      <Routes />
     </>
   );
 };

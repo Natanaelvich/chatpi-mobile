@@ -1,29 +1,27 @@
-import { MaterialCommunityIcons } from 'expo-vector-icons';
+import { Feather, MaterialCommunityIcons } from 'expo-vector-icons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  padding: 24px;
-  background: #f9fafc;
+  padding: 24px 12px;
+  background: #343152;
   border-color: #dde3f0;
-  padding-top: 44px;
   flex-direction: row;
   justify-content: space-between;
 `;
 export const Title = styled.Text`
-  font-size: 15px;
-  color: #8fa7b3;
-  font-family: Nunito_400Regular;
+  font-size: 23px;
+  color: #fff;
+  font-family: Redressed_400Regular;
 `;
-export const ButtonBack = styled(BorderlessButton)``;
-export const ButtonClose = styled(BorderlessButton)``;
-export const IconBack = styled(MaterialCommunityIcons).attrs({
-  name: 'arrow-left',
+export const ButtonHeader = styled(BorderlessButton)``;
+export const IconMenu = styled(MaterialCommunityIcons).attrs({
+  name: 'menu',
   size: 24,
-  color: '#15B6D6',
+  color: '#8FA7B3',
 })``;
-export const IconClose = styled(MaterialCommunityIcons).attrs({
-  name: 'close',
+export const IconUser = styled(Feather).attrs({
+  name: 'user',
   size: 24,
   color: '#8FA7B3',
 })``;

@@ -1,33 +1,18 @@
-import { StackActions, useNavigation } from '@react-navigation/native';
 import React from 'react';
 
-import {
-  Container,
-  Title,
-  ButtonBack,
-  ButtonClose,
-  IconBack,
-  IconClose,
-} from './styles';
+import { Container, Title, ButtonHeader, IconMenu, IconUser } from './styles';
 
-interface HeaderProps {
-  title: string;
-}
-const Header: React.FC<HeaderProps> = ({ title }) => {
-  const navigation = useNavigation();
+const Header: React.FC = () => {
   return (
     <Container>
-      <ButtonBack onPress={() => navigation.goBack()}>
-        <IconBack />
-      </ButtonBack>
-      <Title>{title}</Title>
-      <ButtonClose
-        onPress={() => {
-          navigation.dispatch(StackActions.popToTop());
-        }}
-      >
-        <IconClose />
-      </ButtonClose>
+      <ButtonHeader>
+        <IconMenu />
+      </ButtonHeader>
+      <Title>Chat PI</Title>
+
+      <ButtonHeader>
+        <IconUser />
+      </ButtonHeader>
     </Container>
   );
 };
