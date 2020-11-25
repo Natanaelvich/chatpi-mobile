@@ -12,7 +12,6 @@ const TabNavigator = createMaterialTopTabNavigator();
 const MyTabs: React.FC = () => {
   return (
     <TabNavigator.Navigator
-      initialRouteName="DadosImovel"
       tabBar={(props: MaterialTopTabBarProps) => <Tab {...props} />}
     >
       <TabNavigator.Screen name="Conversas" component={Home} />

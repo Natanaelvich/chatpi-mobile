@@ -32,7 +32,7 @@ export default (
   { type, signinError, loadingSingin, user }: ReducerProps,
 ): InitialStateProps => {
   switch (type) {
-    case '@user/SIGN_IN':
+    case '@user/SIGN_IN_SUCCESS':
       return {
         ...state,
         signedIn: true,

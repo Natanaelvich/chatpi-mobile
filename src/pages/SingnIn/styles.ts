@@ -1,6 +1,6 @@
 import { Feather } from 'expo-vector-icons';
 import React from 'react';
-import { TextInputProps, TextProps } from 'react-native';
+import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -100,4 +100,18 @@ export const CreateAccountText = styled.Text`
   margin-left: 18px;
 
   color: #de595c;
+`;
+export const ErrorLogin = styled.View`
+  flex-direction: row;
+  width: 80%;
+  align-items: center;
+  align-self: center;
+  margin: 12px 0;
+`;
+export const ErrorLoginText = styled.Text`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: #e04848;
+  margin-left: 6px;
 `;

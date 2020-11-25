@@ -1,12 +1,12 @@
 export const signInRequest = (
   email: string,
-  senha: string,
+  password: string,
 ): {
   type: string;
   payload: Record<string, unknown>;
 } => ({
   type: '@user/SIGN_IN_REQUEST',
-  payload: { email, senha },
+  payload: { email, password },
 });
 
 export const signInSuccess = (

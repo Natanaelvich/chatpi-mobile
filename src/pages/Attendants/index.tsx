@@ -18,6 +18,7 @@ import { RootState } from '../../store/modules/rootReducer';
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
   const { attendants } = useSelector((state: RootState) => state.attendants);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const [messages, setMessages] = useState([]);
   const [usersLoggeds, setUsersLoggeds] = useState([]);
@@ -28,8 +29,8 @@ const Attendants: React.FC = () => {
   }, [dispatch]);
 
   const socket = useMemo(() => {
-    return io('https://api.pi.mundotech.dev', {
-      query: { user: '123123' },
+    return io('https://192.168.0.108:3335', {
+      query: { user: user?.user.id },
     });
   }, []);
 
@@ -39,7 +40,6 @@ const Attendants: React.FC = () => {
       setMessages(oldMessages => [...oldMessages, messageParse]);
     });
     socket.on('usersLoggeds', usersLoggedsSocket => {
-      console.log(usersLoggedsSocket);
       setUsersLoggeds(JSON.parse(usersLoggedsSocket));
     });
     socket.on('typing', typingSocket => {
@@ -50,17 +50,18 @@ const Attendants: React.FC = () => {
   return (
     <Container>
       <Content>
-        <ContentTitle>{JSON.stringify(usersLoggeds)}</ContentTitle>
         <ContentTitle>Atendentes</ContentTitle>
         {attendants.map(a => (
-          <Box>
+          <Box key={a.id}>
             <BoxAvatar
-              source={{ uri: `http://10.0.3.2:3335/myAvatars/${a.id}` }}
+              source={{ uri: `http://192.168.0.108:3335/myAvatars/${a.id}` }}
               resizeMode="cover"
             />
             <BoxTextContainer>
               <BoxTitle>{a.name} asdasdasd</BoxTitle>
-              <BoxDesc>Online</BoxDesc>
+              <BoxDesc>
+                {usersLoggeds && usersLoggeds[a.id] ? 'Online' : 'Offline'}
+              </BoxDesc>
             </BoxTextContainer>
 
             <IconNext />

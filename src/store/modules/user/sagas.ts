@@ -9,26 +9,9 @@ import {
 import api from '../../../services/api';
 
 export function* initCheck() {
-  const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
-
-  if (userData) {
-    yield put(signInSuccess(JSON.parse(userData)));
-
-    // check internet
-
-    const { token } = JSON.parse(userData);
-
-    //   verify token is valid
-    try {
-      yield call(api.get, 'vistorias/listagemAmbiente', {
-        headers: {
-          Idcliente: 2,
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      // if error 401 auto logout
-    }
+  try {
+  } catch (error) {
+    // if error 401 auto logout
   }
 }
 
@@ -36,9 +19,9 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
     // check internet
     yield put(setLoadingSingin(true));
-    const response = yield call(api.post, 'users/sessions', {
-      login: payload.email,
-      senha: payload.password,
+    const response = yield call(api.post, 'sessions', {
+      email: payload.email,
+      password: payload.password,
     });
 
     yield put(signInSuccess(response.data));
