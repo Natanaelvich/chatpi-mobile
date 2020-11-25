@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://api.happy.mundotech.dev',
+  baseURL: 'http://10.0.3.2:3335',
 });
 
 export default api;

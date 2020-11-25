@@ -1,12 +1,4 @@
-import { MaterialCommunityIcons, MaterialIcons } from 'expo-vector-icons';
-import {
-  ImageProps,
-  StyleSheet,
-  TextInputProps,
-  TextProps,
-  ViewProps,
-} from 'react-native';
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { ImageProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container: React.FC = styled.View`

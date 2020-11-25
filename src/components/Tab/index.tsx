@@ -23,7 +23,7 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
 
         const isFocused = state.index === index;
 
-        const onPress = () => {
+        const onPress = (): void => {
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -35,7 +35,7 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
           }
         };
 
-        const onLongPress = () => {
+        const onLongPress = (): void => {
           navigation.emit({
             type: 'tabLongPress',
             target: route.key,

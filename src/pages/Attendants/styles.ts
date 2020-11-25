@@ -36,7 +36,10 @@ export const BoxTextContainer: React.FC = styled.View`
   margin-left: 16px;
   flex: 1;
 `;
-export const BoxTitle: React.FC = styled.Text`
+export const BoxTitle: React.FC = styled.Text.attrs({
+  numberOfLines: 1,
+  ellipsizeMode: 'tail',
+})`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
