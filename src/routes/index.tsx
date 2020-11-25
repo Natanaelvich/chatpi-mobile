@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyTabs from './tabs';
+import SingnIn from '../pages/SingnIn';
 
 const Stack = createStackNavigator();
 const Routes: React.FC = () => {
@@ -14,6 +15,7 @@ const Routes: React.FC = () => {
           cardStyle: { backgroundColor: '#f2f3f5' },
         }}
       >
+        <Stack.Screen name="SingnIn" component={SingnIn} />
         <Stack.Screen name="MyTabs" component={MyTabs} />
       </Stack.Navigator>
     </NavigationContainer>

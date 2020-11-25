@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './config/reactotronConfig';
 import { StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
