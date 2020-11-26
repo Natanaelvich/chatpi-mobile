@@ -19,6 +19,7 @@ import {
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
 import { addMessage } from '../../store/modules/messages/actions';
+import env from '../../../env';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
@@ -32,9 +33,7 @@ const Home: React.FC = () => {
   const [typing, setTyping] = useState({});
 
   const socket = useMemo(() => {
-    // return io('https://192.168.0.108:3335', {
-    return io('http://10.0.3.2:3335', {
-      // return io('https://api.pi.mundotech.dev', {
+    return io(env.API_URL, {
       query: { user: user?.user.id },
     });
   }, [user]);
@@ -112,7 +111,7 @@ const Home: React.FC = () => {
                 <BoxAvatarContainer>
                   <BoxAvatar
                     source={{
-                      uri: `http://192.168.0.108:3335/myAvatars/${a.id}`,
+                      uri: `${env.API_URL}/myAvatars/${a.id}`,
                     }}
                     resizeMode="cover"
                   />

@@ -16,6 +16,7 @@ import {
 } from './styles';
 import { getAttendants } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
+import env from '../../../env';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,32 +24,21 @@ const Attendants: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const navigation = useNavigation();
 
-  const [messages, setMessages] = useState([]);
   const [usersLoggeds, setUsersLoggeds] = useState([]);
-  const [typing, setTyping] = useState(null);
 
   useEffect(() => {
     dispatch(getAttendants());
   }, [dispatch]);
 
   const socket = useMemo(() => {
-    // return io('https://192.168.0.108:3335', {
-    return io('http://10.0.3.2:3335', {
-      // return io('https://api.pi.mundotech.dev', {
+    return io(env.API_URL, {
       query: { user: user?.user.id },
     });
   }, [user]);
 
   useEffect(() => {
-    socket.on('message', messageSocket => {
-      const messageParse = JSON.parse(messageSocket);
-      setMessages(oldMessages => [...oldMessages, messageParse]);
-    });
     socket.on('usersLoggeds', usersLoggedsSocket => {
       setUsersLoggeds(JSON.parse(usersLoggedsSocket));
-    });
-    socket.on('typing', typingSocket => {
-      setTyping(typingSocket);
     });
   }, [socket]);
 
@@ -67,7 +57,7 @@ const Attendants: React.FC = () => {
               }
             >
               <BoxAvatar
-                source={{ uri: `http://192.168.0.108:3335/myAvatars/${a.id}` }}
+                source={{ uri: `${env.API_URL}/myAvatars/${a.id}` }}
                 resizeMode="cover"
               />
               <BoxTextContainer>

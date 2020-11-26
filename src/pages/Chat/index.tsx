@@ -31,6 +31,7 @@ import {
 } from './styles';
 import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
+import env from '../../../env';
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
@@ -58,9 +59,7 @@ const Chat: React.FC = () => {
   }, [scrollRef]);
 
   const socket = useMemo(() => {
-    // return io('https://192.168.0.108:3335', {
-    return io('http://10.0.3.2:3335', {
-      // return io('https://api.pi.mundotech.dev', {
+    return io(env.API_URL, {
       query: { user: user?.user.id },
     });
   }, [user]);
@@ -109,7 +108,7 @@ const Chat: React.FC = () => {
         </BorderlessButton>
         <Avatar
           source={{
-            uri: `http://192.168.0.108:3335/myAvatars/${userParam.id}`,
+            uri: `${env.API_URL}/myAvatars/${userParam.id}`,
           }}
         />
         <ContainerText>

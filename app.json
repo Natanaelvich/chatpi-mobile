@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pi-mobile",
-    "slug": "pi-mobile",
+    "name": "Chat PI",
+    "slug": "chat-pi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,12 +15,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.mundotech.pifacema",
+      "bundleIdentifier": "com.mundotech.chatpi",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.mundotech.pifacema",
+      "package": "com.mundotech.chatpi",
       "enableDangerousExperimentalLeanBuilds": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
