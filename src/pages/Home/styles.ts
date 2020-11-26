@@ -1,4 +1,4 @@
-import { ImageProps } from 'react-native';
+import { ImageProps, TouchableOpacityProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container: React.FC = styled.View`
@@ -20,10 +20,26 @@ export const ContentTitle: React.FC = styled.Text`
   color: #343152;
   margin-bottom: 21px;
 `;
-export const Box: React.FC = styled.TouchableOpacity`
+export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   margin-bottom: 24px;
+`;
+export const BoxAvatarContainer: React.FC = styled.View`
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+`;
+export const BoxCircleOnline: React.FC = styled.View`
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: #0aa508;
+
+  bottom: 5px;
+  right: 5px;
 `;
 export const BoxAvatar: React.FC<ImageProps> = styled.Image`
   width: 60px;
@@ -48,6 +64,13 @@ export const BoxDesc: React.FC = styled.Text`
   font-size: 12px;
 
   color: #b5b5b5;
+`;
+export const TypingDesc: React.FC = styled.Text`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+
+  color: #0aa508;
 `;
 export const BoxCircle: React.FC = styled.View`
   background: #fff;

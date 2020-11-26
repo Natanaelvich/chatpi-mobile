@@ -12,7 +12,7 @@ import tron from '../config/reactotronConfig';
 const persistConfig = {
   key: 'user',
   storage: AsyncStorage,
-  whitelist: ['user'],
+  whitelist: ['user', 'messages', 'attendants'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -30,13 +30,7 @@ import {
   InputMessageCotainer,
 } from './styles';
 import Typing from '../../components/Typing';
-import { addMessage } from '../../store/modules/messages/actions';
-
-interface MessageProps {
-  user: string;
-  toUser: string;
-  message: string;
-}
+import { addMessage, readMessage } from '../../store/modules/messages/actions';
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,6 +45,13 @@ const Chat: React.FC = () => {
   const [message, setMessage] = useState('');
 
   const userParam = router.params?.user;
+  const messagesNoRead = router.params?.messagesNoRead;
+
+  useEffect(() => {
+    messagesNoRead.forEach(m => {
+      dispatch(readMessage(m));
+    });
+  }, [messagesNoRead, dispatch]);
 
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
@@ -67,7 +68,7 @@ const Chat: React.FC = () => {
   useEffect(() => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
-      dispatch(addMessage(messageParse));
+      dispatch(addMessage({ ...messageParse, readed: false }));
     });
     socket.on('usersLoggeds', usersLoggedsSocket => {
       setUsersLoggeds(JSON.parse(usersLoggedsSocket));
@@ -83,6 +84,7 @@ const Chat: React.FC = () => {
         user: user?.user.id,
         toUser: userParam.id,
         message,
+        readed: false,
       });
       socket.emit('message', messageJsonString);
       dispatch(
@@ -90,6 +92,7 @@ const Chat: React.FC = () => {
           user: user?.user.id,
           toUser: userParam.id,
           message,
+          readed: false,
         }),
       );
 

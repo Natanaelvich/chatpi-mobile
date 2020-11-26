@@ -10,7 +10,7 @@ const Typing: React.FC = () => {
       style={{
         borderRadius: 12,
         alignSelf: 'flex-start',
-        backgroundColor: '#eee',
+        backgroundColor: '#F4F4F4',
         padding: 6,
         borderBottomLeftRadius: 0,
       }}
