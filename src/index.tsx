@@ -27,7 +27,6 @@ const Main: React.FC = () => {
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Header />
           <Routes />
         </PersistGate>
       </Provider>

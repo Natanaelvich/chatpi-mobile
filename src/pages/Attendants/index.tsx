@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import { useNavigation } from '@react-navigation/native';
 import {
   Container,
   Content,
@@ -11,6 +12,7 @@ import {
   BoxTitle,
   BoxTextContainer,
   IconNext,
+  ContentScroll,
 } from './styles';
 import { getAttendants } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
@@ -19,6 +21,7 @@ const Attendants: React.FC = () => {
   const dispatch = useDispatch();
   const { attendants } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
+  const navigation = useNavigation();
 
   const [messages, setMessages] = useState([]);
   const [usersLoggeds, setUsersLoggeds] = useState([]);
@@ -29,10 +32,12 @@ const Attendants: React.FC = () => {
   }, [dispatch]);
 
   const socket = useMemo(() => {
-    return io('https://192.168.0.108:3335', {
+    // return io('https://192.168.0.108:3335', {
+    return io('http://10.0.3.2:3335', {
+      // return io('https://api.pi.mundotech.dev', {
       query: { user: user?.user.id },
     });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     socket.on('message', messageSocket => {
@@ -51,22 +56,31 @@ const Attendants: React.FC = () => {
     <Container>
       <Content>
         <ContentTitle>Atendentes</ContentTitle>
-        {attendants.map(a => (
-          <Box key={a.id}>
-            <BoxAvatar
-              source={{ uri: `http://192.168.0.108:3335/myAvatars/${a.id}` }}
-              resizeMode="cover"
-            />
-            <BoxTextContainer>
-              <BoxTitle>{a.name} asdasdasd</BoxTitle>
-              <BoxDesc>
-                {usersLoggeds && usersLoggeds[a.id] ? 'Online' : 'Offline'}
-              </BoxDesc>
-            </BoxTextContainer>
+        <ContentScroll>
+          {attendants.map(a => (
+            <Box
+              key={a.id}
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  user: a,
+                })
+              }
+            >
+              <BoxAvatar
+                source={{ uri: `http://192.168.0.108:3335/myAvatars/${a.id}` }}
+                resizeMode="cover"
+              />
+              <BoxTextContainer>
+                <BoxTitle>{a.name}</BoxTitle>
+                <BoxDesc>
+                  {usersLoggeds && usersLoggeds[a.id] ? 'Online' : 'Offline'}
+                </BoxDesc>
+              </BoxTextContainer>
 
-            <IconNext />
-          </Box>
-        ))}
+              <IconNext />
+            </Box>
+          ))}
+        </ContentScroll>
       </Content>
     </Container>
   );

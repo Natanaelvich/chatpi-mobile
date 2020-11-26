@@ -1,6 +1,9 @@
 import { MaterialIcons } from 'expo-vector-icons';
-import { ImageProps } from 'react-native';
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import {
+  ImageProps,
+  ScrollViewProps,
+  TouchableOpacityProps,
+} from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container: React.FC = styled.View`
@@ -13,16 +16,22 @@ export const Content: React.FC = styled.View`
   border-top-right-radius: 44px;
   border-top-left-radius: 44px;
   background: #fff;
-  padding: 28px;
+  padding-top: 28px;
 `;
+export const ContentScroll: React.FC<ScrollViewProps> = styled.ScrollView.attrs(
+  {
+    keyboardShouldPersistTaps: 'always',
+    contentContainerStyle: { paddingHorizontal: 12 },
+  } as ScrollViewProps,
+)``;
 export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
   color: #343152;
-  margin-bottom: 21px;
+  margin: 0 0 21px 21px;
 `;
-export const Box: React.FC = styled.TouchableOpacity`
+export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   margin-bottom: 24px;
