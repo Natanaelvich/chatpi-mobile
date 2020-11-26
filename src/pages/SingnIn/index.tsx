@@ -63,7 +63,7 @@ const SingnIn: React.FC = () => {
             keyboardType="email-address"
             placeholder="E-mail"
             returnKeyType="next"
-            onSubmitEditing={() => passwordRef.current?.focus()}
+            // onSubmitEditing={() => passwordRef.current?.focus()}
           />
           <IconMail />
         </InputContainer>
@@ -71,7 +71,7 @@ const SingnIn: React.FC = () => {
           <Input
             value={password}
             onChangeText={setPassword}
-            ref={passwordRef}
+            // ref={passwordRef}
             secureTextEntry
             placeholder="Senha"
             returnKeyType="send"

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './config/reactotronConfig';
 import { StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
 import { Provider } from 'react-redux';
@@ -9,7 +8,6 @@ import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
-import Header from './components/Header';
 import { persistor, store } from './store';
 import light from './styles/theme/light';
 

@@ -7,7 +7,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import rootReducer from './modules/rootReducer';
 import rootSaga from './modules/rootSaga';
-import tron from '../config/reactotronConfig';
+import { reactotron } from '../config/reactotronConfig';
 
 const persistConfig = {
   key: 'user',
@@ -17,7 +17,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const reactotronMiddleware = __DEV__ && tron ? tron.createEnhancer() : null;
+const reactotronMiddleware = __DEV__ ? reactotron.createEnhancer() : null;
 
 const sagaMiddleware = createSagaMiddleware();
 

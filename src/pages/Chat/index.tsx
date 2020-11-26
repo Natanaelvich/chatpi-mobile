@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from 'expo-vector-icons';
+import * as Sentry from 'sentry-expo';
 import React, {
   useCallback,
   useEffect,
@@ -47,6 +48,12 @@ const Chat: React.FC = () => {
 
   const userParam = router.params?.user;
   const messagesNoRead = router.params?.messagesNoRead;
+
+  useEffect(() => {
+    if (user) {
+      Sentry.Native.setUser({ username: user?.user.name, id: user?.user.id });
+    }
+  }, [user]);
 
   useEffect(() => {
     messagesNoRead.forEach(m => {
