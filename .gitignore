@@ -13,4 +13,4 @@ web-build/
 .DS_Store
 
 #.env
-.env.ts
+env.ts
