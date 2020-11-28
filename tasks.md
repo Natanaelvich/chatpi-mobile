@@ -8,7 +8,7 @@
 
 - [x] usar id user para id das mensagens
 
-- [] verificar se o o outro usuario esta digitando para mim
+- [x] verificar se o o outro usuario esta digitando para mim
 
 ## config app
 
@@ -18,7 +18,7 @@
 
 ## components
 
-- [] criar tela de atualizando app
+- [x] criar tela de atualizando app
 
 - [] criar perfil de usuario
 

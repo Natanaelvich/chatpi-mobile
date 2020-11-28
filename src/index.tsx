@@ -19,9 +19,10 @@ const Main: React.FC = () => {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+
   return (
     <ThemeProvider theme={light}>
-      <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+      <StatusBar barStyle="light-content" backgroundColor="#343152" />
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
