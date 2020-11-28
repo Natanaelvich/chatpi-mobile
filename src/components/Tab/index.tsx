@@ -1,7 +1,6 @@
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import React from 'react';
-import { View } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 const Tab: React.FC<MaterialTopTabBarProps> = ({
@@ -11,15 +10,14 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
   position,
 }) => {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', backgroundColor: '#343152' }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+        let label = options?.tabBarLabel;
+
+        if (!label) {
+          label = options?.title ? options.title : route.name;
+        }
 
         const isFocused = state.index === index;
 
@@ -47,11 +45,18 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
           inputRange,
           outputRange: inputRange.map(i => (i === index ? 1 : 0.5)),
         });
+        const borderWidth = Animated.interpolate(position, {
+          inputRange,
+          outputRange: inputRange.map(i => (i === index ? 2 : 0)),
+        });
+        const borderRadius = Animated.interpolate(position, {
+          inputRange,
+          outputRange: inputRange.map(i => (i === index ? 15 : 10)),
+        });
 
         return (
-          <RectButton
+          <TouchableWithoutFeedback
             key={index}
-            rippleColor="#DE595C"
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -69,12 +74,13 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
                 height: 65,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#343152',
               }}
             >
               <Animated.Text
                 numberOfLines={1}
                 style={{
+                  borderWidth,
+                  borderColor: isFocused ? '#fff' : 'transparent',
                   opacity,
                   fontSize: 14,
                   fontWeight: 'bold',
@@ -83,14 +89,14 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
                   width: '85%',
                   paddingVertical: 12,
                   textAlign: 'center',
-                  borderRadius: 20,
+                  borderRadius,
                   color: isFocused ? '#fff' : '#9999',
                 }}
               >
                 {label}
               </Animated.Text>
             </View>
-          </RectButton>
+          </TouchableWithoutFeedback>
         );
       })}
     </View>
