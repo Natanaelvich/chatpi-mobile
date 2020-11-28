@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 const Routes: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
 
-  const [loadingUpdate, setLoadingUpdate] = useState(true);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   useEffect(() => {
     async function getUpdates(): Promise<void> {
@@ -42,7 +42,7 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      {loadingUpdate && __DEV__ ? (
+      {loadingUpdate && !__DEV__ ? (
         <UpdateContainer>
           <UpdateText>Atualizando...</UpdateText>
           <ActivityIndicator size="large" color="#343152" />
