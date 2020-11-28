@@ -77,7 +77,7 @@ const Chat: React.FC = () => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
       dispatch(
-        addMessage({ ...messageParse, readed: false, id: messageParse.user }),
+        addMessage({ ...messageParse, readed: true, id: messageParse.user }),
       );
     });
     socket.on('usersLoggeds', usersLoggedsSocket => {
@@ -156,7 +156,21 @@ const Chat: React.FC = () => {
         <InputMessageCotainer>
           <InputMessage
             value={message}
-            onChangeText={setMessage}
+            onChangeText={text => {
+              setMessage(text);
+              socket.emit('typing', {
+                user: user?.user.id,
+                typing: true,
+                toUser: userParam?.id,
+              });
+            }}
+            onEndEditing={() => {
+              socket.emit('typingBlur', {
+                user: user?.user.id,
+                typing: true,
+                toUser: userParam?.id,
+              });
+            }}
             onSubmitEditing={sendMessage}
           />
           <ButtonSendMessage onPress={sendMessage}>
