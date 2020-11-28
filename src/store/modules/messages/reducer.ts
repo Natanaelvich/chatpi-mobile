@@ -3,6 +3,7 @@ export interface MessageProps {
   toUser: string;
   message: string;
   readed: false;
+  id: string;
 }
 interface ReducerProps {
   messages: MessageProps[];
@@ -30,7 +31,7 @@ export default (
       return {
         ...state,
         messages: state.messages.map(m =>
-          m.toUser === message.toUser ? { ...m, readed: true } : m,
+          m.id === message.id ? { ...m, readed: true } : m,
         ),
       };
 

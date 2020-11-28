@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React from 'react';
 import * as Sentry from 'sentry-expo';
 import Main from './src';

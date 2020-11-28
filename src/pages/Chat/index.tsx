@@ -56,9 +56,11 @@ const Chat: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    messagesNoRead.forEach(m => {
-      dispatch(readMessage(m));
-    });
+    if (messagesNoRead) {
+      messagesNoRead.forEach(m => {
+        dispatch(readMessage(m));
+      });
+    }
   }, [messagesNoRead, dispatch]);
 
   useEffect(() => {
@@ -74,7 +76,9 @@ const Chat: React.FC = () => {
   useEffect(() => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
-      dispatch(addMessage({ ...messageParse, readed: false }));
+      dispatch(
+        addMessage({ ...messageParse, readed: false, id: messageParse.user }),
+      );
     });
     socket.on('usersLoggeds', usersLoggedsSocket => {
       setUsersLoggeds(JSON.parse(usersLoggedsSocket));
@@ -98,7 +102,8 @@ const Chat: React.FC = () => {
           user: user?.user.id,
           toUser: userParam.id,
           message,
-          readed: false,
+          readed: true,
+          id: userParam.id,
         }),
       );
 
@@ -139,11 +144,7 @@ const Chat: React.FC = () => {
           }
         >
           {messages
-            .filter(
-              m =>
-                (m.toUser === userParam.id && m.user === user?.user.id) ||
-                (m.toUser === user?.user.id && m.user === userParam.id),
-            )
+            .filter(m => m.id === userParam.id)
             .map((m, index) => (
               <Message key={index} author={user?.user.id === m?.user}>
                 {m.message}

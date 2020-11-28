@@ -19,7 +19,6 @@ const Typing: React.FC = () => {
         style={{
           width: 30,
           height: 30,
-          borderRadius: 12,
         }}
         autoPlay
         source={typing}

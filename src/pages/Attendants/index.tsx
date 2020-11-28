@@ -47,29 +47,31 @@ const Attendants: React.FC = () => {
       <Content>
         <ContentTitle>Atendentes</ContentTitle>
         <ContentScroll>
-          {attendants.map(a => (
-            <Box
-              key={a.id}
-              onPress={() =>
-                navigation.navigate('Chat', {
-                  user: a,
-                })
-              }
-            >
-              <BoxAvatar
-                source={{ uri: `${env.API_URL}/myAvatars/${a.id}` }}
-                resizeMode="cover"
-              />
-              <BoxTextContainer>
-                <BoxTitle>{a.name}</BoxTitle>
-                <BoxDesc>
-                  {usersLoggeds && usersLoggeds[a.id] ? 'Online' : 'Offline'}
-                </BoxDesc>
-              </BoxTextContainer>
+          {attendants
+            .filter(a => a.id !== user?.user.id)
+            .map(a => (
+              <Box
+                key={a.id}
+                onPress={() => {
+                  navigation.navigate('Chat', {
+                    user: a,
+                  });
+                }}
+              >
+                <BoxAvatar
+                  source={{ uri: `${env.API_URL}/myAvatars/${a.id}` }}
+                  resizeMode="cover"
+                />
+                <BoxTextContainer>
+                  <BoxTitle>{a.name}</BoxTitle>
+                  <BoxDesc>
+                    {usersLoggeds && usersLoggeds[a.id] ? 'Online' : 'Offline'}
+                  </BoxDesc>
+                </BoxTextContainer>
 
-              <IconNext />
-            </Box>
-          ))}
+                <IconNext />
+              </Box>
+            ))}
         </ContentScroll>
       </Content>
     </Container>

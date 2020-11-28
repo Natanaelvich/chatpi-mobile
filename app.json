@@ -16,8 +16,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.mundotech.chatpi",
-      "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.mundotech.chatpi",

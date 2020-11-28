@@ -41,7 +41,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
-      dispatch(addMessage({ ...messageParse, readed: false }));
+      dispatch(
+        addMessage({ ...messageParse, readed: false, id: messageParse.user }),
+      );
     });
     socket.on('usersLoggeds', usersLoggedsSocket => {
       setUsersLoggeds(JSON.parse(usersLoggedsSocket));
@@ -53,40 +55,32 @@ const Home: React.FC = () => {
 
   const getLastMessage = useCallback(
     attendant => {
-      const messagesUser = messages.filter(
-        m =>
-          (m.user === attendant.id && m.toUser === user?.user.id) ||
-          (m.user === user?.user.id && m.toUser === attendant.id),
-      );
+      const messagesUser = messages.filter(m => m.id === attendant.id);
 
       return messagesUser[messagesUser.length - 1].message;
     },
-    [messages, user],
+    [messages],
   );
 
   const getMessagesNoReadedsArray = useCallback(
     attendant => {
-      const messagesUser = messages.filter(
-        m =>
-          (m.user === attendant.id && m.toUser === user?.user.id) ||
-          (m.user === user?.user.id &&
-            m.toUser === attendant.id &&
-            m.readed === false),
-      );
+      const messagesUser = messages
+        .filter(m => m.id === attendant.id)
+        .filter(m => m.readed === false);
       return messagesUser;
     },
-    [messages, user],
+    [messages],
   );
 
   const getMessagesNoReadeds = useCallback(
     attendant => {
       const messagesUser = messages
-        .filter(m => m.user === attendant.id && m.toUser === user?.user.id)
+        .filter(m => m.id === attendant.id)
         .filter(m => m.readed === false);
 
       return messagesUser.length;
     },
-    [messages, user],
+    [messages],
   );
 
   return (
@@ -95,12 +89,9 @@ const Home: React.FC = () => {
         <ContentTitle>Conversas</ContentTitle>
         {attendants.map(
           a =>
-            !!messages.find(
-              m =>
-                (m.user === a.id && m.toUser === user?.user.id) ||
-                (m.user === user?.user.id && m.toUser === a.id),
-            ) && (
+            !!messages.find(m => m.id === a.id) && (
               <Box
+                key={a.id}
                 onPress={() => {
                   navigation.navigate('Chat', {
                     user: a,
