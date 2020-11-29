@@ -16,7 +16,9 @@
 
 - [ ] adicioanr icon e splash screen
 
-- [ ] criar darkmode
+- [x] criar darkmode
+
+- [ ] adicionar cores tema em todas as telas
 
 - [ ] utilizar LayoutAnimation nas mensagens
 
