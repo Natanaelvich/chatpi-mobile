@@ -4,6 +4,7 @@ import * as Updates from 'expo-updates';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import MyTabs from './tabs';
 import SingnIn from '../pages/SingnIn';
 import { RootState } from '../store/modules/rootReducer';
@@ -12,9 +13,29 @@ import Chat from '../pages/Chat';
 import { isConnected } from '../utils/netInfo';
 import { UpdateContainer, UpdateText } from '../styles/global';
 
+import DrawerContent from '../components/DrawerContent';
+
+const Drawer = createDrawerNavigator();
+
 const Stack = createStackNavigator();
+
 const Routes: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
+
+  function Stacks(): JSX.Element {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyle: { backgroundColor: '#343152' },
+        }}
+      >
+        <Stack.Screen name="MyTabs" component={MyTabs} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator>
+    );
+  }
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
@@ -49,22 +70,22 @@ const Routes: React.FC = () => {
         </UpdateContainer>
       ) : (
         <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              cardStyle: { backgroundColor: '#f2f3f5' },
-            }}
-          >
-            {user ? (
-              <>
-                <Stack.Screen name="MyTabs" component={MyTabs} />
-                <Stack.Screen name="Profile" component={Profile} />
-                <Stack.Screen name="Chat" component={Chat} />
-              </>
-            ) : (
+          {user ? (
+            <Drawer.Navigator
+              drawerContent={props => <DrawerContent {...props} />}
+            >
+              <Drawer.Screen name="Main" component={Stacks} />
+            </Drawer.Navigator>
+          ) : (
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                cardStyle: { backgroundColor: '#343152' },
+              }}
+            >
               <Stack.Screen name="SingnIn" component={SingnIn} />
-            )}
-          </Stack.Navigator>
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       )}
     </>

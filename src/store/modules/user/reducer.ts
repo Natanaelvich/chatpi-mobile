@@ -1,6 +1,9 @@
 export interface UserProps {
-  name: string;
-  email: string;
+  user: {
+    name: string;
+    email: string;
+    id: string;
+  };
   token: string;
 }
 interface ReducerProps {
@@ -9,7 +12,7 @@ interface ReducerProps {
   loadingSingin: boolean;
   user: UserProps;
 }
-interface InitialStateProps {
+interface InitialStateUserProps {
   signedIn: boolean;
   user: UserProps | null;
   signinError: boolean;
@@ -25,12 +28,12 @@ const initialState = {
   loadingSingin: false,
   socketId: null,
   token_expo: null,
-};
+} as InitialStateUserProps;
 
 export default (
   state = initialState,
   { type, signinError, loadingSingin, user }: ReducerProps,
-): InitialStateProps => {
+): InitialStateUserProps => {
   switch (type) {
     case '@user/SIGN_IN_SUCCESS':
       return {

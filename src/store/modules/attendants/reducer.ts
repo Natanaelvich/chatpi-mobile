@@ -5,20 +5,20 @@ export interface UserProps {
 }
 interface ReducerProps {
   attendants: UserProps[];
-}
-interface InitialStateProps {
-  attendants: UserProps[];
   type: string;
+}
+interface InitialStateAttendantsProps {
+  attendants: UserProps[];
 }
 
 const initialState = {
   attendants: [],
-};
+} as InitialStateAttendantsProps;
 
 export default (
   state = initialState,
-  { type, attendants }: InitialStateProps,
-): ReducerProps => {
+  { type, attendants }: ReducerProps,
+): InitialStateAttendantsProps => {
   switch (type) {
     case '@attendants/ADD_ATTENDANTS':
       return {

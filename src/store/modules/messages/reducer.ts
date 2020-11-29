@@ -1,26 +1,26 @@
 export interface MessageProps {
-  user: string;
+  user: string | undefined;
   toUser: string;
   message: string;
-  readed: false;
+  readed: boolean;
   id: string;
 }
-interface ReducerProps {
+interface InitialStateMessageProps {
   messages: MessageProps[];
 }
-interface InitialStateProps {
+interface ReducerProps {
   message: MessageProps;
   type: string;
 }
 
 const initialState = {
   messages: [],
-};
+} as InitialStateMessageProps;
 
 export default (
   state = initialState,
-  { type, message }: InitialStateProps,
-): ReducerProps => {
+  { type, message }: ReducerProps,
+): InitialStateMessageProps => {
   switch (type) {
     case '@messages/ADD_MESSAGE':
       return {

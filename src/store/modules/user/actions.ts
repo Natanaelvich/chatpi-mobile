@@ -20,7 +20,7 @@ export const signInSuccess = (
 });
 
 export const signOutRequest = (): { type: string } => ({
-  type: '@user/SIGN_OUT_REQUEST',
+  type: '@user/SIGN_OUT',
 });
 
 export const signInError = (

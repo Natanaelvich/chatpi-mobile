@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Feather, MaterialIcons } from 'expo-vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
+import { TextInput, TextInputProps } from 'react-native';
 import {
   Container,
   Title,
@@ -12,7 +13,6 @@ import {
   CreateAccountText,
   ForgotPasswordButton,
   FormContainer,
-  Input,
   ButtonText,
   Button,
   InputContainer,
@@ -21,6 +21,7 @@ import {
   LogoText,
   ErrorLogin,
   ErrorLoginText,
+  Input,
 } from './styles';
 import { signInRequest } from '../../store/modules/user/actions';
 import { RootState } from '../../store/modules/rootReducer';
@@ -63,7 +64,7 @@ const SingnIn: React.FC = () => {
             keyboardType="email-address"
             placeholder="E-mail"
             returnKeyType="next"
-            // onSubmitEditing={() => passwordRef.current?.focus()}
+            onSubmitEditing={() => passwordRef.current?.focus()}
           />
           <IconMail />
         </InputContainer>
@@ -71,13 +72,13 @@ const SingnIn: React.FC = () => {
           <Input
             value={password}
             onChangeText={setPassword}
-            // ref={passwordRef}
             secureTextEntry
             placeholder="Senha"
             returnKeyType="send"
             onSubmitEditing={() => {
               hanleSignIn();
             }}
+            ref={passwordRef}
           />
           <IconKey />
         </InputContainer>

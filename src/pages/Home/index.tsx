@@ -16,6 +16,12 @@ import {
   TypingDesc,
   BoxAvatarContainer,
   BoxCircleOnline,
+  ButtonToAttendants,
+  IconMessage,
+  EmptyButton,
+  EmptyContainer,
+  EmptyIconMessage,
+  EmptyText,
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
 import { addMessage } from '../../store/modules/messages/actions';
@@ -86,45 +92,63 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Content>
-        <ContentTitle>Conversas</ContentTitle>
-        {attendants.map(
-          a =>
-            !!messages.find(m => m.id === a.id) && (
-              <Box
-                key={a.id}
-                onPress={() => {
-                  navigation.navigate('Chat', {
-                    user: a,
-                    messagesNoRead: getMessagesNoReadedsArray(a),
-                  });
-                }}
-              >
-                <BoxAvatarContainer>
-                  <BoxAvatar
-                    source={{
-                      uri: `${env.API_URL}/myAvatars/${a.id}`,
-                    }}
-                    resizeMode="cover"
-                  />
-                  {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
-                </BoxAvatarContainer>
-                <BoxTextContainer>
-                  <BoxTitle>{a.name}</BoxTitle>
-                  {typing && typing[a.id] ? (
-                    <TypingDesc>Digitando...</TypingDesc>
-                  ) : (
-                    <BoxDesc>{getLastMessage(a)}</BoxDesc>
-                  )}
-                </BoxTextContainer>
+        {messages.length === 0 ? (
+          <EmptyContainer>
+            <EmptyText>Você não possui mensagens</EmptyText>
+            <EmptyText>Para iniciar uma nova toque em</EmptyText>
 
-                {getMessagesNoReadeds(a) > 0 && (
-                  <BoxCircle>
-                    <BoxCircleText>{getMessagesNoReadeds(a)}</BoxCircleText>
-                  </BoxCircle>
-                )}
-              </Box>
-            ),
+            <EmptyButton>
+              <EmptyIconMessage />
+            </EmptyButton>
+          </EmptyContainer>
+        ) : (
+          <>
+            <ContentTitle>Conversas</ContentTitle>
+            {attendants.map(
+              a =>
+                !!messages.find(m => m.id === a.id) && (
+                  <Box
+                    key={a.id}
+                    onPress={() => {
+                      navigation.navigate('Chat', {
+                        user: a,
+                        messagesNoRead: getMessagesNoReadedsArray(a),
+                      });
+                    }}
+                  >
+                    <BoxAvatarContainer>
+                      <BoxAvatar
+                        source={{
+                          uri: `${env.API_URL}/myAvatars/${a.id}`,
+                        }}
+                        resizeMode="cover"
+                      />
+                      {usersLoggeds && usersLoggeds[a.id] && (
+                        <BoxCircleOnline />
+                      )}
+                    </BoxAvatarContainer>
+                    <BoxTextContainer>
+                      <BoxTitle>{a.name}</BoxTitle>
+                      {typing && typing[a.id] ? (
+                        <TypingDesc>Digitando...</TypingDesc>
+                      ) : (
+                        <BoxDesc>{getLastMessage(a)}</BoxDesc>
+                      )}
+                    </BoxTextContainer>
+
+                    {getMessagesNoReadeds(a) > 0 && (
+                      <BoxCircle>
+                        <BoxCircleText>{getMessagesNoReadeds(a)}</BoxCircleText>
+                      </BoxCircle>
+                    )}
+                  </Box>
+                ),
+            )}
+          </>
         )}
+        <ButtonToAttendants onPress={() => navigation.navigate('Atendentes')}>
+          <IconMessage />
+        </ButtonToAttendants>
       </Content>
     </Container>
   );

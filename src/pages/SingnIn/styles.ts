@@ -1,5 +1,9 @@
 import { Feather } from 'expo-vector-icons';
-import React from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  RefForwardingComponent,
+} from 'react';
 import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -44,6 +48,7 @@ export const Input: React.FC<TextInputProps> = styled.TextInput.attrs({
   flex: 1;
   margin-left: 16px;
 `;
+
 export const IconMail = styled(Feather).attrs({
   name: 'mail',
   size: 23,

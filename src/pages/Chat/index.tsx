@@ -139,9 +139,9 @@ const Chat: React.FC = () => {
       <Content>
         <Messages
           ref={scrollRef}
-          onContentSizeChange={() =>
-            scrollRef.current?.scrollToEnd({ animated: true })
-          }
+          onContentSizeChange={() => {
+            scrollRef.current?.scrollToEnd({ animated: true });
+          }}
         >
           {messages
             .filter(m => m.id === userParam.id)
@@ -155,6 +155,7 @@ const Chat: React.FC = () => {
         </Messages>
         <InputMessageCotainer>
           <InputMessage
+            multiline
             value={message}
             onChangeText={text => {
               setMessage(text);

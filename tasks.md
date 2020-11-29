@@ -20,7 +20,7 @@
 
 - [] utilizar LayoutAnimation nas mensagens
 
-- [] imput message multiline ( **TextInput onContentSizeChange** Callback that is called when the text input's content size changes. This will be called with { nativeEvent: { contentSize: { width, height } } }.)
+- [x] imput message multiline same whats ( **TextInput onContentSizeChange** Callback that is called when the text input's content size changes. This will be called with { nativeEvent: { contentSize: { width, height } } }.)
 
 - [x] typing ( **TextInput onEndEditing** CCallback that is called when text input ends.
       **TextInput onChangeText** Callback that is called when the text input's text changes. Changed text is passed as a single string argument to the callback handler.
@@ -30,16 +30,30 @@
 
 - [x] criar tela de atualizando app
 
-- [] criar perfil de usuario
+- [x] criar botão de iniciar uma nova conversa
 
-- [] criar tela de conversas vazia
+- [x] criar perfil de usuario
 
-- [] criar bota de apagar todas as mensagens
+- [] criar tela de edição de usuario
+
+- [x] criar tela de conversas vazia
+
+- [] add imagem de conversas vazia
+
+- [] criar botao de apagar todas as mensagens
+
+- [] criar botao de apagar uma conversa
 
 ## navigation
 
-- [] botar fundo do app com a cor primary
+- [x] botar fundo do app com a cor primary
 
 - [x] botar borda branca na tab ativa
 
-- [] criar navegação drawer
+- [x] criar navegação drawer (
+      Opening and closing drawer#
+      To open and close drawer, use the following helpers:
+
+navigation.openDrawer();
+navigation.closeDrawer();
+)

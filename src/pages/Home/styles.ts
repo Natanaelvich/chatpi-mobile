@@ -1,10 +1,39 @@
+import { MaterialIcons } from 'expo-vector-icons';
 import { ImageProps, TouchableOpacityProps } from 'react-native';
+import {
+  BorderlessButton,
+  BorderlessButtonProperties,
+} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 export const Container: React.FC = styled.View`
-  position: relative;
   flex: 1;
   background: #343152;
+`;
+export const EmptyContainer: React.FC = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+export const EmptyText: React.FC = styled.Text`
+  color: #d4d4d4;
+  font-size: 16px;
+`;
+export const EmptyButton: React.FC = styled.Text`
+  background: #d4d4d4;
+
+  padding: 16px;
+
+  align-items: center;
+
+  border-radius: 14px;
+`;
+export const EmptyIconMessage: React.FC = styled(MaterialIcons).attrs({
+  name: 'message',
+  size: 24,
+  color: '#f5f5f5',
+})`
+  margin: auto;
 `;
 export const Content: React.FC = styled.View`
   flex: 1;
@@ -12,6 +41,7 @@ export const Content: React.FC = styled.View`
   border-top-left-radius: 44px;
   background: #fff;
   padding: 28px;
+  position: relative;
 `;
 export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
@@ -89,3 +119,25 @@ export const BoxCircleText: React.FC = styled.Text`
   font-size: 12px;
   color: #fceaeb;
 `;
+export const ButtonToAttendants: React.FC<BorderlessButtonProperties> = styled(
+  BorderlessButton,
+)`
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 55px;
+  height: 55px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+  background: #de595c;
+
+  z-index: 999;
+`;
+export const IconMessage: React.FC = styled(MaterialIcons).attrs({
+  name: 'message',
+  size: 24,
+  color: '#fff',
+})``;
