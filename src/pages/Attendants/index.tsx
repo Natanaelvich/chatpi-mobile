@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { useNavigation } from '@react-navigation/native';
+import { LayoutAnimation } from 'react-native';
 import {
   Container,
   Content,
@@ -17,30 +18,18 @@ import {
 import { getAttendants } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
+import { addMessage } from '../../store/modules/messages/actions';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
   const { attendants } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
+  const { usersLoggeds } = useSelector((state: RootState) => state.socket);
   const navigation = useNavigation();
-
-  const [usersLoggeds, setUsersLoggeds] = useState([]);
 
   useEffect(() => {
     dispatch(getAttendants());
   }, [dispatch]);
-
-  const socket = useMemo(() => {
-    return io(env.API_URL, {
-      query: { user: user?.user.id },
-    });
-  }, [user]);
-
-  useEffect(() => {
-    socket.on('usersLoggeds', usersLoggedsSocket => {
-      setUsersLoggeds(JSON.parse(usersLoggedsSocket));
-    });
-  }, [socket]);
 
   return (
     <Container>

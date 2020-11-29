@@ -1,13 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from 'expo-vector-icons';
 import * as Sentry from 'sentry-expo';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -41,13 +35,23 @@ const Chat: React.FC = () => {
   const { goBack } = useNavigation();
   const { user } = useSelector((state: RootState) => state.user);
   const { messages } = useSelector((state: RootState) => state.messages);
+  const { typers, usersLoggeds } = useSelector(
+    (state: RootState) => state.socket,
+  );
 
-  const [usersLoggeds, setUsersLoggeds] = useState([]);
-  const [typing, setTyping] = useState({});
   const [message, setMessage] = useState('');
 
   const userParam = router.params?.user;
-  const messagesNoRead = router.params?.messagesNoRead;
+  const socket = router.params?.socket;
+
+  useEffect(() => {
+    messages
+      .filter(m => m.id === userParam.id)
+      .filter(m => m.readed === false)
+      .map(m => {
+        dispatch(readMessage(m));
+      });
+  }, [dispatch, messages, userParam]);
 
   useEffect(() => {
     if (user) {
@@ -56,38 +60,8 @@ const Chat: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    if (messagesNoRead) {
-      messagesNoRead.forEach(m => {
-        dispatch(readMessage(m));
-      });
-    }
-  }, [messagesNoRead, dispatch]);
-
-  useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
   }, [scrollRef]);
-
-  const socket = useMemo(() => {
-    return io(env.API_URL, {
-      query: { user: user?.user.id },
-    });
-  }, [user]);
-
-  useEffect(() => {
-    socket.on('message', messageSocket => {
-      const messageParse = JSON.parse(messageSocket);
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      dispatch(
-        addMessage({ ...messageParse, readed: true, id: messageParse.user }),
-      );
-    });
-    socket.on('usersLoggeds', usersLoggedsSocket => {
-      setUsersLoggeds(JSON.parse(usersLoggedsSocket));
-    });
-    socket.on('typing', typingSocket => {
-      setTyping(typingSocket);
-    });
-  }, [socket, dispatch]);
 
   const sendMessage = useCallback(() => {
     if (userParam) {
@@ -115,7 +89,7 @@ const Chat: React.FC = () => {
       setMessage('');
       Keyboard.dismiss();
     }
-  }, [socket, message, user, userParam, dispatch]);
+  }, [message, user, userParam, dispatch, socket]);
 
   return (
     <Container>
@@ -130,7 +104,7 @@ const Chat: React.FC = () => {
         />
         <ContainerText>
           <Title>{userParam.name}</Title>
-          {typing && typing[userParam.id] ? (
+          {typers && typers[userParam.id] ? (
             <Status author={false}>Digitando...</Status>
           ) : (
             <Status>
@@ -156,7 +130,7 @@ const Chat: React.FC = () => {
               </Message>
             ))}
 
-          {typing && typing[userParam.id] && <Typing />}
+          {typers && typers[userParam.id] && <Typing />}
         </Messages>
         <InputMessageCotainer>
           <InputMessage
@@ -177,7 +151,6 @@ const Chat: React.FC = () => {
                 toUser: userParam?.id,
               });
             }}
-            onSubmitEditing={sendMessage}
           />
           <ButtonSendMessage onPress={sendMessage}>
             <IconSendMessage />

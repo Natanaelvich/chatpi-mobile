@@ -2,6 +2,14 @@
 
 - [x] ao vizualizar msgn ele vizualiza a dos outros usuarios
 
+- [x] nao aparece bandle de novas mensagens na home(precisa abrir chat)
+
+- [] traço branco abaixo das tabs
+
+- [x] mensagen nao chegam (precisa abrir chat)
+
+- [x] esta abrindo duas conexoes nas tabs
+
 ## features
 
 - [ ] criar tipo de usuario atendente

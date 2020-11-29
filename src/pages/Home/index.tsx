@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
 import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import {
@@ -27,6 +27,7 @@ import {
 import { RootState } from '../../store/modules/rootReducer';
 import { addMessage } from '../../store/modules/messages/actions';
 import env from '../../../env';
+import { addTypers, addUsersLoggeds } from '../../store/modules/socket/actions';
 
 if (
   Platform.OS === 'android' &&
@@ -42,9 +43,9 @@ const Home: React.FC = () => {
   const { messages } = useSelector((state: RootState) => state.messages);
   const { attendants } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
-
-  const [usersLoggeds, setUsersLoggeds] = useState([]);
-  const [typing, setTyping] = useState({});
+  const { typers, usersLoggeds } = useSelector(
+    (state: RootState) => state.socket,
+  );
 
   const socket = useMemo(() => {
     return io(env.API_URL, {
@@ -53,18 +54,24 @@ const Home: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    socket.on('message', messageSocket => {
+    socket.on('usersLoggeds', (usersLoggedsSocket: string) => {
+      dispatch(addUsersLoggeds(JSON.parse(usersLoggedsSocket)));
+    });
+
+    socket.on('typing', (typingSocket: Record<string, unknown>) => {
+      dispatch(addTypers(typingSocket));
+    });
+
+    socket.on('message', (messageSocket: string) => {
       const messageParse = JSON.parse(messageSocket);
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
-        addMessage({ ...messageParse, readed: false, id: messageParse.user }),
+        addMessage({
+          ...messageParse,
+          readed: false,
+          id: messageParse.user,
+        }),
       );
-    });
-    socket.on('usersLoggeds', usersLoggedsSocket => {
-      setUsersLoggeds(JSON.parse(usersLoggedsSocket));
-    });
-    socket.on('typing', typingSocket => {
-      setTyping(typingSocket);
     });
   }, [socket, dispatch]);
 
@@ -124,6 +131,7 @@ const Home: React.FC = () => {
                   navigation.navigate('Chat', {
                     user: a,
                     messagesNoRead: getMessagesNoReadedsArray(a),
+                    socket,
                   });
                 }}
               >
@@ -138,7 +146,7 @@ const Home: React.FC = () => {
                 </BoxAvatarContainer>
                 <BoxTextContainer>
                   <BoxTitle>{a.name}</BoxTitle>
-                  {typing && typing[a.id] ? (
+                  {typers && typers[a.id] ? (
                     <TypingDesc>Digitando...</TypingDesc>
                   ) : (
                     <BoxDesc>{getLastMessage(a)?.message}</BoxDesc>
