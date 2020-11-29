@@ -4,7 +4,7 @@
 
 ## features
 
-- [] criar tipo de usuario atendente
+- [ ] criar tipo de usuario atendente
 
 - [x] usar id user para id das mensagens
 
@@ -14,11 +14,11 @@
 
 ## config app
 
-- [] adicioanr icon e splash screen
+- [ ] adicioanr icon e splash screen
 
-- [] criar darkmode
+- [ ] criar darkmode
 
-- [] utilizar LayoutAnimation nas mensagens
+- [ ] utilizar LayoutAnimation nas mensagens
 
 - [x] imput message multiline same whats ( **TextInput onContentSizeChange** Callback that is called when the text input's content size changes. This will be called with { nativeEvent: { contentSize: { width, height } } }.)
 
@@ -34,15 +34,15 @@
 
 - [x] criar perfil de usuario
 
-- [] criar tela de edição de usuario
+- [ ] criar tela de edição de usuario
 
 - [x] criar tela de conversas vazia
 
-- [] add imagem de conversas vazia
+- [ ] add imagem de conversas vazia
 
-- [] criar botao de apagar todas as mensagens
+- [ ] criar botao de apagar todas as mensagens
 
-- [] criar botao de apagar uma conversa
+- [ ] criar botao de apagar uma conversa
 
 ## navigation
 
