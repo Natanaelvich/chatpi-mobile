@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
+import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import {
   Container,
   Content,
@@ -27,6 +28,13 @@ import { RootState } from '../../store/modules/rootReducer';
 import { addMessage } from '../../store/modules/messages/actions';
 import env from '../../../env';
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -47,6 +55,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
         addMessage({ ...messageParse, readed: false, id: messageParse.user }),
       );
@@ -62,11 +71,26 @@ const Home: React.FC = () => {
   const getLastMessage = useCallback(
     attendant => {
       const messagesUser = messages.filter(m => m.id === attendant.id);
-
-      return messagesUser[messagesUser.length - 1].message;
+      return messagesUser[messagesUser.length - 1];
     },
     [messages],
   );
+
+  const test = useMemo(() => {
+    const attendantsTemp = attendants
+      .filter(a => !!messages.find(m => m.id === a.id))
+      .map(a => ({
+        ...a,
+        numberMessagesNoRead: messages
+          .filter(m => m.id === a.id)
+          .filter(m => m.readed === false).length,
+      }))
+      .sort((a, b) =>
+        getLastMessage(a)?.date > getLastMessage(b)?.date ? -1 : 1,
+      );
+
+    return attendantsTemp;
+  }, [attendants, messages, getLastMessage]);
 
   const getMessagesNoReadedsArray = useCallback(
     attendant => {
@@ -74,17 +98,6 @@ const Home: React.FC = () => {
         .filter(m => m.id === attendant.id)
         .filter(m => m.readed === false);
       return messagesUser;
-    },
-    [messages],
-  );
-
-  const getMessagesNoReadeds = useCallback(
-    attendant => {
-      const messagesUser = messages
-        .filter(m => m.id === attendant.id)
-        .filter(m => m.readed === false);
-
-      return messagesUser.length;
     },
     [messages],
   );
@@ -104,46 +117,41 @@ const Home: React.FC = () => {
         ) : (
           <>
             <ContentTitle>Conversas</ContentTitle>
-            {attendants.map(
-              a =>
-                !!messages.find(m => m.id === a.id) && (
-                  <Box
-                    key={a.id}
-                    onPress={() => {
-                      navigation.navigate('Chat', {
-                        user: a,
-                        messagesNoRead: getMessagesNoReadedsArray(a),
-                      });
+            {test.map(a => (
+              <Box
+                key={a.id}
+                onPress={() => {
+                  navigation.navigate('Chat', {
+                    user: a,
+                    messagesNoRead: getMessagesNoReadedsArray(a),
+                  });
+                }}
+              >
+                <BoxAvatarContainer>
+                  <BoxAvatar
+                    source={{
+                      uri: `${env.API_URL}/myAvatars/${a.id}`,
                     }}
-                  >
-                    <BoxAvatarContainer>
-                      <BoxAvatar
-                        source={{
-                          uri: `${env.API_URL}/myAvatars/${a.id}`,
-                        }}
-                        resizeMode="cover"
-                      />
-                      {usersLoggeds && usersLoggeds[a.id] && (
-                        <BoxCircleOnline />
-                      )}
-                    </BoxAvatarContainer>
-                    <BoxTextContainer>
-                      <BoxTitle>{a.name}</BoxTitle>
-                      {typing && typing[a.id] ? (
-                        <TypingDesc>Digitando...</TypingDesc>
-                      ) : (
-                        <BoxDesc>{getLastMessage(a)}</BoxDesc>
-                      )}
-                    </BoxTextContainer>
+                    resizeMode="cover"
+                  />
+                  {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
+                </BoxAvatarContainer>
+                <BoxTextContainer>
+                  <BoxTitle>{a.name}</BoxTitle>
+                  {typing && typing[a.id] ? (
+                    <TypingDesc>Digitando...</TypingDesc>
+                  ) : (
+                    <BoxDesc>{getLastMessage(a)?.message}</BoxDesc>
+                  )}
+                </BoxTextContainer>
 
-                    {getMessagesNoReadeds(a) > 0 && (
-                      <BoxCircle>
-                        <BoxCircleText>{getMessagesNoReadeds(a)}</BoxCircleText>
-                      </BoxCircle>
-                    )}
-                  </Box>
-                ),
-            )}
+                {a.numberMessagesNoRead > 0 && (
+                  <BoxCircle>
+                    <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
+                  </BoxCircle>
+                )}
+              </Box>
+            ))}
           </>
         )}
         <ButtonToAttendants onPress={() => navigation.navigate('Atendentes')}>

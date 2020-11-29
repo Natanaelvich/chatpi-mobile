@@ -84,10 +84,10 @@ export const InputMessage: React.FC<TextInputProps> = styled.TextInput.attrs({
   underlineColorAndroid: 'transparent',
 } as TextInputProps)`
   flex: 1;
-  background: #eeedf0;
   border-radius: 12px;
   padding: 12px;
-  background: ${props => props.theme.colors.secundary};
+  color: ${props => props.theme.colors.textInput};
+  background: ${props => props.theme.colors.input};
 `;
 export const ButtonSendMessage = styled(BorderlessButton)`
   padding-left: 6px;

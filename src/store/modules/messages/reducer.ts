@@ -4,6 +4,7 @@ export interface MessageProps {
   message: string;
   readed: boolean;
   id: string;
+  date: Date;
 }
 interface InitialStateMessageProps {
   messages: MessageProps[];

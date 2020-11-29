@@ -12,7 +12,7 @@ import io from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { Keyboard } from 'react-native';
+import { Keyboard, LayoutAnimation } from 'react-native';
 import { RootState } from '../../store/modules/rootReducer';
 
 import {
@@ -76,6 +76,7 @@ const Chat: React.FC = () => {
   useEffect(() => {
     socket.on('message', messageSocket => {
       const messageParse = JSON.parse(messageSocket);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
         addMessage({ ...messageParse, readed: true, id: messageParse.user }),
       );
@@ -95,8 +96,11 @@ const Chat: React.FC = () => {
         toUser: userParam.id,
         message,
         readed: false,
+        date: new Date(),
       });
       socket.emit('message', messageJsonString);
+
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
         addMessage({
           user: user?.user.id,
@@ -104,6 +108,7 @@ const Chat: React.FC = () => {
           message,
           readed: true,
           id: userParam.id,
+          date: new Date(),
         }),
       );
 

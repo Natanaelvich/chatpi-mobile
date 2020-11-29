@@ -37,10 +37,13 @@ export const InputContainer = styled.View`
   border-width: 1px;
   border-color: transparent;
 `;
-export const Input: React.FC<TextInputProps> = styled.TextInput.attrs({
-  placeholderTextColor: '${props => props.theme.colors.primary}',
-} as TextInputProps)`
-  color: ${props => props.theme.colors.text};
+export const Input: React.FC<TextInputProps> = styled.TextInput.attrs(
+  props =>
+    ({
+      placeholderTextColor: props.theme.colors.primary,
+    } as TextInputProps),
+)`
+  color: ${props => props.theme.colors.textInput};
   flex: 1;
   margin-left: 16px;
 `;

@@ -9,6 +9,7 @@ export default {
 
     background: '#f5f5f5',
     text: '#343152',
+    input: '#eeedf0',
     textButton: '#fff',
     textInput: '#333333',
     success: '#5DB85C',

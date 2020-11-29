@@ -12,6 +12,8 @@
 
 - [x] adicionar digitando no mobile
 
+- [ ] listar mensagens por data (decrescente)
+
 ## config app
 
 - [ ] adicioanr icon e splash screen
@@ -20,7 +22,7 @@
 
 - [ ] adicionar cores tema em todas as telas
 
-- [ ] utilizar LayoutAnimation nas mensagens
+- [x] utilizar LayoutAnimation nas mensagens
 
 - [x] imput message multiline same whats ( **TextInput onContentSizeChange** Callback that is called when the text input's content size changes. This will be called with { nativeEvent: { contentSize: { width, height } } }.)
 
