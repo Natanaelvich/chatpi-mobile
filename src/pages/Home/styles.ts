@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 
 export const Container: React.FC = styled.View`
   flex: 1;
-  background: #343152;
+  background: ${props => props.theme.colors.primary};
 `;
 export const EmptyContainer: React.FC = styled.View`
   flex: 1;
@@ -21,11 +21,8 @@ export const EmptyText: React.FC = styled.Text`
 `;
 export const EmptyButton: React.FC = styled.Text`
   background: #d4d4d4;
-
   padding: 16px;
-
   align-items: center;
-
   border-radius: 14px;
 `;
 export const EmptyIconMessage: React.FC = styled(MaterialIcons).attrs({
@@ -39,7 +36,8 @@ export const Content: React.FC = styled.View`
   flex: 1;
   border-top-right-radius: 44px;
   border-top-left-radius: 44px;
-  background: #fff;
+  background: ${props => props.theme.colors.background};
+  background: ${props => props.theme.colors.background};
   padding: 28px;
   position: relative;
 `;
@@ -47,7 +45,7 @@ export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   margin-bottom: 21px;
 `;
 export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
@@ -86,12 +84,16 @@ export const BoxTitle: React.FC = styled.Text`
   font-size: 16px;
   margin-bottom: 6px;
 
-  color: #343152;
+  color: ${props => props.theme.colors.text};
 `;
-export const BoxDesc: React.FC = styled.Text`
+export const BoxDesc: React.FC = styled.Text.attrs({
+  numberOfLines: 1,
+  ellipsizeMode: 'tail',
+})`
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
+  max-width: 80%;
 
   color: #b5b5b5;
 `;
@@ -103,7 +105,6 @@ export const TypingDesc: React.FC = styled.Text`
   color: #0aa508;
 `;
 export const BoxCircle: React.FC = styled.View`
-  background: #fff;
   margin: 12px;
   width: 20px;
   height: 20px;

@@ -9,5 +9,5 @@ export const UpdateText = styled.Text`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  color: #343152;
+  color: ${props => props.theme.colors.text};
 `;

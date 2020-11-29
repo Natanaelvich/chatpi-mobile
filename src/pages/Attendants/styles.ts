@@ -9,13 +9,13 @@ import styled from 'styled-components/native';
 export const Container: React.FC = styled.View`
   position: relative;
   flex: 1;
-  background: #343152;
+  background: ${props => props.theme.colors.primary};
 `;
 export const Content: React.FC = styled.View`
   flex: 1;
   border-top-right-radius: 44px;
   border-top-left-radius: 44px;
-  background: #fff;
+  background: ${props => props.theme.colors.background};
   padding-top: 28px;
 `;
 export const ContentScroll: React.FC<ScrollViewProps> = styled.ScrollView.attrs(
@@ -28,7 +28,7 @@ export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   margin: 0 0 21px 21px;
 `;
 export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
@@ -54,7 +54,7 @@ export const BoxTitle: React.FC = styled.Text.attrs({
   font-size: 16px;
   margin-bottom: 6px;
 
-  color: #343152;
+  color: ${props => props.theme.colors.text};
 `;
 export const BoxDesc: React.FC = styled.Text`
   font-style: normal;
@@ -63,8 +63,8 @@ export const BoxDesc: React.FC = styled.Text`
 
   color: #b5b5b5;
 `;
-export const IconNext = styled(MaterialIcons).attrs({
+export const IconNext = styled(MaterialIcons).attrs(props => ({
   name: 'keyboard-arrow-right',
   size: 24,
-  color: '#343152',
-})``;
+  color: props.theme.colors.primary,
+}))``;

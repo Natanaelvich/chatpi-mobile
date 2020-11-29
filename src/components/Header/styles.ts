@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   padding: 24px 12px;
-  background: #343152;
+  background: ${props => props.theme.colors.primary};
   border-color: #dde3f0;
   flex-direction: row;
   justify-content: space-between;

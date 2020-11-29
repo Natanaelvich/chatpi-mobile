@@ -15,7 +15,7 @@ export const Container = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: #fff;
+  background: ${props => props.theme.colors.background};
 `;
 export const AvatarContainer = styled.View`
   elevation: 10;
@@ -27,7 +27,7 @@ export const Avatar: React.FC<ImageProps> = styled.Image`
   border-radius: 65px;
 
   border-width: 4px;
-  border-color: #343152;
+  border-color: ${props => props.theme.colors.text};
 `;
 export const DescContainer = styled.View`
   flex: 1;
@@ -46,7 +46,7 @@ export const Desc = styled.Text`
   font-weight: bold;
   font-size: 18px;
 
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   margin-bottom: 12px;
 `;
 export const ButtonsContainer = styled.View`
@@ -61,7 +61,7 @@ export const ButtonToEditUser: React.FC<TouchableOpacityProps> = styled(
   align-items: center;
 `;
 export const ButtonToEditText: React.FC = styled.Text`
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   margin-right: 12px;
   font-style: normal;
   font-weight: bold;
@@ -89,8 +89,8 @@ export const IconPower: React.FC = styled(MaterialIcons).attrs({
   size: 24,
   color: '#fff',
 })``;
-export const IconEdit: React.FC = styled(MaterialIcons).attrs({
+export const IconEdit: React.FC = styled(MaterialIcons).attrs(props => ({
   name: 'edit',
   size: 24,
-  color: '#343152',
-})``;
+  color: props.theme.colors.primary,
+}))``;

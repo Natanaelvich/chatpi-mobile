@@ -2,6 +2,8 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/modules/rootReducer';
 
 const Tab: React.FC<MaterialTopTabBarProps> = ({
   state,
@@ -9,8 +11,17 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
   navigation,
   position,
 }) => {
+  const { darkMode } = useSelector(
+    (stateReducer: RootState) => stateReducer.options,
+  );
+
   return (
-    <View style={{ flexDirection: 'row', backgroundColor: '#343152' }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: darkMode ? '#242238' : '#343152',
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         let label = options?.tabBarLabel;

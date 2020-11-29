@@ -4,11 +4,11 @@ export default {
   title: 'light',
 
   colors: {
-    primary: '#FF7406',
-    secundary: '#ffff',
+    primary: '#343152',
+    secundary: '#DE595C',
 
     background: '#f5f5f5',
-    text: '#333333',
+    text: '#343152',
     textButton: '#fff',
     textInput: '#333333',
     success: '#5DB85C',

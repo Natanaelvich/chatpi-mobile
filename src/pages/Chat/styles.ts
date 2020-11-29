@@ -1,8 +1,4 @@
-import {
-  Feather,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from 'expo-vector-icons';
+import { MaterialIcons } from 'expo-vector-icons';
 import { ImageProps, ScrollViewProps, TextInputProps } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import styled, { css } from 'styled-components/native';
@@ -13,8 +9,7 @@ interface MessageProps {
 
 export const Container = styled.View`
   flex: 1;
-  background: #343152;
-  border-color: #dde3f0;
+  background: ${props => props.theme.colors.primary};
 `;
 export const Header: React.FC = styled.View`
   flex-direction: row;
@@ -44,7 +39,7 @@ export const Content: React.FC = styled.View`
   flex: 1;
   border-top-right-radius: 44px;
   border-top-left-radius: 44px;
-  background: #fff;
+  background: ${props => props.theme.colors.background};
   overflow: hidden;
 `;
 export const Messages: React.FC<ScrollViewProps> = styled.ScrollView.attrs({
@@ -75,7 +70,7 @@ export const Message = styled.Text<MessageProps>`
           border-bottom-left-radius: 0;
         `}
 
-  color: ${props => (props.author ? '#FCEAEB' : '#343152')};
+  color: ${props => (props.author ? '#FCEAEB' : props.theme.colors.primary)};
 `;
 export const InputMessageCotainer = styled.View`
   flex-direction: row;
@@ -92,6 +87,7 @@ export const InputMessage: React.FC<TextInputProps> = styled.TextInput.attrs({
   background: #eeedf0;
   border-radius: 12px;
   padding: 12px;
+  background: ${props => props.theme.colors.secundary};
 `;
 export const ButtonSendMessage = styled(BorderlessButton)`
   padding-left: 6px;

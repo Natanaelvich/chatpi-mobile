@@ -12,7 +12,7 @@ import { reactotron } from '../config/reactotronConfig';
 const persistConfig = {
   key: 'user',
   storage: AsyncStorage,
-  whitelist: ['user', 'messages', 'attendants'],
+  whitelist: ['user', 'messages', 'attendants', 'options'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

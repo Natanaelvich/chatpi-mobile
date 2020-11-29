@@ -1,9 +1,5 @@
 import { Feather } from 'expo-vector-icons';
-import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  RefForwardingComponent,
-} from 'react';
+import React from 'react';
 import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -14,7 +10,7 @@ export const Container = styled.ScrollView.attrs({
     justifyContent: 'space-between',
   },
 })`
-  background: #343152;
+  background: ${props => props.theme.colors.primary};
 `;
 export const LogoText = styled.Text`
   font-size: 43px;
@@ -42,23 +38,23 @@ export const InputContainer = styled.View`
   border-color: transparent;
 `;
 export const Input: React.FC<TextInputProps> = styled.TextInput.attrs({
-  placeholderTextColor: '#343152',
+  placeholderTextColor: '${props => props.theme.colors.primary}',
 } as TextInputProps)`
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   flex: 1;
   margin-left: 16px;
 `;
 
-export const IconMail = styled(Feather).attrs({
+export const IconMail = styled(Feather).attrs(props => ({
   name: 'mail',
   size: 23,
-  color: '#343152',
-})``;
-export const IconKey = styled(Feather).attrs({
+  color: props.theme.colors.primary,
+}))``;
+export const IconKey = styled(Feather).attrs(props => ({
   name: 'lock',
   size: 23,
-  color: '#343152',
-})``;
+  color: props.theme.colors.primary,
+}))``;
 export const Button = styled(RectButton)<RectButtonProperties>`
   background: #de595c;
   border-radius: 10px;
@@ -97,7 +93,7 @@ export const CreateAccountContainer = styled.TouchableOpacity`
   border-top-width: 1px;
   border-color: #de595c;
 
-  background: #343152;
+  background: ${props => props.theme.colors.primary};
 `;
 export const CreateAccountText = styled.Text`
   font-size: 14px;

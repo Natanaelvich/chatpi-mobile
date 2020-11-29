@@ -6,10 +6,9 @@ import { Provider } from 'react-redux';
 import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
 
 import { PersistGate } from 'redux-persist/integration/react';
-import { ThemeProvider } from 'styled-components';
 import Routes from './routes';
 import { persistor, store } from './store';
-import light from './styles/theme/light';
+import GlobalStyles from './styles';
 
 const Main: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -21,15 +20,17 @@ const Main: React.FC = () => {
   }
 
   return (
-    <ThemeProvider theme={light}>
+    <>
       <StatusBar barStyle="light-content" backgroundColor="#343152" />
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Routes />
+          <GlobalStyles>
+            <Routes />
+          </GlobalStyles>
         </PersistGate>
       </Provider>
-    </ThemeProvider>
+    </>
   );
 };
 

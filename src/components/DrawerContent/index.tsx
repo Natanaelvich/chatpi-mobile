@@ -21,12 +21,15 @@ import {
   Preference,
 } from './styles';
 import { signOutRequest } from '../../store/modules/user/actions';
+import { setDarkMode } from '../../store/modules/options/actions';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
+  const { darkMode } = useSelector((state: RootState) => state.options);
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: darkMode ? '#19191D' : '#fff' }}>
       <DrawerContentScrollView {...props}>
         <DrawerContentStyle>
           <UserInfoSection>
@@ -44,14 +47,17 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
           </UserInfoSection>
 
           <DrawerSection>
-            <RectButton>
-              <Preference>
-                <Title>Tema Escuro</Title>
-                <View pointerEvents="none">
-                  <Switch />
-                </View>
-              </Preference>
-            </RectButton>
+            <Preference>
+              <Title>Tema Escuro</Title>
+              <Switch
+                // trackColor={{ false: '#E66A05', true: '#E66A05' }}
+                // thumbColor="#BF5804"
+                value={darkMode}
+                onValueChange={e => {
+                  dispatch(setDarkMode(e));
+                }}
+              />
+            </Preference>
           </DrawerSection>
         </DrawerContentStyle>
       </DrawerContentScrollView>

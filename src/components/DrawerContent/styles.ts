@@ -7,7 +7,7 @@ export const Avatar: React.FC<ImageProps> = styled.Image`
   border-radius: 28px;
 
   border-width: 3px;
-  border-color: #343152;
+  border-color: ${props => props.theme.colors.primary};
 `;
 
 export const DrawerContent: React.FC = styled.View`
@@ -25,7 +25,7 @@ export const Title: React.FC = styled.Text.attrs({
   font-size: 16px;
   margin-top: 3px;
   font-weight: bold;
-  color: #343152;
+  color: ${props => props.theme.colors.text};
   max-width: 85%;
 `;
 
