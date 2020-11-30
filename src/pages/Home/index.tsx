@@ -58,8 +58,8 @@ const Home: React.FC = () => {
       dispatch(addUsersLoggeds(JSON.parse(usersLoggedsSocket)));
     });
 
-    socket.on('typing', (typingSocket: Record<string, unknown>) => {
-      dispatch(addTypers(typingSocket));
+    socket.on('typing', (typingSocket: string) => {
+      dispatch(addTypers(JSON.parse(typingSocket)));
     });
 
     socket.on('message', (messageSocket: string) => {

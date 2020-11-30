@@ -51,7 +51,8 @@ export const Messages: React.FC<ScrollViewProps> = styled.ScrollView.attrs({
   },
 } as ScrollViewProps)``;
 export const Message = styled.Text<MessageProps>`
-  background: ${props => (props.author ? '#DE595C' : '#EEEDF0')};
+  background: ${props =>
+    props.author ? '#DE595C' : props.theme.colors.boxMessage};
   padding: 16px;
   font-style: normal;
   font-weight: bold;
@@ -70,7 +71,7 @@ export const Message = styled.Text<MessageProps>`
           border-bottom-left-radius: 0;
         `}
 
-  color: ${props => (props.author ? '#FCEAEB' : props.theme.colors.primary)};
+  color: ${props => (props.author ? '#FCEAEB' : props.theme.colors.text)};
 `;
 export const InputMessageCotainer = styled.View`
   flex-direction: row;

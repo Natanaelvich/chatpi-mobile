@@ -7,7 +7,6 @@ import {
 } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from 'expo-vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
 import {
@@ -19,6 +18,9 @@ import {
   DrawerSection,
   BottomDrawerSection,
   Preference,
+  PreferenceText,
+  IconMoob,
+  IconUser,
 } from './styles';
 import { signOutRequest } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
@@ -39,7 +41,15 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
                   uri: `${env.API_URL}/myAvatars/${user?.user.id}`,
                 }}
               />
-              <View style={{ marginLeft: 15, flexDirection: 'column' }}>
+              <View
+                style={{
+                  marginLeft: 15,
+                  flexDirection: 'column',
+                  width: '70%',
+                  paddingRight: 12,
+                  overflow: 'hidden',
+                }}
+              >
                 <Title>{user?.user.name}</Title>
                 <Caption>{user?.user.email}</Caption>
               </View>
@@ -48,10 +58,15 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
 
           <DrawerSection>
             <Preference>
-              <Title>Tema Escuro</Title>
+              <IconUser />
+              <PreferenceText>Perfil</PreferenceText>
+            </Preference>
+            <Preference>
+              <IconMoob />
+              <PreferenceText>Tema Escuro</PreferenceText>
               <Switch
-                // trackColor={{ false: '#E66A05', true: '#E66A05' }}
-                // thumbColor="#BF5804"
+                trackColor={{ false: '#ddd', true: '#3A3A44' }}
+                thumbColor="#242238"
                 value={darkMode}
                 onValueChange={e => {
                   dispatch(setDarkMode(e));
@@ -71,7 +86,7 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
               size={size}
             />
           )}
-          labelStyle={{ color: '#de595c' }}
+          labelStyle={{ color: '#de595c', fontSize: 16 }}
           label="Sair"
           onPress={() => dispatch(signOutRequest())}
         />

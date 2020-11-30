@@ -138,18 +138,24 @@ const Chat: React.FC = () => {
             value={message}
             onChangeText={text => {
               setMessage(text);
-              socket.emit('typing', {
-                user: user?.user.id,
-                typing: true,
-                toUser: userParam?.id,
-              });
+              socket.emit(
+                'typing',
+                JSON.stringify({
+                  user: user?.user.id,
+                  typing: true,
+                  toUser: userParam?.id,
+                }),
+              );
             }}
             onEndEditing={() => {
-              socket.emit('typingBlur', {
-                user: user?.user.id,
-                typing: true,
-                toUser: userParam?.id,
-              });
+              socket.emit(
+                'typingBlur',
+                JSON.stringify({
+                  user: user?.user.id,
+                  typing: true,
+                  toUser: userParam?.id,
+                }),
+              );
             }}
           />
           <ButtonSendMessage onPress={sendMessage}>

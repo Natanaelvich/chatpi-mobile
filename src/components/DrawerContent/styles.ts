@@ -1,3 +1,4 @@
+import { Feather } from 'expo-vector-icons';
 import { ImageProps } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -16,6 +17,7 @@ export const DrawerContent: React.FC = styled.View`
 
 export const UserInfoSection: React.FC = styled.View`
   padding-left: 20px;
+  width: 100%;
 `;
 
 export const Title: React.FC = styled.Text.attrs({
@@ -26,16 +28,14 @@ export const Title: React.FC = styled.Text.attrs({
   margin-top: 3px;
   font-weight: bold;
   color: ${props => props.theme.colors.text};
-  max-width: 85%;
+  max-width: 95%;
 `;
 
 export const Caption: React.FC = styled.Text.attrs({
   numberOfLines: 1,
   ellipsizeMode: 'tail',
 })`
-  max-width: 85%;
   font-size: 14px;
-  line-height: 14px;
   color: #b5b5b5;
 `;
 export const Row: React.FC = styled.View`
@@ -52,7 +52,19 @@ export const Paragraph: React.FC = styled.Text`
   font-weight: bold;
   margin-right: 3px;
 `;
+export const IconMoob: React.FC = styled(Feather).attrs(props => ({
+  name: 'moon',
+  size: 24,
+  color: props.theme.colors.text,
+}))``;
+export const IconUser: React.FC = styled(Feather).attrs(props => ({
+  name: 'user',
+  size: 24,
+  color: props.theme.colors.text,
+}))``;
 export const DrawerSection: React.FC = styled.View`
+  border-top-color: #f4f4f4;
+  border-top-width: 1px;
   margin-top: 15px;
 `;
 export const BottomDrawerSection: React.FC = styled.View`
@@ -62,6 +74,15 @@ export const BottomDrawerSection: React.FC = styled.View`
 `;
 export const Preference: React.FC = styled.View`
   flex-direction: row;
-  justify-content: space-between;
   padding: 12px 16px;
+  align-items: center;
+`;
+export const PreferenceText: React.FC = styled.Text`
+  font-size: 16px;
+  margin-top: 3px;
+  margin-left: 12px;
+  font-weight: normal;
+  color: ${props => props.theme.colors.text};
+  max-width: 85%;
+  flex: 1;
 `;

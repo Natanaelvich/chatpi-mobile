@@ -19,6 +19,7 @@ export default {
     danger: '#C32530',
     dangerLight: '#631B2C',
     disable: 'rgba(0, 0, 0, 0.4)',
+    boxMessage: '#3A3A44',
   },
 
   typograph: {

@@ -10,9 +10,13 @@
 
 - [x] esta abrindo duas conexoes nas tabs
 
+- [ ] digitar esta aparecendo pra todos os usuarios
+
 ## features
 
 - [ ] criar tipo de usuario atendente
+
+- [ ] ordenar mensagens por data e por nao lidas
 
 - [x] usar id user para id das mensagens
 
