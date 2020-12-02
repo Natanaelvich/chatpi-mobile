@@ -14,6 +14,7 @@ import { isConnected } from '../utils/netInfo';
 import { UpdateContainer, UpdateText } from '../styles/global';
 
 import DrawerContent from '../components/DrawerContent';
+import SingnUp from '../pages/SingnUp';
 
 const Drawer = createDrawerNavigator();
 
@@ -84,6 +85,7 @@ const Routes: React.FC = () => {
               }}
             >
               <Stack.Screen name="SingnIn" component={SingnIn} />
+              <Stack.Screen name="SingnUp" component={SingnUp} />
             </Stack.Navigator>
           )}
         </NavigationContainer>

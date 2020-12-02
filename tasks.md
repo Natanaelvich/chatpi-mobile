@@ -10,7 +10,9 @@
 
 - [x] esta abrindo duas conexoes nas tabs
 
-- [ ] digitar esta aparecendo pra todos os usuarios
+- [x] digitar esta aparecendo pra todos os usuarios
+
+- [ ] digitando nao some
 
 ## features
 

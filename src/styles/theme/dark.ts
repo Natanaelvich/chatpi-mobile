@@ -8,6 +8,7 @@ export default {
     secundary: '#3A3A44',
 
     background: '#19191D',
+    backgroundButton: '#DE595C',
     input: '#3A3A44',
     text: '#BFC3C2',
     textButton: '#f5f5f5',

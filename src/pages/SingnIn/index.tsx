@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Feather, MaterialIcons } from 'expo-vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
-import { TextInput, TextInputProps } from 'react-native';
+import { TextInput } from 'react-native';
 import {
   Container,
   Title,
@@ -28,7 +28,7 @@ import { RootState } from '../../store/modules/rootReducer';
 
 const SingnIn: React.FC = () => {
   const dispatch = useDispatch();
-  const passwordRef = useRef();
+  const passwordRef = useRef<TextInput>();
   const navigation = useNavigation();
 
   const { signinError } = useSelector((state: RootState) => state.user);

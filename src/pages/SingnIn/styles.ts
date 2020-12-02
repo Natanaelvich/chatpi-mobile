@@ -43,7 +43,7 @@ export const Input: React.FC<TextInputProps> = styled.TextInput.attrs(
       placeholderTextColor: props.theme.colors.primary,
     } as TextInputProps),
 )`
-  color: ${props => props.theme.colors.textInput};
+  color: ${props => props.theme.colors.primary};
   flex: 1;
   margin-left: 16px;
 `;
