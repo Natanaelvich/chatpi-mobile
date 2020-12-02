@@ -3,6 +3,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Feather, MaterialIcons } from 'expo-vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {
   Container,
   Title,
@@ -45,12 +46,18 @@ const SingnUp: React.FC = () => {
       });
       setErrorSingnUp(false);
       navigation.navigate('SingnIn');
+      Toast.show({
+        text1: 'Parabéns',
+        text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
+        visibilityTime: 3000,
+        type: 'success',
+      });
     } catch (error) {
       setErrorSingnUp(true);
     } finally {
       setLoading(false);
     }
-  }, [name, email, password]);
+  }, [name, email, password, navigation]);
   return (
     <Container>
       <FormContainer>

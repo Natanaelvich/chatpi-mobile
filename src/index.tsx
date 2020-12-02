@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
 
 import { PersistGate } from 'redux-persist/integration/react';
+import Toast from 'react-native-toast-message';
 import Routes from './routes';
 import { persistor, store } from './store';
 import GlobalStyles from './styles';
@@ -27,6 +28,7 @@ const Main: React.FC = () => {
         <PersistGate loading={null} persistor={persistor}>
           <GlobalStyles>
             <Routes />
+            <Toast ref={ref => Toast.setRef(ref)} />
           </GlobalStyles>
         </PersistGate>
       </Provider>
