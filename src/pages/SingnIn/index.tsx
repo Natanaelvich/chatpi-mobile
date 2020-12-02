@@ -31,7 +31,9 @@ const SingnIn: React.FC = () => {
   const passwordRef = useRef<TextInput>();
   const navigation = useNavigation();
 
-  const { signinError } = useSelector((state: RootState) => state.user);
+  const { signinError, loadingSingin } = useSelector(
+    (state: RootState) => state.user,
+  );
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -87,8 +89,9 @@ const SingnIn: React.FC = () => {
           onPress={() => {
             hanleSignIn();
           }}
+          loading={loadingSingin}
         >
-          <ButtonText>Entrar</ButtonText>
+          <ButtonText>{loadingSingin ? 'Entrando...' : 'Entrar'}</ButtonText>
         </Button>
 
         <ForgotPasswordButton>

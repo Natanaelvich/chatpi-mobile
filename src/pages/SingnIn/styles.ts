@@ -58,8 +58,8 @@ export const IconKey = styled(Feather).attrs(props => ({
   size: 23,
   color: props.theme.colors.primary,
 }))``;
-export const Button = styled(RectButton)<RectButtonProperties>`
-  background: #de595c;
+export const Button: React.FC<RectButtonProperties> = styled(RectButton)`
+  background: ${props => (props.laoding ? '#C44F51' : '#de595c')};
   border-radius: 10px;
   height: 50px;
 
