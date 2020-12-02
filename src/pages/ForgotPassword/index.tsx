@@ -31,15 +31,15 @@ const ForgotPassword: React.FC = () => {
   const hanleSignUp = useCallback(async () => {
     try {
       setLoading(true);
-      await api.post('password/rese', {
+      await api.post('password/forgot', {
         email,
       });
       setErrorSingnUp(false);
       navigation.navigate('SingnIn');
       Toast.show({
-        text1: 'Parabéns',
-        text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
-        visibilityTime: 3000,
+        text1: 'Email enviado',
+        text2: 'Seu email de recuperação de senha foi enviado 📧📧',
+        visibilityTime: 6000,
         type: 'success',
       });
     } catch (error) {
@@ -52,7 +52,7 @@ const ForgotPassword: React.FC = () => {
     <Container>
       <FormContainer>
         <LogoText>Chat PI</LogoText>
-        <Title>Faça seu cadastro</Title>
+        <Title>Recuperação de senha</Title>
 
         {errorSingnUp && (
           <ErrorLogin>
@@ -77,7 +77,7 @@ const ForgotPassword: React.FC = () => {
         </InputContainer>
 
         <Button loading={loading} onPress={hanleSignUp}>
-          <ButtonText>{loading ? 'Enviando...' : 'Cadastrar'}</ButtonText>
+          <ButtonText>{loading ? 'Enviando...' : 'Enviar'}</ButtonText>
         </Button>
       </FormContainer>
 

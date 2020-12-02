@@ -15,6 +15,7 @@ import { UpdateContainer, UpdateText } from '../styles/global';
 
 import DrawerContent from '../components/DrawerContent';
 import SingnUp from '../pages/SingnUp';
+import ForgotPassword from '../pages/ForgotPassword';
 
 const Drawer = createDrawerNavigator();
 
@@ -86,6 +87,7 @@ const Routes: React.FC = () => {
             >
               <Stack.Screen name="SingnIn" component={SingnIn} />
               <Stack.Screen name="SingnUp" component={SingnUp} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             </Stack.Navigator>
           )}
         </NavigationContainer>

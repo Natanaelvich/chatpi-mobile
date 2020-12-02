@@ -94,7 +94,9 @@ const SingnIn: React.FC = () => {
           <ButtonText>{loadingSingin ? 'Entrando...' : 'Entrar'}</ButtonText>
         </Button>
 
-        <ForgotPasswordButton>
+        <ForgotPasswordButton
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
           <ForgotPassword>Esqueci minha senha</ForgotPassword>
         </ForgotPasswordButton>
       </FormContainer>
