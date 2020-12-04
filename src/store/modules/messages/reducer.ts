@@ -11,6 +11,7 @@ interface InitialStateMessageProps {
 }
 interface ReducerProps {
   message: MessageProps;
+  messages: string;
   type: string;
 }
 
@@ -20,7 +21,7 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, message }: ReducerProps,
+  { type, message, messages }: ReducerProps,
 ): InitialStateMessageProps => {
   switch (type) {
     case '@messages/ADD_MESSAGE':
@@ -28,6 +29,25 @@ export default (
         ...state,
         messages: [...state.messages, message],
       };
+    case '@messages/ADD_MESSAGES': {
+      const messagesParse = JSON.parse(messages) as MessageProps[];
+      const messagesTemp = messagesParse.map(m => ({
+        ...m,
+        id: m.user,
+      })) as MessageProps[];
+
+      console.tron('state.messages');
+      console.tron(state.messages);
+      console.tron('messagesTemp');
+      console.tron(messagesTemp);
+      console.tron('messagesParse');
+      console.tron(messagesParse);
+
+      return {
+        ...state,
+        messages: state.messages.concat(messagesTemp),
+      };
+    }
     case '@messages/READ_MESSAGE':
       return {
         ...state,

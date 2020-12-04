@@ -2,7 +2,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from 'expo-vector-icons';
 import * as Sentry from 'sentry-expo';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import io from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BorderlessButton } from 'react-native-gesture-handler';
@@ -35,20 +34,19 @@ const Chat: React.FC = () => {
   const { goBack } = useNavigation();
   const { user } = useSelector((state: RootState) => state.user);
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { typers, usersLoggeds } = useSelector(
+  const { typers, usersLoggeds, socket } = useSelector(
     (state: RootState) => state.socket,
   );
 
   const [message, setMessage] = useState('');
 
   const userParam = router.params?.user;
-  const socket = router.params?.socket;
 
   useEffect(() => {
     messages
       .filter(m => m.id === userParam.id)
       .filter(m => m.readed === false)
-      .map(m => {
+      .forEach(m => {
         dispatch(readMessage(m));
       });
   }, [dispatch, messages, userParam]);
@@ -138,14 +136,16 @@ const Chat: React.FC = () => {
             value={message}
             onChangeText={text => {
               setMessage(text);
-              socket.emit(
-                'typing',
-                JSON.stringify({
-                  user: user?.user.id,
-                  typing: true,
-                  toUser: userParam?.id,
-                }),
-              );
+              if (socket) {
+                socket.emit(
+                  'typing',
+                  JSON.stringify({
+                    user: user?.user.id,
+                    typing: true,
+                    toUser: userParam?.id,
+                  }),
+                );
+              }
             }}
             onEndEditing={() => {
               socket.emit(

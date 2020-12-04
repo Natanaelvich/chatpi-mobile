@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
 import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import {
@@ -25,9 +25,13 @@ import {
   EmptyText,
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
-import { addMessage } from '../../store/modules/messages/actions';
+import { addMessage, addMessages } from '../../store/modules/messages/actions';
 import env from '../../../env';
-import { addTypers, addUsersLoggeds } from '../../store/modules/socket/actions';
+import {
+  addSocket,
+  addTypers,
+  addUsersLoggeds,
+} from '../../store/modules/socket/actions';
 
 if (
   Platform.OS === 'android' &&
@@ -54,12 +58,21 @@ const Home: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
+    dispatch(addSocket(socket));
+  }, [socket, dispatch]);
+
+  useEffect(() => {
     socket.on('usersLoggeds', (usersLoggedsSocket: string) => {
       dispatch(addUsersLoggeds(JSON.parse(usersLoggedsSocket)));
     });
 
     socket.on('typing', (typingSocket: string) => {
       dispatch(addTypers(JSON.parse(typingSocket)));
+    });
+
+    socket.on('messagesCache', (messagesCache: string) => {
+      dispatch(addMessages(messagesCache));
+      socket.emit('deleteMessagesCache');
     });
 
     socket.on('message', (messageSocket: string) => {
@@ -83,7 +96,7 @@ const Home: React.FC = () => {
     [messages],
   );
 
-  const test = useMemo(() => {
+  const messagesUsers = useMemo(() => {
     const attendantsTemp = attendants
       .filter(a => !!messages.find(m => m.id === a.id))
       .map(a => ({
@@ -124,7 +137,7 @@ const Home: React.FC = () => {
         ) : (
           <>
             <ContentTitle>Conversas</ContentTitle>
-            {test.map(a => (
+            {messagesUsers.map(a => (
               <Box
                 key={a.id}
                 onPress={() => {

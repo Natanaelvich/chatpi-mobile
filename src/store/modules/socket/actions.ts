@@ -16,3 +16,12 @@ export const addUsersLoggeds = (
   type: '@socket/ADD_USERS_LOGGEDS',
   usersLoggeds,
 });
+export const addSocket = (
+  socket: SocketIOClient.Socket,
+): {
+  type: string;
+  socket: SocketIOClient.Socket;
+} => ({
+  type: '@socket/ADD_SOCKET',
+  socket,
+});

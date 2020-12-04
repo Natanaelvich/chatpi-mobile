@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Feather, MaterialIcons } from 'expo-vector-icons';
@@ -37,6 +37,13 @@ const SingnIn: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (__DEV__) {
+      setEmail('hehe@gmail.com');
+      setPassword('123456');
+    }
+  }, []);
 
   const hanleSignIn = useCallback(async () => {
     dispatch(signInRequest(email, password));

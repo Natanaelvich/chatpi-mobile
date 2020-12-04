@@ -9,11 +9,20 @@ export const addMessage = (
   type: '@messages/ADD_MESSAGE',
   message,
 });
-export const readMessage = (
-  message: MessageProps,
+export const addMessages = (
+  messages: string,
 ): {
   type: string;
-  message: MessageProps;
+  messages: string;
+} => ({
+  type: '@messages/ADD_MESSAGES',
+  messages,
+});
+export const readMessage = (
+  message: string,
+): {
+  type: string;
+  message: string;
 } => ({
   type: '@messages/READ_MESSAGE',
   message,
