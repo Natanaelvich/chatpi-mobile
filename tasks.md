@@ -12,7 +12,9 @@
 
 - [x] digitar esta aparecendo pra todos os usuarios
 
-- [ ] digitando nao some
+- [x] digitando nao some
+
+- [ ] ao receber mensagens de cache o socket para de funfa
 
 ## features
 

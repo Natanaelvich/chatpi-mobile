@@ -72,7 +72,6 @@ const Home: React.FC = () => {
 
     socket.on('messagesCache', (messagesCache: string) => {
       dispatch(addMessages(messagesCache));
-      socket.emit('deleteMessagesCache');
     });
 
     socket.on('message', (messageSocket: string) => {

@@ -36,13 +36,6 @@ export default (
         id: m.user,
       })) as MessageProps[];
 
-      console.tron('state.messages');
-      console.tron(state.messages);
-      console.tron('messagesTemp');
-      console.tron(messagesTemp);
-      console.tron('messagesParse');
-      console.tron(messagesParse);
-
       return {
         ...state,
         messages: state.messages.concat(messagesTemp),
