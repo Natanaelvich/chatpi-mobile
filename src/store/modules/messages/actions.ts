@@ -19,10 +19,10 @@ export const addMessages = (
   messages,
 });
 export const readMessage = (
-  message: string,
+  message: MessageProps,
 ): {
   type: string;
-  message: string;
+  message: MessageProps;
 } => ({
   type: '@messages/READ_MESSAGE',
   message,

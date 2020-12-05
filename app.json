@@ -21,6 +21,8 @@
     "android": {
       "package": "com.mundotech.chatpi",
       "enableDangerousExperimentalLeanBuilds": true,
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

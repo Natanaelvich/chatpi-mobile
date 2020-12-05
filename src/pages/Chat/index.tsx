@@ -69,8 +69,12 @@ const Chat: React.FC = () => {
         message,
         readed: false,
         date: new Date(),
+        name: user?.user.name,
       });
-      socket.emit('message', messageJsonString);
+
+      if (socket) {
+        socket.emit('message', messageJsonString);
+      }
 
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
@@ -81,6 +85,7 @@ const Chat: React.FC = () => {
           readed: true,
           id: userParam.id,
           date: new Date(),
+          name: user?.user.name,
         }),
       );
 
@@ -148,14 +153,16 @@ const Chat: React.FC = () => {
               }
             }}
             onEndEditing={() => {
-              socket.emit(
-                'typingBlur',
-                JSON.stringify({
-                  user: user?.user.id,
-                  typing: true,
-                  toUser: userParam?.id,
-                }),
-              );
+              if (socket) {
+                socket.emit(
+                  'typingBlur',
+                  JSON.stringify({
+                    user: user?.user.id,
+                    typing: true,
+                    toUser: userParam?.id,
+                  }),
+                );
+              }
             }}
           />
           <ButtonSendMessage onPress={sendMessage}>

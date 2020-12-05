@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "349762476231",
+    "firebase_url": "https://expo-notification-cc970.firebaseio.com",
+    "project_id": "expo-notification-cc970",
+    "storage_bucket": "expo-notification-cc970.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349762476231:android:dfe0f36055c2e15d3506e2",
+        "android_client_info": {
+          "package_name": "com.expo_map_test.coolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQbSwkyFeV8R_NKNjvItdVyO6pRgkpLqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349762476231:android:34f37f1d0b58a9803506e2",
+        "android_client_info": {
+          "package_name": "com.mundotech.chatpi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQbSwkyFeV8R_NKNjvItdVyO6pRgkpLqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349762476231:android:fec427e7b899a6f43506e2",
+        "android_client_info": {
+          "package_name": "com.natanaelvich.notifications_expo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349762476231-r1jtm0k98kq0vu63kpmp1226hoj4sffi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.natanaelvich.notifications_expo",
+            "certificate_hash": "2388c41abe2c7f38088bad1287ae45571b0ae157"
+          }
+        },
+        {
+          "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQbSwkyFeV8R_NKNjvItdVyO6pRgkpLqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349762476231-ocpgpc6v438runrucafqjrj4kcukb4b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
