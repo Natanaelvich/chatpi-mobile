@@ -3,6 +3,7 @@ export interface UserProps {
     name: string;
     email: string;
     id: string;
+    avatar_url: string;
   };
   token: string;
 }
@@ -11,6 +12,7 @@ interface ReducerProps {
   signinError: boolean;
   loadingSingin: boolean;
   user: UserProps;
+  avatar_url: string;
 }
 interface InitialStateUserProps {
   signedIn: boolean;
@@ -32,9 +34,17 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, signinError, loadingSingin, user }: ReducerProps,
+  { type, signinError, loadingSingin, user, avatar_url }: ReducerProps,
 ): InitialStateUserProps => {
   switch (type) {
+    case '@user/UPDATE_AVATAR':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          user: { ...state.user.user, avatar_url },
+        },
+      };
     case '@user/SIGN_IN_SUCCESS':
       return {
         ...state,

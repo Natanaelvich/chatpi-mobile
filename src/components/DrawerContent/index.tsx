@@ -24,6 +24,7 @@ import {
 } from './styles';
 import { signOutRequest } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
+import getAvatarUrl from '../../utils/getAvatarUrl';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
             <View style={{ flexDirection: 'row', marginTop: 15 }}>
               <Avatar
                 source={{
-                  uri: `${env.API_URL}/myAvatars/${user?.user.id}`,
+                  uri:
+                    getAvatarUrl(user?.user.avatar_url) ||
+                    `${env.API_URL}/myAvatars/${user?.user.id}`,
                 }}
               />
               <View

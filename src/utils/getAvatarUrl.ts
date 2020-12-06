@@ -1,4 +1,6 @@
-export default function getAvatarUrl(url: string): string | null {
+export default function getAvatarUrl(
+  url: string | null | undefined,
+): string | null {
   if (!url) {
     return null;
   }

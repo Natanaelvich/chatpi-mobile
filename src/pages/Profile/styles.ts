@@ -1,96 +1,86 @@
-import { MaterialIcons } from 'expo-vector-icons';
-import {
-  ImageProps,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
-import {
-  BorderlessButton,
-  BorderlessButtonProperties,
-} from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+import { ImageProps, Platform } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import { FontAwesome } from 'expo-vector-icons';
+
+interface AvatarContainerProps {
+  loading: boolean;
+}
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: ${props => props.theme.colors.background};
+  justify-content: center;
+  padding: 0 30px ${Platform.OS === 'android' ? 150 : 40}px;
 `;
-export const AvatarContainer = styled.View`
-  elevation: 10;
-  margin-top: 34px;
-`;
-export const Avatar: React.FC<ImageProps> = styled.Image`
-  width: 124px;
-  height: 124px;
-  border-radius: 65px;
 
-  border-width: 4px;
-  border-color: ${props => props.theme.colors.text};
-`;
-export const DescContainer = styled.View`
-  flex: 1;
-  margin-top: 50px;
-  align-items: center;
-`;
 export const Title = styled.Text`
-  font-style: normal;
-  font-weight: bold;
+  font-size: 24px;
+  color: #f4ede8;
+  margin: 24px 0;
+`;
+
+export const ContainerModalPreview = styled.View`
+  flex: 1;
+`;
+export const TextPreview = styled.Text`
+  align-self: center;
+  color: #fff;
   font-size: 16px;
-
-  color: #b5b5b5;
-`;
-export const Desc = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
-
-  color: ${props => props.theme.colors.text};
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 `;
-export const ButtonsContainer = styled.View`
-  width: 100%;
+export const ContainerButtonsPreview = styled.View`
+  flex: 0.2;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
-export const ButtonToEditUser: React.FC<TouchableOpacityProps> = styled(
-  TouchableOpacity,
-)`
-  flex-direction: row;
-  align-items: center;
-`;
-export const ButtonToEditText: React.FC = styled.Text`
-  color: ${props => props.theme.colors.text};
-  margin-right: 12px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 21px;
-`;
-export const ButtonLogout: React.FC<BorderlessButtonProperties> = styled(
-  BorderlessButton,
-)`
-  width: 55px;
-  height: 55px;
+export const ButtonPreview = styled.TouchableWithoutFeedback``;
+export const IconAwesome = styled(FontAwesome).attrs(props => ({
+  size: props.size,
+  name: props.name,
+  color: props.theme.colors[props.color],
+}))``;
 
+export const AvatarModal: React.FC<ImageProps> = styled.Image`
+  flex: 1;
+  border-radius: 22px;
+`;
+export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
+  width: 186px;
+  height: 186px;
+  border-radius: 98px;
+  position: relative;
+  margin-top: 64px;
+  align-self: center;
   align-items: center;
   justify-content: center;
-
-  background: #de595c;
-  border-radius: 28px;
+  ${props =>
+    props.loading &&
+    css`
+      background: ${props.theme.colors.background};
+    `}
 `;
-export const ButtonBack: React.FC<BorderlessButtonProperties> = styled(
-  BorderlessButton,
-)`
-  align-self: flex-start;
+export const ButtonCamera = styled(RectButton)`
+  width: 46px;
+  height: 46px;
+  border-radius: 25px;
+  background: ${props => props.theme.colors.secundary};
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
 `;
-export const IconPower: React.FC = styled(MaterialIcons).attrs({
-  name: 'power-settings-new',
+export const IconCamera = styled(FontAwesome).attrs({
+  name: 'camera',
   size: 24,
   color: '#fff',
 })``;
-export const IconEdit: React.FC = styled(MaterialIcons).attrs(props => ({
-  name: 'edit',
-  size: 24,
-  color: props.theme.colors.primary,
-}))``;
+export const Avatar = styled.Image`
+  width: 186px;
+  height: 186px;
+  border-radius: 98px;
+  align-self: center;
+`;

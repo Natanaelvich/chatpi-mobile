@@ -4,7 +4,7 @@ import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 interface ButtonProps {
-  laoding: boolean;
+  loading: boolean;
 }
 
 export const Container = styled.ScrollView.attrs({
@@ -51,7 +51,7 @@ export const ReturnLoginText = styled.Text`
 export const Button: React.FC<RectButtonProperties> = styled(
   RectButton,
 )<ButtonProps>`
-  background: ${props => (props.laoding ? '#C44F51' : '#de595c')};
+  background: ${props => (props.loading ? '#C44F51' : '#de595c')};
   border-radius: 10px;
   height: 50px;
 

@@ -1,3 +1,12 @@
+export const updateAvatar = (
+  avatar_url: string,
+): {
+  type: string;
+  avatar_url: string;
+} => ({
+  type: '@user/UPDATE_AVATAR',
+  avatar_url,
+});
 export const signInRequest = (
   email: string,
   password: string,
@@ -8,7 +17,6 @@ export const signInRequest = (
   type: '@user/SIGN_IN_REQUEST',
   payload: { email, password },
 });
-
 export const signInSuccess = (
   user: Record<string, unknown>,
 ): {
