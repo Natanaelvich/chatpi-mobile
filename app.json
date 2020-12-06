@@ -26,11 +26,16 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundImage": "./assets/bg_icon.png"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "notification": {
+      "icon": "./assets/notifications.png",
+      "color": "#343152",
+      "androidMode": "default"
     }
   }
 }

@@ -2,6 +2,7 @@ export interface UserProps {
   id: string;
   name: string;
   email: string;
+  avatar_url: string;
 }
 interface ReducerProps {
   attendants: UserProps[];

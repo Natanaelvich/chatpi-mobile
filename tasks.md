@@ -14,7 +14,7 @@
 
 - [x] digitando nao some
 
-- [ ] ao receber mensagens de cache o socket para de funfa
+- [x] ao receber mensagens de cache o socket para de funfa
 
 ## features
 
@@ -32,7 +32,9 @@
 
 ## config app
 
-- [ ] adicioanr icon e splash screen
+- [x] adicioanr icon e splash screen
+
+- [ ] adicioanr icon notificação
 
 - [x] criar darkmode
 

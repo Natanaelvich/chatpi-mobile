@@ -66,5 +66,5 @@ export const BoxDesc: React.FC = styled.Text`
 export const IconNext = styled(MaterialIcons).attrs(props => ({
   name: 'keyboard-arrow-right',
   size: 24,
-  color: props.theme.colors.primary,
+  color: props.theme.colors.text,
 }))``;

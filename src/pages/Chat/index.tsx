@@ -26,6 +26,7 @@ import {
 import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
 import env from '../../../env';
+import getAvatarUrl from '../../utils/getAvatarUrl';
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
@@ -102,7 +103,9 @@ const Chat: React.FC = () => {
         </BorderlessButton>
         <Avatar
           source={{
-            uri: `${env.API_URL}/myAvatars/${userParam.id}`,
+            uri:
+              getAvatarUrl(userParam.avatar_url) ||
+              `${env.API_URL}/myAvatars/${userParam.id}`,
           }}
         />
         <ContainerText>

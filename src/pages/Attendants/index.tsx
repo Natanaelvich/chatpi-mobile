@@ -19,6 +19,7 @@ import { getAttendants } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
 import { addMessage } from '../../store/modules/messages/actions';
+import getAvatarUrl from '../../utils/getAvatarUrl';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,11 @@ const Attendants: React.FC = () => {
                 }}
               >
                 <BoxAvatar
-                  source={{ uri: `${env.API_URL}/myAvatars/${a.id}` }}
+                  source={{
+                    uri:
+                      getAvatarUrl(a.avatar_url) ||
+                      `${env.API_URL}/myAvatars/${a.id}`,
+                  }}
                   resizeMode="cover"
                 />
                 <BoxTextContainer>
