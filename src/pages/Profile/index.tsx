@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import {
   View,
   ScrollView,
@@ -12,8 +12,8 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { RectButton } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import { MaterialIcons } from 'expo-vector-icons';
 import api from '../../services/api';
 
 import {
@@ -43,7 +43,8 @@ import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import env from '../../../env';
 import ModalComponent from '../../components/Modal';
-import { updateAvatar } from '../../store/modules/user/actions';
+import { updateAvatar, updateUser } from '../../store/modules/user/actions';
+import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 
 interface ProfileFormData {
   name: string;
@@ -52,26 +53,29 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
-  const formRef = useRef(null);
-
-  const naviation = useNavigation();
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
 
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
-  const confirmPasswordRef = useRef<TextInput>(null);
+  const newPasswordRef = useRef<TextInput>(null);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, sePassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingUpdateAvatar, setloadingUpdateAvatar] = useState(false);
-  const [errorSingnUp, setErrorSingnUp] = useState(false);
+  const [errorUpdate, setErrorUpdate] = useState(false);
+  const [messageErrorUpdate, setMessageErrorUpdate] = useState('');
   const [image, setimage] = useState('');
   const [modalAvatarVisible, setModalAvatarVisible] = useState(false);
   const [modalPreviewPhoto, setModalPreviewPhoto] = useState(false);
+
+  useEffect(() => {
+    setName(user?.user.name || '');
+    setEmail(user?.user.email || '');
+  }, [user]);
 
   async function pickImage(): Promise<void> {
     if (Platform.OS !== 'web') {
@@ -127,118 +131,152 @@ const Profile: React.FC = () => {
     }
   }
 
-  const handleSaveProfile = useCallback(async (data: ProfileFormData) => {
+  const handleUpdateProfile = useCallback(async () => {
     try {
       setLoading(true);
-      console.log(data);
 
-      Alert.alert(
-        'Perfil atualizado com sucesso!',
-        'As informações do perfil foram atualizadas.',
-      );
+      if (
+        (password !== '' && oldPassword === '') ||
+        (oldPassword !== '' && password === '')
+      ) {
+        setErrorUpdate(true);
+        setMessageErrorUpdate('Verifique a senha atual e a nova senha');
+        return;
+      }
+
+      const formData = {
+        name,
+        email,
+        ...(oldPassword
+          ? {
+              oldPassword,
+              password,
+            }
+          : {}),
+      };
+
+      const response = await api.put('/profile/update', formData);
+
+      dispatch(updateUser(response.data.user));
+
+      Toast.show({
+        text1: 'Perfil atualizado com sucesso!',
+        text2: 'As informações do perfil foram atualizadas.',
+        visibilityTime: 3000,
+        type: 'success',
+      });
+
+      setErrorUpdate(false);
+      setMessageErrorUpdate('');
     } catch (err) {
-      console.log(err);
+      setErrorUpdate(true);
+      setMessageErrorUpdate(
+        'Falha ao atualizar, verifique os dados e tente novamente',
+      );
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [name, email, oldPassword, password, dispatch]);
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled
+    <ScrollView
+      keyboardShouldPersistTaps="always"
+      contentContainerStyle={{ flexGrow: 1 }}
     >
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flex: 1 }}
-      >
-        <Container>
-          <AvatarContainer
-            loading={loadingUpdateAvatar}
-            onPress={() => setModalAvatarVisible(true)}
-          >
-            {loadingUpdateAvatar ? (
-              <ActivityIndicator
-                color="#111"
-                animating={loadingUpdateAvatar}
-                size="large"
+      <Container>
+        <AvatarContainer
+          loading={loadingUpdateAvatar}
+          onPress={() => setModalAvatarVisible(true)}
+        >
+          {loadingUpdateAvatar ? (
+            <ActivityIndicator
+              color="#111"
+              animating={loadingUpdateAvatar}
+              size="large"
+            />
+          ) : (
+            <>
+              <Avatar
+                source={{
+                  uri:
+                    getAvatarUrl(user?.user.avatar_url) ||
+                    `${env.API_URL}/myAvatars/${user?.user.id}`,
+                }}
               />
-            ) : (
-              <>
-                <Avatar
-                  source={{
-                    uri:
-                      getAvatarUrl(user?.user.avatar_url) ||
-                      `${env.API_URL}/myAvatars/${user?.user.id}`,
-                  }}
-                />
-                <ButtonCamera onPress={pickImage}>
-                  <IconCamera />
-                </ButtonCamera>
-              </>
-            )}
-          </AvatarContainer>
+              <ButtonCamera onPress={pickImage}>
+                <IconCamera />
+              </ButtonCamera>
+            </>
+          )}
+        </AvatarContainer>
 
-          <View>
-            <Title>Atualizar perfil</Title>
-          </View>
+        <View>
+          <Title>Atualizar perfil</Title>
+        </View>
 
-          <InputContainer>
-            <Input
-              value={user?.user.name || name}
-              onChangeText={setName}
-              autoCapitalize="words"
-              placeholder="Nome"
-              returnKeyType="next"
-              onSubmitEditing={() => emailRef.current?.focus()}
-            />
+        {errorUpdate && (
+          <ErrorLogin>
+            <MaterialIcons name="error" size={32} color="#E04848" />
+            <ErrorLoginText>
+              {messageErrorUpdate || 'Houve uma falha inesperada'}
+            </ErrorLoginText>
+          </ErrorLogin>
+        )}
 
-            <IconUser />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              value={user?.user.email || email}
-              onChangeText={setEmail}
-              autoCorrect={false}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              placeholder="E-mail"
-              returnKeyType="next"
-              onSubmitEditing={() => passwordRef.current?.focus()}
-            />
-            <IconMail />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              value={password}
-              onChangeText={sePassword}
-              secureTextEntry
-              placeholder="Senha"
-              returnKeyType="next"
-              onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-              ref={passwordRef}
-            />
-            <IconKey />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-              placeholder="Confirmar Senha"
-              returnKeyType="send"
-              onSubmitEditing={() => {}}
-              ref={confirmPasswordRef}
-            />
-            <IconKey />
-          </InputContainer>
+        <InputContainer>
+          <Input
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+            placeholder="Nome"
+            returnKeyType="next"
+            onSubmitEditing={() => emailRef.current?.focus()}
+          />
 
-          <Button loading={loading} onPress={() => {}}>
-            <ButtonText>{loading ? 'Atualizar...' : 'Atualizar'}</ButtonText>
-          </Button>
-        </Container>
-      </ScrollView>
+          <IconUser />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            value={email}
+            onChangeText={setEmail}
+            autoCorrect={false}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="E-mail"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current?.focus()}
+          />
+          <IconMail />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            value={oldPassword}
+            onChangeText={setOldPassword}
+            secureTextEntry
+            placeholder="Senha Atual"
+            returnKeyType="next"
+            onSubmitEditing={() => newPasswordRef.current?.focus()}
+            ref={passwordRef}
+          />
+          <IconKey />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="Nova Senha"
+            returnKeyType="send"
+            onSubmitEditing={handleUpdateProfile}
+            ref={newPasswordRef}
+          />
+          <IconKey />
+        </InputContainer>
+
+        <Button loading={loading} onPress={handleUpdateProfile}>
+          <ButtonText>{loading ? 'Atualizar...' : 'Atualizar'}</ButtonText>
+        </Button>
+      </Container>
 
       <ModalComponent
         visible={modalAvatarVisible}
@@ -278,7 +316,7 @@ const Profile: React.FC = () => {
           </ContainerModalPreview>
         </ModalComponent>
       )}
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

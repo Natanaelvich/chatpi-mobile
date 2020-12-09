@@ -107,7 +107,6 @@ export const CreateAccountText = styled.Text`
 `;
 export const ErrorLogin = styled.View`
   flex-direction: row;
-  width: 80%;
   align-items: center;
   align-self: center;
   margin: 12px 0;

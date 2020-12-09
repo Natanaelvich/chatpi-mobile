@@ -1,3 +1,5 @@
+import { UserContent } from './reducer';
+
 export const updateAvatar = (
   avatar_url: string,
 ): {
@@ -49,4 +51,14 @@ export const setLoadingSingin = (
 } => ({
   type: '@user/LOADING_SINGIN',
   loadingSingin,
+});
+
+export const updateUser = (
+  userContent: UserContent,
+): {
+  type: string;
+  userContent: UserContent;
+} => ({
+  type: '@user/UPDATE_USER',
+  userContent,
 });

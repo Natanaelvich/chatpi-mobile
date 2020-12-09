@@ -1,10 +1,12 @@
+export interface UserContent {
+  name: string;
+  email: string;
+  id: string;
+  avatar_url: string;
+}
+
 export interface UserProps {
-  user: {
-    name: string;
-    email: string;
-    id: string;
-    avatar_url: string;
-  };
+  user: UserContent;
   token: string;
 }
 interface ReducerProps {
@@ -12,6 +14,7 @@ interface ReducerProps {
   signinError: boolean;
   loadingSingin: boolean;
   user: UserProps;
+  userContent: UserContent;
   avatar_url: string;
 }
 interface InitialStateUserProps {
@@ -34,7 +37,14 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, signinError, loadingSingin, user, avatar_url }: ReducerProps,
+  {
+    type,
+    signinError,
+    loadingSingin,
+    user,
+    avatar_url,
+    userContent,
+  }: ReducerProps,
 ): InitialStateUserProps => {
   switch (type) {
     case '@user/UPDATE_AVATAR':
@@ -50,6 +60,11 @@ export default (
         ...state,
         signedIn: true,
         user,
+      };
+    case '@user/UPDATE_USER':
+      return {
+        ...state,
+        user: { ...state.user, user: userContent },
       };
 
     case '@user/SIGN_OUT':

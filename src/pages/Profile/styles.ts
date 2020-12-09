@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { ImageProps, Platform } from 'react-native';
+import { ImageProps } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { FontAwesome } from 'expo-vector-icons';
 
@@ -10,7 +10,7 @@ interface AvatarContainerProps {
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
-  padding: 0 30px ${Platform.OS === 'android' ? 150 : 40}px;
+  padding: 0 30px 24px;
 `;
 
 export const Title = styled.Text`
@@ -51,7 +51,7 @@ export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
   height: 186px;
   border-radius: 98px;
   position: relative;
-  margin-top: 64px;
+  margin-top: 14px;
   align-self: center;
   align-items: center;
   justify-content: center;
