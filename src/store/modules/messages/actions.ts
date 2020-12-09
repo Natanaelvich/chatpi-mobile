@@ -27,3 +27,12 @@ export const readMessage = (
   type: '@messages/READ_MESSAGE',
   message,
 });
+export const deleteMessage = (
+  user: string,
+): {
+  type: string;
+  user: string;
+} => ({
+  type: '@messages/DELETE_MESSAGE',
+  user,
+});

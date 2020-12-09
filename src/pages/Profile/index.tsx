@@ -246,7 +246,11 @@ const Profile: React.FC = () => {
       >
         <AvatarModal
           resizeMode="center"
-          source={{ uri: getAvatarUrl(user?.user.avatar_url) }}
+          source={{
+            uri:
+              getAvatarUrl(user?.user.avatar_url) ||
+              `${env.API_URL}/myAvatars/${user?.user.id}`,
+          }}
         />
       </ModalComponent>
 

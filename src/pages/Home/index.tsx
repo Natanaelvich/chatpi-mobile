@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import { useNavigation } from '@react-navigation/native';
@@ -26,9 +26,17 @@ import {
   EmptyContainer,
   EmptyIconMessage,
   EmptyText,
+  ButtonHeaderDeleteMode,
+  IconClose,
+  IconDelete,
+  HeaderDeleteMode,
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
-import { addMessage, addMessages } from '../../store/modules/messages/actions';
+import {
+  addMessage,
+  addMessages,
+  deleteMessage,
+} from '../../store/modules/messages/actions';
 import env from '../../../env';
 import {
   addSocket,
@@ -36,6 +44,7 @@ import {
   addUsersLoggeds,
 } from '../../store/modules/socket/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
+import ModalDelete from '../../components/ModalDelete';
 
 if (
   Platform.OS === 'android' &&
@@ -54,6 +63,10 @@ const Home: React.FC = () => {
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
   );
+
+  const [deleteModeMessage, setDeleteModeMessage] = useState(false);
+  const [userSelecteds, setUserSelecteds] = useState<string[]>([]);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
   const socket = useMemo(() => {
     return io(env.API_URL, {
@@ -103,17 +116,6 @@ const Home: React.FC = () => {
     }
   }, [socket]);
 
-  async function teste(): void {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Time's up!",
-        body: 'Change sides!',
-      },
-      trigger: {
-        seconds: 2,
-      },
-    });
-  }
   useEffect(() => {
     registerForPushNotificationsAsync();
   }, [registerForPushNotificationsAsync]);
@@ -182,6 +184,14 @@ const Home: React.FC = () => {
     [messages],
   );
 
+  function deleteMessages(): void {
+    userSelecteds.forEach(u => {
+      dispatch(deleteMessage(u));
+    });
+
+    setUserSelecteds([]);
+    setDeleteModeMessage(false);
+  }
   return (
     <Container>
       <Content>
@@ -196,11 +206,57 @@ const Home: React.FC = () => {
           </EmptyContainer>
         ) : (
           <>
-            <ContentTitle>Conversas</ContentTitle>
+            {deleteModeMessage ? (
+              <HeaderDeleteMode>
+                <ButtonHeaderDeleteMode
+                  onPress={() => {
+                    setDeleteModeMessage(false);
+                    setUserSelecteds([]);
+                  }}
+                >
+                  <IconClose />
+                </ButtonHeaderDeleteMode>
+                <ButtonHeaderDeleteMode
+                  onPress={() => {
+                    setModalDeleteVisible(true);
+                  }}
+                >
+                  <IconDelete />
+                </ButtonHeaderDeleteMode>
+              </HeaderDeleteMode>
+            ) : (
+              <ContentTitle>Conversas</ContentTitle>
+            )}
             {messagesUsers.map(a => (
               <Box
                 key={a.id}
+                onLongPress={() => {
+                  if (!userSelecteds.includes(a.id)) {
+                    setUserSelecteds(oldUsersSelecteds => [
+                      ...oldUsersSelecteds,
+                      a.id,
+                    ]);
+
+                    setDeleteModeMessage(true);
+                  }
+                }}
+                deleteMode={userSelecteds.includes(a.id) && deleteModeMessage}
                 onPress={() => {
+                  if (deleteModeMessage) {
+                    if (!userSelecteds.includes(a.id)) {
+                      setUserSelecteds(oldUsersSelecteds => [
+                        ...oldUsersSelecteds,
+                        a.id,
+                      ]);
+
+                      return;
+                    }
+                    setUserSelecteds(oldUsersSelecteds =>
+                      oldUsersSelecteds.filter(u => u !== a.id),
+                    );
+
+                    return;
+                  }
                   navigation.navigate('Chat', {
                     user: a,
                     messagesNoRead: getMessagesNoReadedsArray(a),
@@ -240,6 +296,13 @@ const Home: React.FC = () => {
           <IconMessage />
         </ButtonToAttendants>
       </Content>
+
+      <ModalDelete
+        visibleDelete={modalDeleteVisible}
+        setVisibleDelete={setModalDeleteVisible}
+        title="Deletar mensagens?"
+        handleDeleteItem={deleteMessages}
+      />
     </Container>
   );
 };

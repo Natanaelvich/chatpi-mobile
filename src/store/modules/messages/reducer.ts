@@ -13,6 +13,7 @@ interface InitialStateMessageProps {
 interface ReducerProps {
   message: MessageProps;
   messages: string;
+  user: string;
   type: string;
 }
 
@@ -22,7 +23,7 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, message, messages }: ReducerProps,
+  { type, message, messages, user }: ReducerProps,
 ): InitialStateMessageProps => {
   switch (type) {
     case '@messages/ADD_MESSAGE':
@@ -48,6 +49,11 @@ export default (
         messages: state.messages.map(m =>
           m.id === message.id ? { ...m, readed: true } : m,
         ),
+      };
+    case '@messages/DELETE_MESSAGE':
+      return {
+        ...state,
+        messages: state.messages.filter(m => m.id !== user),
       };
 
     default:

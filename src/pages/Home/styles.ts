@@ -4,7 +4,11 @@ import {
   BorderlessButton,
   BorderlessButtonProperties,
 } from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+
+interface BoxProps {
+  deleteMode: boolean;
+}
 
 export const Container: React.FC = styled.View`
   flex: 1;
@@ -38,7 +42,6 @@ export const Content: React.FC = styled.View`
   border-top-left-radius: 44px;
   background: ${props => props.theme.colors.background};
   background: ${props => props.theme.colors.background};
-  padding: 28px;
   position: relative;
 `;
 export const ContentTitle: React.FC = styled.Text`
@@ -46,12 +49,18 @@ export const ContentTitle: React.FC = styled.Text`
   font-weight: bold;
   font-size: 16px;
   color: ${props => props.theme.colors.text};
-  margin-bottom: 21px;
+  padding: 28px;
 `;
-export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
+
+export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity<BoxProps>`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 24px;
+  padding: 16px 28px;
+  ${props =>
+    props.deleteMode &&
+    css`
+      background: rgba(222, 89, 92, 0.39);
+    `}
 `;
 export const BoxAvatarContainer: React.FC = styled.View`
   position: relative;
@@ -142,3 +151,19 @@ export const IconMessage: React.FC = styled(MaterialIcons).attrs({
   size: 24,
   color: '#fff',
 })``;
+export const HeaderDeleteMode: React.FC = styled.View`
+  padding: 28px;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+export const ButtonHeaderDeleteMode: React.FC = styled(BorderlessButton)``;
+export const IconDelete: React.FC = styled(MaterialIcons).attrs(props => ({
+  name: 'delete',
+  size: 24,
+  color: props.theme.colors.danger,
+}))``;
+export const IconClose: React.FC = styled(MaterialIcons).attrs(props => ({
+  name: 'close',
+  size: 24,
+  color: props.theme.colors.danger,
+}))``;
