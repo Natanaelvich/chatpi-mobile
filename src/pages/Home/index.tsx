@@ -98,9 +98,22 @@ const Home: React.FC = () => {
           shouldSetBadge: false,
         }),
       });
+
+      Notifications.dismissAllNotificationsAsync();
     }
   }, [socket]);
 
+  async function teste(): void {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Time's up!",
+        body: 'Change sides!',
+      },
+      trigger: {
+        seconds: 2,
+      },
+    });
+  }
   useEffect(() => {
     registerForPushNotificationsAsync();
   }, [registerForPushNotificationsAsync]);
@@ -191,7 +204,6 @@ const Home: React.FC = () => {
                   navigation.navigate('Chat', {
                     user: a,
                     messagesNoRead: getMessagesNoReadedsArray(a),
-                    socket,
                   });
                 }}
               >
