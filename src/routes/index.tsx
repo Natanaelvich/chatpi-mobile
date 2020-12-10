@@ -10,6 +10,7 @@ import SingnIn from '../pages/SingnIn';
 import { RootState } from '../store/modules/rootReducer';
 import Profile from '../pages/Profile';
 import Chat from '../pages/Chat';
+import UserDetails from '../pages/UserDetails';
 import { isConnected } from '../utils/netInfo';
 import { UpdateContainer, UpdateText } from '../styles/global';
 
@@ -35,6 +36,7 @@ const Routes: React.FC = () => {
         <Stack.Screen name="MyTabs" component={MyTabs} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="UserDetails" component={UserDetails} />
       </Stack.Navigator>
     );
   }

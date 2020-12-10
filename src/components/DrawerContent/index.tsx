@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from 'expo-vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
 import {
@@ -28,6 +29,8 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
+  // const navigation = useNavigation();
+
   const { user } = useSelector((state: RootState) => state.user);
   const { darkMode } = useSelector((state: RootState) => state.options);
 
@@ -60,20 +63,21 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
           </UserInfoSection>
 
           <DrawerSection>
-            <Preference>
+            <Preference onPress={() => props.navigation.navigate('Profile')}>
               <IconUser />
               <PreferenceText>Perfil</PreferenceText>
             </Preference>
-            <Preference>
+            <Preference
+              onPress={() => {
+                dispatch(setDarkMode(!darkMode));
+              }}
+            >
               <IconMoob />
               <PreferenceText>Tema Escuro</PreferenceText>
               <Switch
                 trackColor={{ false: '#ddd', true: '#3A3A44' }}
                 thumbColor="#242238"
                 value={darkMode}
-                onValueChange={e => {
-                  dispatch(setDarkMode(e));
-                }}
               />
             </Preference>
           </DrawerSection>

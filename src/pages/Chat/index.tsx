@@ -4,7 +4,7 @@ import * as Sentry from 'sentry-expo';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Keyboard, LayoutAnimation } from 'react-native';
 import { RootState } from '../../store/modules/rootReducer';
 
@@ -32,7 +32,7 @@ const Chat: React.FC = () => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
   const router = useRoute();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const { user } = useSelector((state: RootState) => state.user);
   const { messages } = useSelector((state: RootState) => state.messages);
   const { typers, usersLoggeds, socket } = useSelector(
@@ -101,25 +101,34 @@ const Chat: React.FC = () => {
         <BorderlessButton onPress={goBack}>
           <AntDesign name="left" size={16} color="#fff" />
         </BorderlessButton>
-        <Avatar
-          source={{
-            uri:
-              getAvatarUrl(userParam.avatar_url) ||
-              `${env.API_URL}/myAvatars/${userParam.id}`,
-          }}
-        />
-        <ContainerText>
-          <Title>{userParam.name}</Title>
-          {typers && typers[userParam.id] ? (
-            <Status author={false}>Digitando...</Status>
-          ) : (
-            <Status>
-              {usersLoggeds && usersLoggeds[userParam.id]
-                ? 'Online'
-                : 'Offline'}
-            </Status>
-          )}
-        </ContainerText>
+        <RectButton
+          onPress={() =>
+            navigate('UserDetails', {
+              user: userParam,
+            })
+          }
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Avatar
+            source={{
+              uri:
+                getAvatarUrl(userParam.avatar_url) ||
+                `${env.API_URL}/myAvatars/${userParam.id}`,
+            }}
+          />
+          <ContainerText>
+            <Title>{userParam.name}</Title>
+            {typers && typers[userParam.id] ? (
+              <Status author={false}>Digitando...</Status>
+            ) : (
+              <Status>
+                {usersLoggeds && usersLoggeds[userParam.id]
+                  ? 'Online'
+                  : 'Offline'}
+              </Status>
+            )}
+          </ContainerText>
+        </RectButton>
       </Header>
       <Content>
         <Messages

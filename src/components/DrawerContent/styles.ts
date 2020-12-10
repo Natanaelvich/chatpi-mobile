@@ -1,5 +1,6 @@
 import { Feather } from 'expo-vector-icons';
 import { ImageProps } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 export const Avatar: React.FC<ImageProps> = styled.Image`
@@ -72,7 +73,7 @@ export const BottomDrawerSection: React.FC = styled.View`
   border-top-color: #f4f4f4;
   border-top-width: 1px;
 `;
-export const Preference: React.FC = styled.View`
+export const Preference: React.FC = styled(RectButton)`
   flex-direction: row;
   padding: 12px 16px;
   align-items: center;
