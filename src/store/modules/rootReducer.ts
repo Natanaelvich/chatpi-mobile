@@ -5,6 +5,7 @@ import attendants from './attendants/reducer';
 import messages from './messages/reducer';
 import options from './options/reducer';
 import socket from './socket/reducer';
+import utils from './utils/reducer';
 
 const rootReducer = combineReducers({
   user,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   messages,
   options,
   socket,
+  utils,
 });
 
 export default rootReducer;

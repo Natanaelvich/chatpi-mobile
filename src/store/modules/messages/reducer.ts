@@ -50,6 +50,11 @@ export default (
           m.id === message.id ? { ...m, readed: true } : m,
         ),
       };
+    case '@messages/DELETE_ALL_MESSAGES':
+      return {
+        ...state,
+        messages: [],
+      };
     case '@messages/DELETE_MESSAGE':
       return {
         ...state,

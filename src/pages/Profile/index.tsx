@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
-import { MaterialIcons } from 'expo-vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import {

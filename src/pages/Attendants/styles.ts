@@ -1,4 +1,8 @@
-import { MaterialIcons } from 'expo-vector-icons';
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import {
   ImageProps,
   ScrollViewProps,
@@ -27,9 +31,33 @@ export const ContentScroll: React.FC<ScrollViewProps> = styled.ScrollView.attrs(
 export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: ${props => props.theme.colors.text};
   margin: 0 0 21px 21px;
+`;
+export const Section: React.FC = styled.View`
+  flex-direction: row;
+  align-items: baseline;
+  margin: 12px 0;
+`;
+export const IconNurse: React.FC = styled(FontAwesome5).attrs(props => ({
+  name: 'user-nurse',
+  size: 24,
+  color: props.theme.colors.text,
+}))``;
+export const IconBrain: React.FC = styled(MaterialCommunityIcons).attrs(
+  props => ({
+    name: 'brain',
+    size: 24,
+    color: props.theme.colors.text,
+  }),
+)``;
+export const SectionTitle: React.FC = styled.Text`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  color: ${props => props.theme.colors.text};
+  margin-right: 12px;
 `;
 export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
   flex-direction: row;

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { ImageProps } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { FontAwesome } from 'expo-vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 interface AvatarContainerProps {
   loading: boolean;

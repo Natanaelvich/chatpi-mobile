@@ -3,6 +3,7 @@ export interface UserProps {
   name: string;
   email: string;
   avatar_url: string;
+  clerk: string | null;
 }
 interface ReducerProps {
   attendants: UserProps[];

@@ -1,5 +1,5 @@
-import { Feather } from 'expo-vector-icons';
-import { TextInputProps } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { Picker, PickerProperties, TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -36,10 +36,31 @@ export const ReturnLoginContainer = styled.TouchableOpacity`
   border-top-width: 1px;
   border-color: ${props => props.theme.colors.backgroundButton};
   background: ${props => props.theme.colors.primary};
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
+`;
+export const CheckBoxContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 12px;
+`;
+export const LabelCheckBox = styled.Text`
+  ${props => props.theme.typograph.textH1Normal}
+  color: #f4ede8;
+  font-size: 18px;
+  margin-right: 6px;
+  letter-spacing: 0.89px;
+`;
+export const SelectContainer = styled.View`
+  width: 100%;
+  height: 50px;
+  background: #9c9ab1;
+  color: #f00;
+  margin-bottom: 12px;
+  border-radius: 12px;
+`;
+export const Select: React.FC<PickerProperties> = styled(Picker)`
+  flex: 1;
 `;
 export const ReturnLoginText = styled.Text`
   font-size: 14px;
@@ -68,7 +89,6 @@ export const ButtonText = styled.Text`
 
 export const ErrorLogin = styled.View`
   flex-direction: row;
-  width: 80%;
   align-items: center;
   align-self: center;
   margin: 12px 0;

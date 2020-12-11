@@ -1,4 +1,4 @@
-import { Feather, MaterialCommunityIcons } from 'expo-vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 

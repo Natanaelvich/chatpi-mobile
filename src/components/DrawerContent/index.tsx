@@ -6,8 +6,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
-import { MaterialIcons } from 'expo-vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
 import {
@@ -22,14 +21,15 @@ import {
   PreferenceText,
   IconMoob,
   IconUser,
+  IconDelete,
 } from './styles';
 import { signOutRequest } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
+import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
-  // const navigation = useNavigation();
 
   const { user } = useSelector((state: RootState) => state.user);
   const { darkMode } = useSelector((state: RootState) => state.options);
@@ -79,6 +79,14 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
                 thumbColor="#242238"
                 value={darkMode}
               />
+            </Preference>
+            <Preference
+              onPress={() => {
+                dispatch(modalDeleteDataVisible(true));
+              }}
+            >
+              <IconDelete />
+              <PreferenceText>Limpar Dados</PreferenceText>
             </Preference>
           </DrawerSection>
         </DrawerContentStyle>

@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
 
-import { Feather, MaterialIcons } from 'expo-vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { TextInput } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import Toast from 'react-native-toast-message';
+import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import {
   Container,
   Title,
@@ -18,31 +19,53 @@ import {
   IconMail,
   Input,
   InputContainer,
-  Logo,
   IconUser,
+  CheckBoxContainer,
+  LabelCheckBox,
+  Select,
+  SelectContainer,
 } from './styles';
 
 import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
-  const emailRef = useRef<TextInput>(null);
-  const passwordRef = useRef<TextInput>(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, sePassword] = useState('');
+  const [attendant, setAttendant] = useState(false);
+  const [attendantType, setAttendantType] = useState('');
+
   const [loading, setLoading] = useState(false);
   const [errorSingnUp, setErrorSingnUp] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   const hanleSignUp = useCallback(async () => {
     try {
       setLoading(true);
+
+      if (attendant && attendantType === '') {
+        setErrorSingnUp(true);
+        setMessageError('Selecione o tipo de atendente que você deseja ser.');
+        return;
+      }
+
       await api.post('users', {
         name,
         email,
         password,
+        clerk: attendantType !== '' ? attendantType : null,
       });
       setErrorSingnUp(false);
       navigation.navigate('SingnIn');
@@ -57,7 +80,8 @@ const SingnUp: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [name, email, password, navigation]);
+  }, [name, email, password, navigation, attendantType, attendant]);
+
   return (
     <Container>
       <FormContainer>
@@ -68,7 +92,8 @@ const SingnUp: React.FC = () => {
           <ErrorLogin>
             <MaterialIcons name="error" size={32} color="#E04848" />
             <ErrorLoginText>
-              Falha ao se cadastrar, tente novamente mas tarde!
+              {messageError ||
+                'Falha ao se cadastrar, tente novamente mas tarde!'}
             </ErrorLoginText>
           </ErrorLogin>
         )}
@@ -110,6 +135,36 @@ const SingnUp: React.FC = () => {
           />
           <IconKey />
         </InputContainer>
+
+        <CheckBoxContainer>
+          <LabelCheckBox>Atendente</LabelCheckBox>
+          <Checkbox
+            disabled={false}
+            value={attendant}
+            onValueChange={e => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+              setAttendant(e);
+            }}
+            color="#DE595C"
+          />
+        </CheckBoxContainer>
+
+        {attendant && (
+          <SelectContainer>
+            <Select
+              selectedValue={attendantType}
+              onValueChange={setAttendantType}
+            >
+              <Select.Item
+                label="Selecione uma opção"
+                value=""
+                color="#343152"
+              />
+              <Select.Item label="Enfermeiro(a)" value="enf" color="#343152" />
+              <Select.Item label="Psicólogo(a)" value="psic" color="#343152" />
+            </Select>
+          </SelectContainer>
+        )}
 
         <Button loading={loading} onPress={hanleSignUp}>
           <ButtonText>{loading ? 'Cadastrando...' : 'Cadastrar'}</ButtonText>

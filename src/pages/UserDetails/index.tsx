@@ -52,6 +52,10 @@ const UserDetails: React.FC = () => {
         <SubTitle>{user.name}</SubTitle>
         <Title>Email</Title>
         <SubTitle>{user.email}</SubTitle>
+        <Title>Atendente</Title>
+        <SubTitle>
+          {user.clerk === 'enf' ? 'Enfermeiro(a)' : 'Psicólogo(a)'}
+        </SubTitle>
       </Container>
 
       <ModalComponent

@@ -4,7 +4,7 @@ import api from '../../../services/api';
 
 export function* getAttendants() {
   try {
-    const response = yield call(api.get, 'users');
+    const response = yield call(api.get, 'attendantes');
 
     yield put(addAttendants(response.data));
   } catch (error) {

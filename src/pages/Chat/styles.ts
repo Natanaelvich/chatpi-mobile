@@ -1,4 +1,8 @@
-import { MaterialIcons } from 'expo-vector-icons';
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import { ImageProps, ScrollViewProps, TextInputProps } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import styled, { css } from 'styled-components/native';
@@ -15,6 +19,7 @@ export const Header: React.FC = styled.View`
   flex-direction: row;
   padding: 28px 12px;
   align-items: center;
+  justify-content: space-between;
 `;
 export const Avatar: React.FC<ImageProps> = styled.Image`
   width: 53px;
@@ -98,3 +103,17 @@ export const IconSendMessage = styled(MaterialIcons).attrs({
   size: 26,
   color: '#8FA7B3',
 })``;
+export const IconNurse: React.FC = styled(FontAwesome5).attrs({
+  name: 'user-nurse',
+  size: 24,
+  color: '#fff',
+})`
+  margin-right: 12px;
+`;
+export const IconBrain: React.FC = styled(MaterialCommunityIcons).attrs({
+  name: 'brain',
+  size: 24,
+  color: '#fff',
+})`
+  margin-right: 12px;
+`;

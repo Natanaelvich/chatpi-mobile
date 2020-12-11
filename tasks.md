@@ -18,9 +18,11 @@
 
 ## features
 
-- [ ] criar tipo de usuario atendente
+- [x] criar tipo de usuario atendente
 
 - [ ] ordenar mensagens por data e por nao lidas
+
+- [ ] listar mensagens por data (decrescente)
 
 - [x] usar id user para id das mensagens
 
@@ -28,13 +30,13 @@
 
 - [x] adicionar digitando no mobile
 
-- [ ] listar mensagens por data (decrescente)
+- [ ] Listar usuarios caso seja atendente
 
 ## config app
 
 - [x] adicioanr icon e splash screen
 
-- [ ] adicioanr icon notificação
+- [ ] adicioanr icon notificação (Error)
 
 - [x] criar darkmode
 
@@ -56,15 +58,15 @@
 
 - [x] criar perfil de usuario
 
-- [ ] criar tela de edição de usuario
+- [x] criar tela de edição de usuario
 
 - [x] criar tela de conversas vazia
 
-- [ ] add imagem de conversas vazia
+- [x] add imagem de conversas vazia
 
-- [ ] criar botao de apagar todas as mensagens
+- [x] criar botao de apagar todas as mensagens
 
-- [ ] criar botao de apagar uma conversa
+- [x] criar botao de apagar uma conversa
 
 ## navigation
 

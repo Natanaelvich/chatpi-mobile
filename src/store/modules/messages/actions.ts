@@ -36,3 +36,8 @@ export const deleteMessage = (
   type: '@messages/DELETE_MESSAGE',
   user,
 });
+export const deleteAllMessage = (): {
+  type: string;
+} => ({
+  type: '@messages/DELETE_ALL_MESSAGES',
+});

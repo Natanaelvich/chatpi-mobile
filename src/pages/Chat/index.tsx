@@ -1,11 +1,11 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign } from 'expo-vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import * as Sentry from 'sentry-expo';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
-import { Keyboard, LayoutAnimation } from 'react-native';
+import { Keyboard, LayoutAnimation, View } from 'react-native';
 import { RootState } from '../../store/modules/rootReducer';
 
 import {
@@ -22,6 +22,8 @@ import {
   ButtonSendMessage,
   IconSendMessage,
   InputMessageCotainer,
+  IconBrain,
+  IconNurse,
 } from './styles';
 import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
@@ -98,37 +100,41 @@ const Chat: React.FC = () => {
   return (
     <Container>
       <Header>
-        <BorderlessButton onPress={goBack}>
-          <AntDesign name="left" size={16} color="#fff" />
-        </BorderlessButton>
-        <RectButton
-          onPress={() =>
-            navigate('UserDetails', {
-              user: userParam,
-            })
-          }
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Avatar
-            source={{
-              uri:
-                getAvatarUrl(userParam.avatar_url) ||
-                `${env.API_URL}/myAvatars/${userParam.id}`,
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <BorderlessButton onPress={goBack}>
+            <AntDesign name="left" size={16} color="#fff" />
+          </BorderlessButton>
+          <RectButton
+            onPress={() => {
+              navigate('UserDetails', {
+                user: userParam,
+              });
             }}
-          />
-          <ContainerText>
-            <Title>{userParam.name}</Title>
-            {typers && typers[userParam.id] ? (
-              <Status author={false}>Digitando...</Status>
-            ) : (
-              <Status>
-                {usersLoggeds && usersLoggeds[userParam.id]
-                  ? 'Online'
-                  : 'Offline'}
-              </Status>
-            )}
-          </ContainerText>
-        </RectButton>
+            style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Avatar
+              source={{
+                uri:
+                  getAvatarUrl(userParam.avatar_url) ||
+                  `${env.API_URL}/myAvatars/${userParam.id}`,
+              }}
+            />
+            <ContainerText>
+              <Title>{userParam.name}</Title>
+              {typers && typers[userParam.id] ? (
+                <Status author={false}>Digitando...</Status>
+              ) : (
+                <Status>
+                  {usersLoggeds && usersLoggeds[userParam.id]
+                    ? 'Online'
+                    : 'Offline'}
+                </Status>
+              )}
+            </ContainerText>
+          </RectButton>
+        </View>
+
+        {userParam.clerk === 'enf' ? <IconNurse /> : <IconBrain />}
       </Header>
       <Content>
         <Messages

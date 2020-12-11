@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { Feather, MaterialIcons } from 'expo-vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import {

@@ -1,4 +1,4 @@
-import { Feather } from 'expo-vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { ImageProps } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -58,6 +58,14 @@ export const IconMoob: React.FC = styled(Feather).attrs(props => ({
   size: 24,
   color: props.theme.colors.text,
 }))``;
+
+export const IconDelete: React.FC = styled(MaterialCommunityIcons).attrs(
+  props => ({
+    name: 'delete-outline',
+    size: 24,
+    color: props.theme.colors.text,
+  }),
+)``;
 export const IconUser: React.FC = styled(Feather).attrs(props => ({
   name: 'user',
   size: 24,

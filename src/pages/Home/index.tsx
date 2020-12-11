@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
-import { Alert, LayoutAnimation, Platform, UIManager } from 'react-native';
+import {
+  Alert,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  View,
+} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import {
@@ -36,6 +42,7 @@ import {
   addMessage,
   addMessages,
   deleteMessage,
+  deleteAllMessage,
 } from '../../store/modules/messages/actions';
 import env from '../../../env';
 import {
@@ -45,6 +52,8 @@ import {
 } from '../../store/modules/socket/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalDelete from '../../components/ModalDelete';
+import DateParsed from '../../components/DateParsed';
+import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
 
 if (
   Platform.OS === 'android' &&
@@ -60,6 +69,7 @@ const Home: React.FC = () => {
   const { messages } = useSelector((state: RootState) => state.messages);
   const { attendants } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
+  const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
   );
@@ -282,12 +292,17 @@ const Home: React.FC = () => {
                     <BoxDesc>{getLastMessage(a)?.message}</BoxDesc>
                   )}
                 </BoxTextContainer>
+                <View>
+                  {a.numberMessagesNoRead > 0 && (
+                    <BoxCircle>
+                      <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
+                    </BoxCircle>
+                  )}
 
-                {a.numberMessagesNoRead > 0 && (
-                  <BoxCircle>
-                    <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
-                  </BoxCircle>
-                )}
+                  {getLastMessage(a)?.date && (
+                    <DateParsed date={getLastMessage(a)?.date} />
+                  )}
+                </View>
               </Box>
             ))}
           </>
@@ -302,6 +317,15 @@ const Home: React.FC = () => {
         setVisibleDelete={setModalDeleteVisible}
         title="Deletar mensagens?"
         handleDeleteItem={deleteMessages}
+      />
+
+      <ModalDelete
+        handleDeleteItem={() => {
+          dispatch(deleteAllMessage());
+        }}
+        setVisibleDelete={(e: boolean) => dispatch(modalDeleteDataVisible(e))}
+        title="Deseja deletar tudo?"
+        visibleDelete={modalDeleteData}
       />
     </Container>
   );

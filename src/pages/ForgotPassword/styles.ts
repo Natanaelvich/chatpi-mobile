@@ -1,4 +1,4 @@
-import { Feather } from 'expo-vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
