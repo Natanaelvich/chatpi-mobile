@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call } from 'redux-saga/effects';
+import { all, takeLatest, put, call, select } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   signInSuccess,
@@ -9,15 +9,17 @@ import {
 import api from '../../../services/api';
 
 export function* initCheck() {
-  try {
-  } catch (error) {
-    // if error 401 auto logout
+  const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
+
+  if (userData) {
+    const { token } = JSON.parse(userData);
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
   }
 }
 
 function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
-    // check internet
     yield put(setLoadingSingin(true));
     const response = yield call(api.post, 'sessions', {
       email: payload.email,
@@ -33,14 +35,8 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>) {
       JSON.stringify(response.data),
     );
 
-    api.interceptors.request.use(config => {
-      const headers = { ...config.headers };
-      if (response.data.token) {
-        headers.Authorization = `Bearer ${response.data.token}`;
-      }
-
-      return { ...config, headers };
-    });
+    const { token } = response.data;
+    api.defaults.headers.authorization = `Bearer ${token}`;
   } catch (error) {
     yield put(signInError(true));
   } finally {
