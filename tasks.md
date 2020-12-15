@@ -30,7 +30,7 @@
 
 - [x] adicionar digitando no mobile
 
-- [ ] Listar usuarios caso seja atendente
+- [x] Listar usuarios caso seja atendente
 
 ## config app
 
