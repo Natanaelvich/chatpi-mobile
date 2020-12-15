@@ -1,10 +1,12 @@
 import { all, takeLatest, put, call, select } from 'redux-saga/effects';
+import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   signInSuccess,
   setLoadingSingin,
   signInError,
   signInRequest,
+  signOut,
 } from './actions';
 import api from '../../../services/api';
 
@@ -14,7 +16,16 @@ export function* initCheck() {
   if (userData) {
     const { token } = JSON.parse(userData);
 
+    const decodedToken = jwt(token);
+    const dateNow = new Date();
+
+    if (decodedToken.exp < dateNow.getTime()) {
+      yield put(signOut());
+    }
+
     api.defaults.headers.authorization = `Bearer ${token}`;
+
+    console.log(userData);
   }
 }
 

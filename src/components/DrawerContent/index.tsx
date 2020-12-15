@@ -23,7 +23,7 @@ import {
   IconUser,
   IconDelete,
 } from './styles';
-import { signOutRequest } from '../../store/modules/user/actions';
+import { signOut } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
@@ -103,7 +103,7 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
           )}
           labelStyle={{ color: '#de595c', fontSize: 16 }}
           label="Sair"
-          onPress={() => dispatch(signOutRequest())}
+          onPress={() => dispatch(signOut())}
         />
       </BottomDrawerSection>
     </View>

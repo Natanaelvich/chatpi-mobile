@@ -3,6 +3,7 @@ export interface UserContent {
   email: string;
   id: string;
   avatar_url: string;
+  clerk: string | null;
 }
 
 export interface UserProps {

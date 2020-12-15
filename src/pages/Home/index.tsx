@@ -67,7 +67,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { attendants } = useSelector((state: RootState) => state.attendants);
+  const { users } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
   const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
@@ -161,15 +161,15 @@ const Home: React.FC = () => {
   }, [socket, dispatch]);
 
   const getLastMessage = useCallback(
-    attendant => {
-      const messagesUser = messages.filter(m => m.id === attendant.id);
+    userMessage => {
+      const messagesUser = messages.filter(m => m.id === userMessage.id);
       return messagesUser[messagesUser.length - 1];
     },
     [messages],
   );
 
   const messagesUsers = useMemo(() => {
-    const attendantsTemp = attendants
+    const usersTemp = users
       .filter(a => !!messages.find(m => m.id === a.id))
       .map(a => ({
         ...a,
@@ -181,8 +181,8 @@ const Home: React.FC = () => {
         getLastMessage(a)?.date > getLastMessage(b)?.date ? -1 : 1,
       );
 
-    return attendantsTemp;
-  }, [attendants, messages, getLastMessage]);
+    return usersTemp;
+  }, [users, messages, getLastMessage]);
 
   const getMessagesNoReadedsArray = useCallback(
     attendant => {

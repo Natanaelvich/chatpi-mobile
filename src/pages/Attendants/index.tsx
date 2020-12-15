@@ -18,7 +18,10 @@ import {
   IconBrain,
   IconNurse,
 } from './styles';
-import { getAttendants } from '../../store/modules/attendants/actions';
+import {
+  getAttendants,
+  getUsers,
+} from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import env from '../../../env';
 import getAvatarUrl from '../../utils/getAvatarUrl';
@@ -26,12 +29,19 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
   const { attendants } = useSelector((state: RootState) => state.attendants);
+  const { user } = useSelector((state: RootState) => state.user);
   const { usersLoggeds } = useSelector((state: RootState) => state.socket);
   const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getAttendants());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user?.user.clerk !== null) {
+      dispatch(getUsers());
+    }
+  }, [dispatch, user]);
 
   return (
     <Container>

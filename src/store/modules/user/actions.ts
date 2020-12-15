@@ -29,7 +29,7 @@ export const signInSuccess = (
   user,
 });
 
-export const signOutRequest = (): { type: string } => ({
+export const signOut = (): { type: string } => ({
   type: '@user/SIGN_OUT',
 });
 

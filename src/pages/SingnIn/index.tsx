@@ -40,7 +40,9 @@ const SingnIn: React.FC = () => {
 
   useEffect(() => {
     if (__DEV__) {
-      setEmail('hehe22@gmail.com');
+      // setEmail('hehe22@gmail.com');
+      // setPassword('123456');
+      setEmail('atendente@gmail.com');
       setPassword('123456');
     }
   }, []);

@@ -134,7 +134,8 @@ const Chat: React.FC = () => {
           </RectButton>
         </View>
 
-        {userParam.clerk === 'enf' ? <IconNurse /> : <IconBrain />}
+        {userParam.clerk === 'enf' && <IconNurse />}
+        {userParam.clerk === 'psic' && <IconBrain />}
       </Header>
       <Content>
         <Messages
