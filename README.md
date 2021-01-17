@@ -1,10 +1,6 @@
 <h1 align='center'> CHAT PI </h1>
 
-### college integrator project system mobile ⚡️
-
----
-
-## Gifs
+### College integrator project system mobile ⚡️
 
 ## ScreenShots
 
@@ -35,5 +31,5 @@
 - [Expo](https://expo.io/) The fastest way to build an app.
 - [Eslint](https://eslint.org/) is used to prevent JavaScript error.
 - [Prettier](https://prettier.io/docs/en/index.html) is an opinionated code formatter.
-- [ReactJS](https://github.com/facebook/react) is used for UI.
+- [React Native](https://reactnative.dev/) React Native combines the best parts of native development with React, a best-in-class JavaScript library for building user interfaces.
 - [Typecript](https://www.typescriptlang.org/) TypeScript extends JavaScript by adding types.
