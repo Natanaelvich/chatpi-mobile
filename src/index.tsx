@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StatusBar } from 'react-native';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
 
