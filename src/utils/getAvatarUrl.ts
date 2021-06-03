@@ -1,3 +1,5 @@
+import getIPhost from './getIPhost';
+
 export default function getAvatarUrl(
   url: string | null | undefined,
 ): string | null {
@@ -9,5 +11,7 @@ export default function getAvatarUrl(
     return url;
   }
 
-  return String(url).replace('localhost', '10.0.3.2');
+  const hostname = getIPhost();
+
+  return String(url).replace('localhost', hostname);
 }
