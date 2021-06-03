@@ -176,6 +176,7 @@ const Home: React.FC = () => {
         numberMessagesNoRead: messages
           .filter(m => m.id === a.id)
           .filter(m => m.readed === false).length,
+        lastMessage: getLastMessage(a),
       }))
       .sort((a, b) =>
         getLastMessage(a)?.date > getLastMessage(b)?.date ? -1 : 1,
@@ -202,6 +203,7 @@ const Home: React.FC = () => {
     setUserSelecteds([]);
     setDeleteModeMessage(false);
   }
+
   return (
     <Container>
       <Content>
@@ -289,7 +291,7 @@ const Home: React.FC = () => {
                   {typers && typers[a.id] ? (
                     <TypingDesc>Digitando...</TypingDesc>
                   ) : (
-                    <BoxDesc>{getLastMessage(a)?.message}</BoxDesc>
+                    <BoxDesc>{a.lastMessage.message}</BoxDesc>
                   )}
                 </BoxTextContainer>
                 <View>
@@ -299,9 +301,7 @@ const Home: React.FC = () => {
                     </BoxCircle>
                   )}
 
-                  {getLastMessage(a)?.date && (
-                    <DateParsed date={getLastMessage(a)?.date} />
-                  )}
+                  <DateParsed date={a.lastMessage.date} />
                 </View>
               </Box>
             ))}
