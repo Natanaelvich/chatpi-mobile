@@ -6,7 +6,7 @@ import {
 } from 'react-native-gesture-handler';
 import styled, { css } from 'styled-components/native';
 
-interface BoxProps {
+interface BoxProps extends TouchableOpacityProps {
   deleteMode: boolean;
 }
 
@@ -52,7 +52,7 @@ export const ContentTitle: React.FC = styled.Text`
   padding: 28px;
 `;
 
-export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity<BoxProps>`
+export const Box: React.FC<BoxProps> = styled.TouchableOpacity<BoxProps>`
   flex-direction: row;
   align-items: center;
   padding: 16px 28px;
@@ -78,7 +78,7 @@ export const BoxCircleOnline: React.FC = styled.View`
   bottom: 5px;
   right: 5px;
 `;
-export const BoxAvatar: React.FC<ImageProps> = styled.Image`
+export const BoxAvatar = styled.Image`
   width: 60px;
   height: 60px;
   border-radius: 30px;
@@ -156,7 +156,9 @@ export const HeaderDeleteMode: React.FC = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
-export const ButtonHeaderDeleteMode: React.FC = styled(BorderlessButton)``;
+export const ButtonHeaderDeleteMode: React.FC<BorderlessButtonProperties> = styled(
+  BorderlessButton,
+)``;
 export const IconDelete: React.FC = styled(MaterialIcons).attrs(props => ({
   name: 'delete',
   size: 24,

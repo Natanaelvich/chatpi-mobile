@@ -56,3 +56,36 @@ export default {
     `,
   },
 };
+
+export const theme = {
+  title: 'light',
+
+  colors: {
+    primary: '#343152',
+    secundary: '#DE595C',
+
+    background: '#f5f5f5',
+    text: '#343152',
+    input: '#eeedf0',
+    backgroundButton: '#DE595C',
+    textButton: '#fff',
+    textInput: '#333333',
+    success: '#5DB85C',
+    successLight: '#CBEDCA',
+    dark: '#333333',
+    darkLight: '#C4C4C4',
+    danger: '#E04848',
+    dangerLight: '#F4C7C7',
+    disable: 'rgba(255, 255, 255, 0.3)',
+    boxMessage: '#EEEDF0',
+  },
+
+  typograph: {
+    textH3Normal: ``,
+    textH3Bold: ``,
+    textH2Normal: ``,
+    textH2Bold: ``,
+    textH1Normal: ``,
+    textH1Bold: ``,
+  },
+};
