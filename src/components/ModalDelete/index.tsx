@@ -11,7 +11,7 @@ import {
 
 interface ModalProps {
   handleDeleteItem: any;
-  setVisibleDelete: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleDelete: (state: boolean) => void;
   visibleDelete: boolean;
   title: string;
 }

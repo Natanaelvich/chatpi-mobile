@@ -5,7 +5,7 @@ import { Container } from './styles';
 
 interface ModalProps {
   visible: boolean;
-  changeSetVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  changeSetVisible: (state: boolean) => void;
 }
 
 const ModalComponent: React.FC<ModalProps> = ({
