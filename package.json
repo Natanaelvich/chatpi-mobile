@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@redux-saga/types": "^1.1.0",
     "@types/axios": "^0.14.0",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
