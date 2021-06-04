@@ -3,7 +3,7 @@ import { ImageProps } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-export const Avatar: React.FC<ImageProps> = styled.Image`
+export const Avatar = styled.Image<ImageProps>`
   width: 55px;
   height: 55px;
   border-radius: 28px;
@@ -81,12 +81,12 @@ export const BottomDrawerSection: React.FC = styled.View`
   border-top-color: #f4f4f4;
   border-top-width: 1px;
 `;
-export const Preference: React.FC = styled(RectButton)`
+export const Preference = styled(RectButton)`
   flex-direction: row;
   padding: 12px 16px;
   align-items: center;
 `;
-export const PreferenceText: React.FC = styled.Text`
+export const PreferenceText = styled.Text`
   font-size: 16px;
   margin-top: 3px;
   margin-left: 12px;
