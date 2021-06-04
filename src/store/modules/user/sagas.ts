@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { all, takeLatest, put, call, select } from 'redux-saga/effects';
 import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
+import { SagaIterator } from '@redux-saga/core';
 import {
   signInSuccess,
   setLoadingSingin,
@@ -10,26 +12,31 @@ import {
 } from './actions';
 import api from '../../../services/api';
 
-export function* initCheck() {
+export function* initCheck(): SagaIterator {
   const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
 
   if (userData) {
-    const { token } = JSON.parse(userData);
+    const user = JSON.parse(userData);
 
-    const decodedToken = jwt(token);
-    const dateNow = new Date();
+    const { token } = user;
+    const decodedToken: {
+      exp: number;
+    } = jwt(token);
 
-    if (decodedToken.exp < dateNow.getTime()) {
+    const dateNow = new Date().getTime() / 1000;
+
+    if (decodedToken.exp < dateNow) {
       yield put(signOut());
+      return;
     }
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
-    console.log(userData);
+    yield put(signInSuccess(user));
   }
 }
 
-function* signIn({ payload }: ReturnType<typeof signInRequest>) {
+function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
   try {
     yield put(setLoadingSingin(true));
     const response = yield call(api.post, 'sessions', {
