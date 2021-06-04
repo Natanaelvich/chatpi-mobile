@@ -78,14 +78,20 @@ export const BoxCircleOnline: React.FC = styled.View`
   bottom: 5px;
   right: 5px;
 `;
+export const ContentBoxText = styled.View`
+  flex: 1;
+`;
+export const ViewRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  padding-left: 12px;
+`;
 export const BoxAvatar = styled.Image`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-`;
-export const BoxTextContainer: React.FC = styled.View`
-  margin-left: 16px;
-  flex: 1;
 `;
 export const BoxTitle: React.FC = styled.Text`
   font-style: normal;
@@ -122,6 +128,7 @@ export const BoxCircle: React.FC = styled.View`
 
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
 `;
 export const BoxCircleText: React.FC = styled.Text`
   font-style: normal;

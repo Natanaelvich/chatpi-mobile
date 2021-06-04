@@ -3,13 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
-import {
-  Alert,
-  LayoutAnimation,
-  Platform,
-  UIManager,
-  View,
-} from 'react-native';
+import { Alert, LayoutAnimation, Platform, UIManager } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import {
@@ -20,7 +14,6 @@ import {
   BoxAvatar,
   BoxDesc,
   BoxTitle,
-  BoxTextContainer,
   BoxCircle,
   BoxCircleText,
   TypingDesc,
@@ -36,6 +29,8 @@ import {
   IconClose,
   IconDelete,
   HeaderDeleteMode,
+  ViewRow,
+  ContentBoxText,
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
 import {
@@ -286,23 +281,24 @@ const Home: React.FC = () => {
                   />
                   {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
                 </BoxAvatarContainer>
-                <BoxTextContainer>
-                  <BoxTitle>{a.name}</BoxTitle>
-                  {typers && typers[a.id] ? (
-                    <TypingDesc>Digitando...</TypingDesc>
-                  ) : (
-                    <BoxDesc>{a.lastMessage.message}</BoxDesc>
-                  )}
-                </BoxTextContainer>
-                <View>
-                  {a.numberMessagesNoRead > 0 && (
-                    <BoxCircle>
-                      <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
-                    </BoxCircle>
-                  )}
-
-                  <DateParsed date={a.lastMessage.date} />
-                </View>
+                <ContentBoxText>
+                  <ViewRow>
+                    <BoxTitle>{a.name}</BoxTitle>
+                    {a.numberMessagesNoRead > 0 && (
+                      <BoxCircle>
+                        <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
+                      </BoxCircle>
+                    )}
+                  </ViewRow>
+                  <ViewRow>
+                    {typers && typers[a.id] ? (
+                      <TypingDesc>Digitando...</TypingDesc>
+                    ) : (
+                      <BoxDesc>{a.lastMessage.message}</BoxDesc>
+                    )}
+                    <DateParsed date={a.lastMessage.date} />
+                  </ViewRow>
+                </ContentBoxText>
               </Box>
             ))}
           </>
