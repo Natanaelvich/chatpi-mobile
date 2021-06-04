@@ -34,6 +34,11 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const { user } = useSelector((state: RootState) => state.user);
   const { darkMode } = useSelector((state: RootState) => state.options);
 
+  function handleSiginout(): void {
+    props.navigation.closeDrawer();
+    dispatch(signOut());
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: darkMode ? '#19191D' : '#fff' }}>
       <DrawerContentScrollView {...props}>
@@ -103,7 +108,7 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
           )}
           labelStyle={{ color: '#de595c', fontSize: 16 }}
           label="Sair"
-          onPress={() => dispatch(signOut())}
+          onPress={handleSiginout}
         />
       </BottomDrawerSection>
     </View>
