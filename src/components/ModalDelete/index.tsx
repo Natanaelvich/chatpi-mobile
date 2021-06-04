@@ -27,6 +27,10 @@ const ModalDelete: React.FC<ModalProps> = ({
       <ModalContentDelete>
         <ModalTitleDelete>{title}</ModalTitleDelete>
         <ButtonContainerDelete>
+          <ButtonModal secundary onPress={() => setVisibleDelete(false)}>
+            <ButtonText secundary>Não</ButtonText>
+          </ButtonModal>
+
           <ButtonModal
             onPress={() => {
               handleDeleteItem();
@@ -34,10 +38,6 @@ const ModalDelete: React.FC<ModalProps> = ({
             }}
           >
             <ButtonText>Sim</ButtonText>
-          </ButtonModal>
-
-          <ButtonModal secundary onPress={() => setVisibleDelete(false)}>
-            <ButtonText secundary>Não</ButtonText>
           </ButtonModal>
         </ButtonContainerDelete>
       </ModalContentDelete>
