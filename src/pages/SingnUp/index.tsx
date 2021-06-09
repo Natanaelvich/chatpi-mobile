@@ -4,7 +4,12 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Checkbox from 'expo-checkbox';
 import Toast from 'react-native-toast-message';
-import { LayoutAnimation, Platform, UIManager } from 'react-native';
+import {
+  LayoutAnimation,
+  Platform,
+  TextInputProps,
+  UIManager,
+} from 'react-native';
 import {
   Container,
   Title,
@@ -28,6 +33,7 @@ import {
 
 import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
+import ModalProVerification from './ModalProVerification';
 
 if (
   Platform.OS === 'android' &&
@@ -50,6 +56,7 @@ const SingnUp: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorSingnUp, setErrorSingnUp] = useState(false);
   const [messageError, setMessageError] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const hanleSignUp = useCallback(async () => {
     try {
@@ -79,8 +86,13 @@ const SingnUp: React.FC = () => {
       setErrorSingnUp(true);
     } finally {
       setLoading(false);
+      setModalVisible(false);
     }
   }, [name, email, password, navigation, attendantType, attendant]);
+
+  function handleOpenModal(): void {
+    setModalVisible(true);
+  }
 
   return (
     <Container>
@@ -166,7 +178,7 @@ const SingnUp: React.FC = () => {
           </SelectContainer>
         )}
 
-        <Button loading={loading} onPress={hanleSignUp}>
+        <Button loading={loading} onPress={handleOpenModal}>
           <ButtonText>{loading ? 'Cadastrando...' : 'Cadastrar'}</ButtonText>
         </Button>
       </FormContainer>
@@ -175,6 +187,14 @@ const SingnUp: React.FC = () => {
         <Feather name="arrow-left" size={24} color="#fff" />
         <ReturnLoginText>Voltar para login</ReturnLoginText>
       </ReturnLoginContainer>
+
+      {modalVisible && (
+        <ModalProVerification
+          handleVerification={hanleSignUp}
+          visible={modalVisible}
+          changeSetVisible={setModalVisible}
+        />
+      )}
     </Container>
   );
 };
