@@ -1,3 +1,4 @@
+
 <h1 align='center'> CHAT PI </h1>
 
 ### College integrator project system mobile ⚡️
@@ -11,7 +12,18 @@
 </p>
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/104669819-92658f80-56b9-11eb-9481-8b26bf65e60c.jpg' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121285392-b8800c00-c8b4-11eb-9cf1-05b057a58cc7.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121285393-b918a280-c8b4-11eb-8f15-5e3577e3ba37.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121285394-b918a280-c8b4-11eb-984e-9d36de19147d.png' width='240' />
+</p>
+
+<p align='center'>
+<img src='https://user-images.githubusercontent.com/52014318/121285396-b9b13900-c8b4-11eb-84f4-95d46da428ea.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121285398-b9b13900-c8b4-11eb-8d3b-eaa8a5f85e7a.png' width='240' />
+ <img src='https://user-images.githubusercontent.com/52014318/104669819-92658f80-56b9-11eb-9481-8b26bf65e60c.jpg' width='240' />
+</p>
+
+<p align='center'>
 <img src='https://user-images.githubusercontent.com/52014318/104669831-97c2da00-56b9-11eb-8440-406fc8d3719f.jpg' width='240' />
 <img src='https://user-images.githubusercontent.com/52014318/104669838-9b566100-56b9-11eb-8eed-6a52e650a036.jpg' width='240' />
 </p>
