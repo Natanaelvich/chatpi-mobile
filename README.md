@@ -6,15 +6,15 @@
 ## ScreenShots
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/104669785-84177380-56b9-11eb-8d2a-287c743c22ac.jpg' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/104669804-8aa5eb00-56b9-11eb-8f4e-3b1a3ac240e2.jpg' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/104669810-8ed20880-56b9-11eb-9228-257cdab806a3.jpg' width='240' />
-</p>
-
-<p align='center'>
 <img src='https://user-images.githubusercontent.com/52014318/121285392-b8800c00-c8b4-11eb-9cf1-05b057a58cc7.png' width='240' />
 <img src='https://user-images.githubusercontent.com/52014318/121285393-b918a280-c8b4-11eb-8f15-5e3577e3ba37.png' width='240' />
 <img src='https://user-images.githubusercontent.com/52014318/121285394-b918a280-c8b4-11eb-984e-9d36de19147d.png' width='240' />
+</p>
+
+<p align='center'>
+<img src='https://user-images.githubusercontent.com/52014318/121286130-c97d4d00-c8b5-11eb-8b5b-2c27a483b709.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121286222-ea45a280-c8b5-11eb-9683-978155de4ad8.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/121286226-eade3900-c8b5-11eb-8e5f-575d5b5c909b.png' width='240' />
 </p>
 
 <p align='center'>
@@ -26,6 +26,7 @@
 <p align='center'>
 <img src='https://user-images.githubusercontent.com/52014318/104669831-97c2da00-56b9-11eb-8440-406fc8d3719f.jpg' width='240' />
 <img src='https://user-images.githubusercontent.com/52014318/104669838-9b566100-56b9-11eb-8eed-6a52e650a036.jpg' width='240' />
+  <img src='https://user-images.githubusercontent.com/52014318/104669810-8ed20880-56b9-11eb-9228-257cdab806a3.jpg' width='240' />
 </p>
 
 ## Install
