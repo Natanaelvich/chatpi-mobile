@@ -16,7 +16,7 @@ const DateParsed: React.FC<DateParsedProps> = ({ date }) => {
         return formatDistanceToNow(new Date(date), {
           locale: pt,
           addSuffix: true,
-          includeSeconds: true,
+          includeSeconds: false,
         });
       } catch (error) {
         return null;
