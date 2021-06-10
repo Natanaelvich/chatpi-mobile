@@ -4,6 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
+    "android:release": "cd android/ && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release",
+    "android:abb": "cd android/ && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew bundleRelease && echo android/app/build/outputs/apk/budle",
     "eject": "expo eject",
     "test": "jest",
     "coverage": "jest --coverage"
