@@ -56,7 +56,7 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      Sentry.Native.setUser({ username: user?.user.name, id: user?.user.id });
+      Sentry.setUser({ username: user?.user.name, id: user?.user.id });
     }
   }, [user]);
 
