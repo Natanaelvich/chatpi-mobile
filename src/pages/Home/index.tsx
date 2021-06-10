@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Constants from 'expo-constants';
+import { Constants, Permissions } from 'react-native-unimodules';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
 import { Alert, LayoutAnimation, Platform, UIManager } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import {
   Container,
   Content,
