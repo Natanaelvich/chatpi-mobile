@@ -5,7 +5,30 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ],
+    "setupFiles": [
+      "./src/__test__/jestSetup.ts",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/modules/**/*.tsx",
+      "!src/hooks/index.tsx",
+      "src/utils/*.ts"
+    ]
   },
   "dependencies": {
     "@expo-google-fonts/nunito": "^0.1.0",
