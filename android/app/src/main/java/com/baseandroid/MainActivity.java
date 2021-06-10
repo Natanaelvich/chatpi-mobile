@@ -1,6 +1,4 @@
 package com.mundotech.chatpi;
-import android.content.res.Configuration;
-import android.content.Intent;
 
 import android.os.Bundle;
 
@@ -12,18 +10,7 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
 
-
 public class MainActivity extends ReactActivity {
-
-    // Added automatically by Expo Config
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Intent intent = new Intent("onConfigurationChanged");
-        intent.putExtra("newConfig", newConfig);
-        sendBroadcast(intent);
-    }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
