@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { fireEvent } from '@testing-library/react-native';
 import React from 'react';
 
 import SingnIn from '../../pages/SingnIn';
@@ -18,5 +19,29 @@ describe('SignIn page', () => {
 
     expect(getByPlaceholderText('E-mail')).toBeTruthy();
     expect(getByPlaceholderText('Senha')).toBeTruthy();
+  });
+
+  it('Should to able navigate to signup', async () => {
+    const { getByText } = renderWithReduxAndTheme(<SingnIn />, {
+      initialState: {},
+    });
+
+    const buttonElement = getByText('Criar uma conta');
+
+    fireEvent.press(buttonElement);
+
+    expect(mockedNavigate).toBeCalledWith('SingnUp');
+  });
+
+  it('Should to able navigate to ForgotPassword', async () => {
+    const { getByText } = renderWithReduxAndTheme(<SingnIn />, {
+      initialState: {},
+    });
+
+    const buttonElement = getByText('Esqueci minha senha');
+
+    fireEvent.press(buttonElement);
+
+    expect(mockedNavigate).toBeCalledWith('ForgotPassword');
   });
 });
