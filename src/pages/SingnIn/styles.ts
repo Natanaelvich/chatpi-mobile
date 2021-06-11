@@ -4,6 +4,10 @@ import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
+interface ButtonProps {
+  loading: boolean;
+}
+
 export const Container = styled.ScrollView.attrs({
   contentContainerStyle: {
     flexGrow: 1,
@@ -37,12 +41,9 @@ export const InputContainer = styled.View`
   border-width: 1px;
   border-color: transparent;
 `;
-export const Input: React.FC<TextInputProps> = styled.TextInput.attrs(
-  props =>
-    ({
-      placeholderTextColor: props.theme.colors.primary,
-    } as TextInputProps),
-)`
+export const Input = styled.TextInput.attrs(props => ({
+  placeholderTextColor: props.theme.colors.primary,
+}))`
   color: ${props => props.theme.colors.primary};
   flex: 1;
   margin-left: 16px;
@@ -58,8 +59,8 @@ export const IconKey = styled(Feather).attrs(props => ({
   size: 23,
   color: props.theme.colors.primary,
 }))``;
-export const Button: React.FC<RectButtonProperties> = styled(RectButton)`
-  background: ${props => (props.laoding ? '#C44F51' : '#de595c')};
+export const Button = styled(RectButton)<ButtonProps>`
+  background: ${props => (props.loading ? '#C44F51' : '#de595c')};
   border-radius: 10px;
   height: 50px;
 
