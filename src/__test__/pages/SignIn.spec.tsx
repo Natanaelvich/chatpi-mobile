@@ -44,4 +44,24 @@ describe('SignIn page', () => {
 
     expect(mockedNavigate).toBeCalledWith('ForgotPassword');
   });
+
+  it('Should to able to do the signin', async () => {
+    const { getByPlaceholderText, getByText } = renderWithReduxAndTheme(
+      <SingnIn />,
+      {
+        initialState: {},
+      },
+    );
+
+    const emailField = getByPlaceholderText('E-mail');
+    const passwordField = getByPlaceholderText('Senha');
+    const buttonElement = getByText('Entrar');
+
+    fireEvent.changeText(emailField, '');
+    fireEvent.changeText(passwordField, '');
+
+    fireEvent.press(buttonElement);
+
+    expect(getByText('Entrando')).toBeTruthy();
+  });
 });
