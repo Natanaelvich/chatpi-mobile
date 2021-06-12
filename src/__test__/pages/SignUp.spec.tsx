@@ -1,12 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { fireEvent } from '@testing-library/react-native';
+import { fireEvent, waitFor } from '@testing-library/react-native';
 import React from 'react';
+import MockAdapter from 'axios-mock-adapter';
 
 import SingnUp from '../../pages/SingnUp';
 import { renderWithReduxAndTheme } from '../test-utils';
+import api from '../../services/api';
 
 const mockedNavigate = jest.fn();
 const mockedGoback = jest.fn();
+const apiMock = new MockAdapter(api);
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: mockedNavigate, goBack: mockedGoback }),
@@ -23,7 +26,7 @@ describe('SignUp page', () => {
     expect(getByPlaceholderText('Senha')).toBeTruthy();
   });
 
-  it('Should to able navigate to back signin', async () => {
+  it('Should to able navigate to back signin', () => {
     const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
       initialState: {},
     });
@@ -35,16 +38,41 @@ describe('SignUp page', () => {
     expect(mockedGoback).toHaveBeenCalledTimes(1);
   });
 
-  it('Should to able navigate to ForgotPassword', async () => {
+  it('Should to able to signup', () => {
     const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
       initialState: {},
     });
 
-    const buttonElement = getByText('Esqueci minha senha');
+    const buttonElement = getByText('Cadastrar');
 
     fireEvent.press(buttonElement);
 
-    expect(mockedNavigate).toBeCalledWith('ForgotPassword');
+    expect(getByText('Verificação Profissional')).toBeTruthy();
+  });
+
+  it('Should to able to confirm modal', async () => {
+    apiMock.onPost('users').reply(200, {
+      name: 'name',
+      email: 'email',
+      password: 'password',
+      clerk: '',
+    });
+
+    const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
+      initialState: {},
+    });
+
+    const buttonElementSignup = getByText('Cadastrar');
+
+    fireEvent.press(buttonElementSignup);
+
+    const buttonElement = getByText('Verificar');
+
+    fireEvent.press(buttonElement);
+
+    await waitFor(() => {
+      expect(mockedNavigate).toBeCalledWith('SingnIn');
+    });
   });
 
   // it('Should to able to do the signin', async () => {
