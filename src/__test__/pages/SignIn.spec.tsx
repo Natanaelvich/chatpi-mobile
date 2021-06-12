@@ -12,7 +12,7 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('SignIn page', () => {
-  it('Should contains email/password inputs', async () => {
+  it('Should contains email/password inputs', () => {
     const { getByPlaceholderText } = renderWithReduxAndTheme(<SignIn />, {
       initialState: {},
     });
@@ -21,7 +21,7 @@ describe('SignIn page', () => {
     expect(getByPlaceholderText('Senha')).toBeTruthy();
   });
 
-  it('Should to able navigate to signIn', async () => {
+  it('Should to able navigate to signIn', () => {
     const { getByText } = renderWithReduxAndTheme(<SignIn />, {
       initialState: {},
     });
@@ -33,7 +33,7 @@ describe('SignIn page', () => {
     expect(mockedNavigate).toBeCalledWith('SingnUp');
   });
 
-  it('Should to able navigate to ForgotPassword', async () => {
+  it('Should to able navigate to ForgotPassword', () => {
     const { getByText } = renderWithReduxAndTheme(<SignIn />, {
       initialState: {},
     });
