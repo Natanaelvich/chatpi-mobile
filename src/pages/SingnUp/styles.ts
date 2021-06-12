@@ -4,7 +4,7 @@ import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import styled from 'styled-components/native';
 
-interface ButtonProps {
+interface ButtonProps extends RectButtonProperties {
   loading: boolean;
 }
 
@@ -70,9 +70,7 @@ export const ReturnLoginText = styled.Text`
 
   color: #fff;
 `;
-export const Button: React.FC<RectButtonProperties> = styled(
-  RectButton,
-)<ButtonProps>`
+export const Button = styled(RectButton)<ButtonProps>`
   background: ${props => (props.loading ? '#C44F51' : '#de595c')};
   border-radius: 10px;
   height: 50px;

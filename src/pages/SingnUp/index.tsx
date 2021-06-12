@@ -2,14 +2,9 @@ import React, { useCallback, useRef, useState } from 'react';
 
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Checkbox from 'expo-checkbox';
+import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
-import {
-  LayoutAnimation,
-  Platform,
-  TextInputProps,
-  UIManager,
-} from 'react-native';
+import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import {
   Container,
   Title,
@@ -62,6 +57,8 @@ const SingnUp: React.FC = () => {
     try {
       setLoading(true);
 
+      console.log('attendant, attendantType, name, email, password');
+      console.log(attendant, attendantType, name, email, password);
       if (attendant && attendantType === '') {
         setErrorSingnUp(true);
         setMessageError('Selecione o tipo de atendente que você deseja ser.');
