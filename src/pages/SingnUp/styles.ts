@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
-import { Picker, PickerProperties, TextInputProps } from 'react-native';
+import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
+import { Picker } from '@react-native-picker/picker';
 import styled from 'styled-components/native';
 
 interface ButtonProps {
@@ -59,7 +60,7 @@ export const SelectContainer = styled.View`
   margin-bottom: 12px;
   border-radius: 12px;
 `;
-export const Select: React.FC<PickerProperties> = styled(Picker)`
+export const Select = styled(Picker)`
   flex: 1;
 `;
 export const ReturnLoginText = styled.Text`
