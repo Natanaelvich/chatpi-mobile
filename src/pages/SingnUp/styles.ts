@@ -115,7 +115,7 @@ export const InputContainer = styled.View`
   border-width: 1px;
   border-color: transparent;
 `;
-export const Input: React.FC<TextInputProps> = styled.TextInput.attrs(
+export const Input = styled.TextInput.attrs(
   props =>
     ({
       placeholderTextColor: props.theme.colors.primary,
