@@ -7,7 +7,7 @@
     "android:release": "cd android/ && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release",
     "android:abb": "cd android/ && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew bundleRelease && echo android/app/build/outputs/apk/budle",
     "eject": "expo eject",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage && echo coverage/lcov-report/index.html",
     "test": "jest --watch --coverage=false --changedSince=origin/master",
     "test:debug": "jest -o --coverage=false",
     "test:final": "jest",
