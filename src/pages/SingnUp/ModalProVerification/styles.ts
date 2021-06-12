@@ -17,8 +17,8 @@ export const ModalContent = styled.View`
 `;
 export const ButtonClose = styled.TouchableOpacity`
   position: absolute;
-  right: 6;
-  top: 6;
+  right: 6px;
+  top: 6px;
 `;
 export const Desc = styled.Text`
   margin-bottom: 12px;
