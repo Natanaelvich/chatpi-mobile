@@ -61,7 +61,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { users } = useSelector((state: RootState) => state.attendants);
+  const { attendants } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
   const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
@@ -73,56 +73,56 @@ const Home: React.FC = () => {
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
   const socket = useMemo(() => {
-    return io(env.API_URL, {
+    return io('https://api.pi.mundotech.dev', {
       query: { user: user?.user.id },
     });
   }, [user]);
 
-  const registerForPushNotificationsAsync = useCallback(async () => {
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS,
-      );
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS,
-        );
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        Alert.alert('Failed to get push token for push notification!');
-        return;
-      }
-      const tokenExpo = await Notifications.getExpoPushTokenAsync();
-      socket.emit('expoToken', tokenExpo.data);
-    } else {
-      const tokenExpo = await Notifications.getExpoPushTokenAsync();
-      socket.emit('expoToken', tokenExpo.data);
-    }
+  // const registerForPushNotificationsAsync = useCallback(async () => {
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } = await Permissions.getAsync(
+  //       Permissions.NOTIFICATIONS,
+  //     );
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Permissions.askAsync(
+  //         Permissions.NOTIFICATIONS,
+  //       );
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== 'granted') {
+  //       Alert.alert('Failed to get push token for push notification!');
+  //       return;
+  //     }
+  //     const tokenExpo = await Notifications.getExpoPushTokenAsync();
+  //     socket.emit('expoToken', tokenExpo.data);
+  //   } else {
+  //     const tokenExpo = await Notifications.getExpoPushTokenAsync();
+  //     socket.emit('expoToken', tokenExpo.data);
+  //   }
 
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-      });
+  //   if (Platform.OS === 'android') {
+  //     Notifications.setNotificationChannelAsync('default', {
+  //       name: 'default',
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //     });
 
-      Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowAlert: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
-        }),
-      });
+  //     Notifications.setNotificationHandler({
+  //       handleNotification: async () => ({
+  //         shouldShowAlert: true,
+  //         shouldPlaySound: false,
+  //         shouldSetBadge: false,
+  //       }),
+  //     });
 
-      Notifications.dismissAllNotificationsAsync();
-    }
-  }, [socket]);
+  //     Notifications.dismissAllNotificationsAsync();
+  //   }
+  // }, [socket]);
 
-  useEffect(() => {
-    registerForPushNotificationsAsync();
-  }, [registerForPushNotificationsAsync]);
+  // useEffect(() => {
+  //   registerForPushNotificationsAsync();
+  // }, [registerForPushNotificationsAsync]);
 
   useEffect(() => {
     dispatch(addSocket(socket));
@@ -163,7 +163,7 @@ const Home: React.FC = () => {
   );
 
   const messagesUsers = useMemo(() => {
-    const usersTemp = users
+    const usersTemp = attendants
       .filter(a => !!messages.find(m => m.id === a.id))
       .map(a => ({
         ...a,
@@ -177,7 +177,7 @@ const Home: React.FC = () => {
       );
 
     return usersTemp;
-  }, [users, messages, getLastMessage]);
+  }, [attendants, messages, getLastMessage]);
 
   const getMessagesNoReadedsArray = useCallback(
     attendant => {
@@ -197,7 +197,6 @@ const Home: React.FC = () => {
     setUserSelecteds([]);
     setDeleteModeMessage(false);
   }
-
   return (
     <Container>
       <Content>
