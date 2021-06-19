@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
-import { TextInputProps } from 'react-native';
 import {
   Container,
   Title,

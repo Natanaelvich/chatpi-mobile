@@ -1,5 +1,4 @@
-import { formatDistanceStrict, formatDistanceToNow } from 'date-fns';
-import { formatDistance } from 'date-fns/esm';
+import { formatDistanceToNow } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import React, { useMemo } from 'react';
 

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { all, takeLatest, put, call, select } from 'redux-saga/effects';
+import { all, takeLatest, put, call } from 'redux-saga/effects';
 import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SagaIterator } from '@redux-saga/core';

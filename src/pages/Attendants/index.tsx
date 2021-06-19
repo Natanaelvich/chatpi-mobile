@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Container,
   Content,

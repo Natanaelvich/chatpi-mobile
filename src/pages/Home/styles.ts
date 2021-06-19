@@ -1,5 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { ImageProps, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 import {
   BorderlessButton,
   BorderlessButtonProperties,
