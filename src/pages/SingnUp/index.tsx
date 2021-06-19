@@ -57,8 +57,6 @@ const SingnUp: React.FC = () => {
     try {
       setLoading(true);
 
-      console.log('attendant, attendantType, name, email, password');
-      console.log(attendant, attendantType, name, email, password);
       if (attendant && attendantType === '') {
         setErrorSingnUp(true);
         setMessageError('Selecione o tipo de atendente que você deseja ser.');
