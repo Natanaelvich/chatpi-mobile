@@ -2,7 +2,6 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import {
   View,
   ScrollView,
-  KeyboardAvoidingView,
   Platform,
   TextInput,
   Alert,
@@ -10,7 +9,6 @@ import {
 } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -45,12 +43,6 @@ import env from '../../../env';
 import ModalComponent from '../../components/Modal';
 import { updateAvatar, updateUser } from '../../store/modules/user/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
-
-interface ProfileFormData {
-  name: string;
-  email: string;
-  password: string;
-}
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
