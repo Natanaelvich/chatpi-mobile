@@ -52,15 +52,15 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
         };
 
         const inputRange = state.routes.map((_, i) => i);
-        const opacity = Animated.interpolate(position, {
+        const opacity = Animated.interpolateNode(position, {
           inputRange,
           outputRange: inputRange.map(i => (i === index ? 1 : 0.5)),
         });
-        const borderWidth = Animated.interpolate(position, {
+        const borderWidth = Animated.interpolateNode(position, {
           inputRange,
           outputRange: inputRange.map(i => (i === index ? 2 : 0)),
         });
-        const borderRadius = Animated.interpolate(position, {
+        const borderRadius = Animated.interpolateNode(position, {
           inputRange,
           outputRange: inputRange.map(i => (i === index ? 15 : 10)),
         });
