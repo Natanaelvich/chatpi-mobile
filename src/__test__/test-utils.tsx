@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable import/no-extraneous-dependencies */
 // test-utils.js
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react-native';
