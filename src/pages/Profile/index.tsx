@@ -7,11 +7,13 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from 'styled-components';
 import Toast from 'react-native-toast-message';
-import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 import api from '../../services/api';
 
 import {
@@ -20,12 +22,10 @@ import {
   Avatar,
   AvatarContainer,
   ButtonCamera,
-  IconCamera,
   AvatarModal,
   ButtonPreview,
   ContainerButtonsPreview,
   ContainerModalPreview,
-  IconAwesome,
   TextPreview,
 } from './styles';
 import {
@@ -46,6 +46,8 @@ import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const { user } = useSelector((state: RootState) => state.user);
 
   const emailRef = useRef<TextInput>(null);
@@ -71,7 +73,9 @@ const Profile: React.FC = () => {
 
   async function pickImage(): Promise<void> {
     if (Platform.OS !== 'web') {
-      const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+      const {
+        status,
+      } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Descule, nós precisamos da sua permisão para continuar!');
       }
@@ -81,46 +85,44 @@ const Profile: React.FC = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       aspect: [4, 3],
       quality: 1,
-      allowsMultipleSelection: true,
+      allowsEditing: true,
     });
 
     if (!result.cancelled) {
-      setimage(result.uri);
-      setModalPreviewPhoto(true);
+      try {
+        setloadingUpdateAvatar(true);
+        const data = new FormData();
+
+        data.append('avatar', {
+          name: `image_${user?.user.id}.jpg`,
+          type: 'image/jpg',
+          uri: result.uri,
+        });
+
+        await api.patch('/users/avatar', data);
+        dispatch(updateAvatar(result.uri));
+
+        Toast.show({
+          text1: 'Perfil atualizado',
+          text2: 'Sua foto de perfil foi atualizada 🖼',
+          visibilityTime: 2000,
+          type: 'success',
+        });
+      } catch (error) {
+        Toast.show({
+          text1: 'Ops',
+          text2: 'Falha ao atualizar sua foto de perfil 😔',
+          visibilityTime: 2000,
+          type: 'error',
+        });
+      } finally {
+        setloadingUpdateAvatar(false);
+      }
     }
   }
 
   async function updateAvatarUser(): Promise<void> {
     setModalPreviewPhoto(false);
-    try {
-      setloadingUpdateAvatar(true);
-      const data = new FormData();
-
-      data.append('avatar', {
-        name: `image_${user?.user.id}.jpg`,
-        type: 'image/jpg',
-        uri: image,
-      });
-
-      await api.patch('/users/avatar', data);
-      dispatch(updateAvatar(image));
-
-      Toast.show({
-        text1: 'Perfil atualizado',
-        text2: 'Sua foto de perfil foi atualizada 🖼',
-        visibilityTime: 2000,
-        type: 'success',
-      });
-    } catch (error) {
-      Toast.show({
-        text1: 'Ops',
-        text2: 'Falha ao atualizar sua foto de perfil 😔',
-        visibilityTime: 2000,
-        type: 'error',
-      });
-    } finally {
-      setloadingUpdateAvatar(false);
-    }
   }
 
   const handleUpdateProfile = useCallback(async () => {
@@ -196,7 +198,11 @@ const Profile: React.FC = () => {
                 }}
               />
               <ButtonCamera onPress={pickImage}>
-                <IconCamera />
+                <FontAwesome
+                  name="camera"
+                  size={RFValue(24)}
+                  color={theme.colors.textButton}
+                />
               </ButtonCamera>
             </>
           )}
@@ -208,7 +214,7 @@ const Profile: React.FC = () => {
 
         {errorUpdate && (
           <ErrorLogin>
-            <MaterialIcons name="error" size={32} color="#E04848" />
+            <MaterialIcons name="error" size={RFValue(32)} color="#E04848" />
             <ErrorLoginText>
               {messageErrorUpdate || 'Houve uma falha inesperada'}
             </ErrorLoginText>
@@ -299,10 +305,18 @@ const Profile: React.FC = () => {
                   setimage('');
                 }}
               >
-                <IconAwesome name="times-circle" size={51} color="danger" />
+                <FontAwesome
+                  name="times-circle"
+                  size={RFValue(51)}
+                  color={theme.colors.danger}
+                />
               </ButtonPreview>
               <ButtonPreview onPress={updateAvatarUser}>
-                <IconAwesome name="check-circle" size={51} color="success" />
+                <FontAwesome
+                  name="check-circle"
+                  size={RFValue(51)}
+                  color={theme.colors.success}
+                />
               </ButtonPreview>
             </ContainerButtonsPreview>
           </ContainerModalPreview>
