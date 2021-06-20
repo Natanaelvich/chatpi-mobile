@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components/native';
-import { ImageProps } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { FontAwesome } from '@expo/vector-icons';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface AvatarContainerProps {
   loading: boolean;
@@ -10,13 +9,13 @@ interface AvatarContainerProps {
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
-  padding: 0 30px 24px;
+  padding: 0 ${RFValue(30)}px ${RFValue(24)}px;
 `;
 
 export const Title = styled.Text`
-  font-size: 24px;
+  font-size: ${RFValue(24)}px;
   color: #f4ede8;
-  margin: 24px 0;
+  margin: ${RFValue(24)}px 0;
 `;
 
 export const ContainerModalPreview = styled.View`
@@ -25,10 +24,10 @@ export const ContainerModalPreview = styled.View`
 export const TextPreview = styled.Text`
   align-self: center;
   color: #fff;
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
   font-style: normal;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: ${RFValue(24)}px;
 `;
 export const ContainerButtonsPreview = styled.View`
   flex: 0.2;
@@ -36,22 +35,17 @@ export const ContainerButtonsPreview = styled.View`
   justify-content: space-around;
 `;
 export const ButtonPreview = styled.TouchableWithoutFeedback``;
-export const IconAwesome = styled(FontAwesome).attrs(props => ({
-  size: props.size,
-  name: props.name,
-  color: props.theme.colors[props.color],
-}))``;
 
-export const AvatarModal: React.FC<ImageProps> = styled.Image`
+export const AvatarModal = styled.Image`
   flex: 1;
-  border-radius: 22px;
+  border-radius: ${RFValue(22)}px;
 `;
 export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
-  width: 186px;
-  height: 186px;
-  border-radius: 98px;
+  width: ${RFValue(186)}px;
+  height: ${RFValue(186)}px;
+  border-radius: ${RFValue(98)}px;
   position: relative;
-  margin-top: 14px;
+  margin-top: ${RFValue(14)}px;
   align-self: center;
   align-items: center;
   justify-content: center;
@@ -62,25 +56,21 @@ export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
     `}
 `;
 export const ButtonCamera = styled(RectButton)`
-  width: 46px;
-  height: 46px;
-  border-radius: 25px;
+  width: ${RFValue(46)}px;
+  height: ${RFValue(46)}px;
+  border-radius: ${RFValue(25)}px;
   background: ${props => props.theme.colors.secundary};
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: ${RFValue(12)}px;
+  right: ${RFValue(12)}px;
   z-index: 999;
   align-items: center;
   justify-content: center;
 `;
-export const IconCamera = styled(FontAwesome).attrs({
-  name: 'camera',
-  size: 24,
-  color: '#fff',
-})``;
+
 export const Avatar = styled.Image`
-  width: 186px;
-  height: 186px;
-  border-radius: 98px;
+  width: ${RFValue(186)}px;
+  height: ${RFValue(186)}px;
+  border-radius: ${RFValue(98)}px;
   align-self: center;
 `;
