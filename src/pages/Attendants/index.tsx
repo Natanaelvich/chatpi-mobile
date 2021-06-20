@@ -28,19 +28,13 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
   const { attendants } = useSelector((state: RootState) => state.attendants);
-  const { user } = useSelector((state: RootState) => state.user);
   const { usersLoggeds } = useSelector((state: RootState) => state.socket);
   const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getAttendants());
+    dispatch(getUsers());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (user?.user.clerk !== null) {
-      dispatch(getUsers());
-    }
-  }, [dispatch, user]);
 
   return (
     <Container>
