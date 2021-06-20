@@ -3,6 +3,8 @@ import React from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 import { RootState } from '../../store/modules/rootReducer';
 
 const Tab: React.FC<MaterialTopTabBarProps> = ({
@@ -54,15 +56,17 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
         const inputRange = state.routes.map((_, i) => i);
         const opacity = Animated.interpolateNode(position, {
           inputRange,
-          outputRange: inputRange.map(i => (i === index ? 1 : 0.5)),
+          outputRange: inputRange.map(i => (i === index ? RFValue(1) : 0.5)),
         });
         const borderWidth = Animated.interpolateNode(position, {
           inputRange,
-          outputRange: inputRange.map(i => (i === index ? 2 : 0)),
+          outputRange: inputRange.map(i => (i === index ? RFValue(2) : 0)),
         });
         const borderRadius = Animated.interpolateNode(position, {
           inputRange,
-          outputRange: inputRange.map(i => (i === index ? 15 : 10)),
+          outputRange: inputRange.map(i =>
+            i === index ? RFValue(15) : RFValue(10),
+          ),
         });
 
         return (
@@ -82,7 +86,7 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
             <View
               style={{
                 flex: 1,
-                height: 65,
+                height: RFValue(65),
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -93,12 +97,12 @@ const Tab: React.FC<MaterialTopTabBarProps> = ({
                   borderWidth,
                   borderColor: isFocused ? '#fff' : 'transparent',
                   opacity,
-                  fontSize: 14,
+                  fontSize: RFValue(14),
                   fontWeight: 'bold',
-                  letterSpacing: 1.19,
+                  letterSpacing: RFValue(1.19),
                   backgroundColor: '#DE595C',
                   width: '85%',
-                  paddingVertical: 12,
+                  paddingVertical: RFValue(12),
                   textAlign: 'center',
                   borderRadius,
                   color: isFocused ? '#fff' : '#9999',
