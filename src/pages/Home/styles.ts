@@ -5,6 +5,7 @@ import {
   BorderlessButtonProperties,
 } from 'react-native-gesture-handler';
 import styled, { css } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface BoxProps extends TouchableOpacityProps {
   deleteMode: boolean;
@@ -21,13 +22,13 @@ export const EmptyContainer: React.FC = styled.View`
 `;
 export const EmptyText: React.FC = styled.Text`
   color: #d4d4d4;
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
 `;
 export const EmptyButton: React.FC = styled.Text`
   background: #d4d4d4;
-  padding: 16px;
+  padding: ${RFValue(16)}px;
   align-items: center;
-  border-radius: 14px;
+  border-radius: ${RFValue(14)}px;
 `;
 export const EmptyIconMessage: React.FC = styled(MaterialIcons).attrs({
   name: 'message',
@@ -38,8 +39,8 @@ export const EmptyIconMessage: React.FC = styled(MaterialIcons).attrs({
 `;
 export const Content: React.FC = styled.View`
   flex: 1;
-  border-top-right-radius: 44px;
-  border-top-left-radius: 44px;
+  border-top-right-radius: ${RFValue(44)}px;
+  border-top-left-radius: ${RFValue(44)}px;
   background: ${props => props.theme.colors.background};
   background: ${props => props.theme.colors.background};
   position: relative;
@@ -47,15 +48,15 @@ export const Content: React.FC = styled.View`
 export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
   color: ${props => props.theme.colors.text};
-  padding: 28px;
+  padding: ${RFValue(28)}px;
 `;
 
 export const Box: React.FC<BoxProps> = styled.TouchableOpacity<BoxProps>`
   flex-direction: row;
   align-items: center;
-  padding: 16px 28px;
+  padding: ${RFValue(16)}px ${RFValue(28)}px;
   ${props =>
     props.deleteMode &&
     css`
@@ -64,19 +65,19 @@ export const Box: React.FC<BoxProps> = styled.TouchableOpacity<BoxProps>`
 `;
 export const BoxAvatarContainer: React.FC = styled.View`
   position: relative;
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
+  width: ${RFValue(60)}px;
+  height: ${RFValue(60)}px;
+  border-radius: ${RFValue(30)}px;
 `;
 export const BoxCircleOnline: React.FC = styled.View`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
+  width: ${RFValue(10)}px;
+  height: ${RFValue(10)}px;
+  border-radius: ${RFValue(5)}px;
   background: #0aa508;
 
-  bottom: 5px;
-  right: 5px;
+  bottom: ${RFValue(5)}px;
+  right: ${RFValue(5)}px;
 `;
 export const ContentBoxText = styled.View`
   flex: 1;
@@ -86,18 +87,18 @@ export const ViewRow = styled.View`
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  padding-left: 12px;
+  padding-left: ${RFValue(12)}px;
 `;
 export const BoxAvatar = styled.Image`
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
+  width: ${RFValue(60)}px;
+  height: ${RFValue(60)}px;
+  border-radius: ${RFValue(30)}px;
 `;
 export const BoxTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 6px;
+  font-size: ${RFValue(16)}px;
+  margin-bottom: ${RFValue(6)}px;
 
   color: ${props => props.theme.colors.text};
 `;
@@ -107,23 +108,23 @@ export const BoxDesc: React.FC = styled.Text.attrs({
 })`
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
-  max-width: 80%;
+  font-size: ${RFValue(12)}px;
+  max-width: ${RFValue(100)}px;
 
   color: #b5b5b5;
 `;
 export const TypingDesc: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: ${RFValue(12)}px;
 
   color: #0aa508;
 `;
 export const BoxCircle: React.FC = styled.View`
-  margin: 12px;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  margin: ${RFValue(12)}px;
+  width: ${RFValue(20)}px;
+  height: ${RFValue(20)}px;
+  border-radius: ${RFValue(10)}px;
   background: #de595c;
 
   align-items: center;
@@ -133,33 +134,31 @@ export const BoxCircle: React.FC = styled.View`
 export const BoxCircleText: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: ${RFValue(12)}px;
   color: #fceaeb;
 `;
-export const ButtonToAttendants: React.FC<BorderlessButtonProperties> = styled(
-  BorderlessButton,
-)`
+export const ButtonToAttendants = styled(BorderlessButton)`
   position: absolute;
-  bottom: 24px;
-  right: 24px;
-  width: 55px;
-  height: 55px;
+  bottom: ${RFValue(24)}px;
+  right: ${RFValue(24)}px;
+  width: ${RFValue(55)}px;
+  height: ${RFValue(55)}px;
 
   align-items: center;
   justify-content: center;
 
-  border-radius: 14px;
+  border-radius: ${RFValue(14)}px;
   background: #de595c;
 
   z-index: 999;
 `;
 export const IconMessage: React.FC = styled(MaterialIcons).attrs({
   name: 'message',
-  size: 24,
+  size: RFValue(24),
   color: '#fff',
 })``;
 export const HeaderDeleteMode: React.FC = styled.View`
-  padding: 28px;
+  padding: ${RFValue(28)}px;
   flex-direction: row;
   justify-content: space-between;
 `;
