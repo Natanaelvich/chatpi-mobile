@@ -1,50 +1,51 @@
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
   flex: 1;
   background: rgba(0, 0, 0, 0.3);
   justify-content: center;
-  padding: 0 18px;
+  padding: 0 ${RFValue(18)}px;
 `;
 export const ModalContent = styled.View`
   background: rgba(63, 58, 121, 0.81);
-  padding: 23px 11px 8px;
-  border-radius: 6px;
-  width: 263px;
-  height: 254px;
+  padding: ${RFValue(23)}px ${RFValue(11)}px ${RFValue(8)}px;
+  border-radius: ${RFValue(6)}px;
+  width: ${RFValue(263)}px;
+  height: ${RFValue(254)}px;
   align-self: center;
   position: relative;
 `;
 export const ButtonClose = styled.TouchableOpacity`
   position: absolute;
-  right: 6px;
-  top: 6px;
+  right: ${RFValue(6)}px;
+  top: ${RFValue(6)}px;
 `;
 export const Desc = styled.Text`
-  margin-bottom: 12px;
+  margin-bottom: ${RFValue(12)}px;
   font-style: normal;
   font-weight: normal;
-  font-size: 11px;
-  line-height: 13px;
+  font-size: ${RFValue(11)}px;
+  line-height: ${RFValue(13)}px;
 
   color: #ffffff;
 `;
 export const TextArea = styled.TextInput.attrs({})`
-  height: 42px;
+  height: ${RFValue(42)}px;
   background: rgba(31, 29, 60, 1);
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 6px;
-  margin-top: 30px;
-  font-size: 14px;
+  border-radius: ${RFValue(6)}px;
+  padding: ${RFValue(12)}px;
+  margin-bottom: ${RFValue(6)}px;
+  margin-top: ${RFValue(30)}px;
+  font-size: ${RFValue(14)}px;
   color: #ffffff;
 `;
 export const Button = styled.TouchableOpacity`
-  width: 226px;
-  height: 36px;
+  width: ${RFValue(226)}px;
+  height: ${RFValue(36)}px;
 
   background: #c85d67;
-  border-radius: 9px;
+  border-radius: ${RFValue(9)}px;
   align-self: center;
 
   align-items: center;
@@ -52,15 +53,15 @@ export const Button = styled.TouchableOpacity`
   margin-top: auto;
 `;
 export const ButtonText = styled.Text`
-  font-size: 15px;
+  font-size: ${RFValue(15)}px;
   color: #ffffff;
 `;
 export const ModalTitle = styled.Text`
   align-self: center;
-  margin-bottom: 12px;
+  margin-bottom: ${RFValue(12)}px;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
+  font-size: ${RFValue(18)}px;
+  line-height: ${RFValue(21)}px;
   color: #fff;
 `;
