@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
 import { Alert, LayoutAnimation, Platform, UIManager } from 'react-native';
 import * as Notifications from 'expo-notifications';
+
 import {
   Container,
   Content,
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { attendants } = useSelector((state: RootState) => state.attendants);
+  const { users } = useSelector((state: RootState) => state.attendants);
   const { user } = useSelector((state: RootState) => state.user);
   const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
@@ -163,7 +164,7 @@ const Home: React.FC = () => {
   );
 
   const messagesUsers = useMemo(() => {
-    const usersTemp = attendants
+    const usersTemp = users
       .filter(a => !!messages.find(m => m.id === a.id))
       .map(a => ({
         ...a,
@@ -177,7 +178,7 @@ const Home: React.FC = () => {
       );
 
     return usersTemp;
-  }, [attendants, messages, getLastMessage]);
+  }, [users, messages, getLastMessage]);
 
   const getMessagesNoReadedsArray = useCallback(
     attendant => {
@@ -197,6 +198,7 @@ const Home: React.FC = () => {
     setUserSelecteds([]);
     setDeleteModeMessage(false);
   }
+
   return (
     <Container>
       <Content>
