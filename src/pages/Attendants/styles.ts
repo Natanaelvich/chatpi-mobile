@@ -3,12 +3,9 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import {
-  ImageProps,
-  ScrollViewProps,
-  TouchableOpacityProps,
-} from 'react-native';
+import { ScrollViewProps } from 'react-native';
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container: React.FC = styled.View`
   position: relative;
@@ -17,28 +14,26 @@ export const Container: React.FC = styled.View`
 `;
 export const Content: React.FC = styled.View`
   flex: 1;
-  border-top-right-radius: 44px;
-  border-top-left-radius: 44px;
+  border-top-right-radius: ${RFValue(44)}px;
+  border-top-left-radius: ${RFValue(44)}px;
   background: ${props => props.theme.colors.background};
-  padding-top: 28px;
+  padding-top: ${RFValue(28)}px;
 `;
-export const ContentScroll: React.FC<ScrollViewProps> = styled.ScrollView.attrs(
-  {
-    keyboardShouldPersistTaps: 'always',
-    contentContainerStyle: { paddingHorizontal: 12 },
-  } as ScrollViewProps,
-)``;
+export const ContentScroll = styled.ScrollView.attrs({
+  keyboardShouldPersistTaps: 'always',
+  contentContainerStyle: { paddingHorizontal: 12 },
+})<ScrollViewProps>``;
 export const ContentTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
+  font-size: ${RFValue(18)}px;
   color: ${props => props.theme.colors.text};
-  margin: 0 0 21px 21px;
+  margin: 0 0 ${RFValue(21)}px ${RFValue(21)}px;
 `;
 export const Section: React.FC = styled.View`
   flex-direction: row;
   align-items: baseline;
-  margin: 12px 0;
+  margin: ${RFValue(12)}px 0;
 `;
 export const IconNurse: React.FC = styled(FontAwesome5).attrs(props => ({
   name: 'user-nurse',
@@ -55,22 +50,22 @@ export const IconBrain: React.FC = styled(MaterialCommunityIcons).attrs(
 export const SectionTitle: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 14px;
+  font-size: ${RFValue(14)}px;
   color: ${props => props.theme.colors.text};
-  margin-right: 12px;
+  margin-right: ${RFValue(12)}px;
 `;
-export const Box: React.FC<TouchableOpacityProps> = styled.TouchableOpacity`
+export const Box = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: ${RFValue(24)}px;
 `;
-export const BoxAvatar: React.FC<ImageProps> = styled.Image`
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
+export const BoxAvatar = styled.Image`
+  width: ${RFValue(60)}px;
+  height: ${RFValue(60)}px;
+  border-radius: ${RFValue(30)}px;
 `;
 export const BoxTextContainer: React.FC = styled.View`
-  margin-left: 16px;
+  margin-left: ${RFValue(16)}px;
   flex: 1;
 `;
 export const BoxTitle: React.FC = styled.Text.attrs({
@@ -79,15 +74,15 @@ export const BoxTitle: React.FC = styled.Text.attrs({
 })`
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 6px;
+  font-size: ${RFValue(16)}px;
+  margin-bottom: ${RFValue(6)}px;
 
   color: ${props => props.theme.colors.text};
 `;
 export const BoxDesc: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: ${RFValue(12)}px;
 
   color: #b5b5b5;
 `;
