@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import * as Sentry from '@sentry/react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,11 +29,19 @@ import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
 import env from '../../../env';
 import getAvatarUrl from '../../utils/getAvatarUrl';
+import { UserContent } from '../../store/modules/user/reducer';
+
+type ParamList = {
+  Chat: {
+    user: UserContent;
+  };
+};
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
-  const router = useRoute();
+  const router = useRoute<RouteProp<ParamList, 'Chat'>>();
+
   const { goBack, navigate } = useNavigation();
   const { user } = useSelector((state: RootState) => state.user);
   const { messages } = useSelector((state: RootState) => state.messages);
@@ -124,7 +132,7 @@ const Chat: React.FC = () => {
               {typers && typers[userParam.id] ? (
                 <Status author={false}>Digitando...</Status>
               ) : (
-                <Status>
+                <Status author>
                   {usersLoggeds && usersLoggeds[userParam.id]
                     ? 'Online'
                     : 'Offline'}
@@ -157,6 +165,8 @@ const Chat: React.FC = () => {
         <InputMessageCotainer>
           <InputMessage
             multiline
+            autoCorrect={false}
+            autoCapitalize="none"
             value={message}
             onChangeText={text => {
               setMessage(text);
