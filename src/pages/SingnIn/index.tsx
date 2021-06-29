@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,6 +25,7 @@ import {
 } from './styles';
 import { signInRequest } from '../../store/modules/user/actions';
 import { RootState } from '../../store/modules/rootReducer';
+import { database, ModelMessage } from '../../database';
 
 const SingnIn: React.FC = () => {
   const dispatch = useDispatch();
@@ -36,6 +38,16 @@ const SingnIn: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const loadMessages = async (): Promise<void> => {
+    const messageCollection = database.get<ModelMessage>('messages');
+    const messages = await messageCollection.query().fetch();
+
+    console.tron(messages);
+  };
+
+  useEffect(() => {
+    loadMessages();
+  }, []);
 
   useEffect(() => {
     if (__DEV__) {
@@ -48,6 +60,27 @@ const SingnIn: React.FC = () => {
     dispatch(signInRequest(email, password));
   }, [email, password, dispatch]);
 
+  async function handleCreateMessage(): Promise<void> {
+    try {
+      const messageCollection = database.get<ModelMessage>('messages');
+
+      await database.action(async () => {
+        await messageCollection.create(newMessage => {
+          newMessage.user = '12312asdasdasd12313';
+          newMessage.toUser = '123123asdadasdads123123';
+          newMessage.message = 'OLAAAAAAAAAAAAAAAAAAAA';
+          newMessage.readed = 'true';
+          newMessage.date = new Date();
+          newMessage.name = 'que';
+        });
+      });
+    } catch (error) {
+      console.tron(error);
+    }
+  }
+  function handleLoadMessages(): void {
+    loadMessages();
+  }
   return (
     <Container>
       <FormContainer>
@@ -106,6 +139,12 @@ const SingnIn: React.FC = () => {
           <ForgotPassword>Esqueci minha senha</ForgotPassword>
         </ForgotPasswordButton>
       </FormContainer>
+      <Button onPress={handleCreateMessage} loading={false}>
+        <ButtonText>Create message</ButtonText>
+      </Button>
+      <Button onPress={handleLoadMessages} loading={false}>
+        <ButtonText>Load messages</ButtonText>
+      </Button>
       <CreateAccountContainer onPress={() => navigation.navigate('SingnUp')}>
         <Feather name="log-in" size={24} color="#de595c" />
         <CreateAccountText>Criar uma conta</CreateAccountText>
