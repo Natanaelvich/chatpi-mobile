@@ -20,12 +20,8 @@ export const messageSchema = tableSchema({
       type: 'string',
     },
     {
-      name: 'id',
-      type: 'string',
-    },
-    {
       name: 'date',
-      type: 'number',
+      type: 'string',
     },
     {
       name: 'name',

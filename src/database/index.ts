@@ -15,4 +15,4 @@ export const database = new Database({
   actionsEnabled: true,
 });
 
-export { Message as MessageUser } from './model/Message';
+export { Message as ModelMessage } from './model/Message';

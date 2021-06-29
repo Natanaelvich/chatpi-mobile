@@ -2,7 +2,7 @@ import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
 export class Message extends Model {
-  static table = 'cars';
+  static table = 'messages';
 
   @field('user')
   user!: string;
@@ -15,9 +15,6 @@ export class Message extends Model {
 
   @field('readed')
   readed!: string;
-
-  @field('id')
-  id!: string;
 
   @field('date')
   date!: Date;
