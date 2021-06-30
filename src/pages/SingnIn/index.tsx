@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
+import { TextInput } from 'react-native';
 import {
   Container,
   Title,
@@ -25,11 +26,11 @@ import {
 } from './styles';
 import { signInRequest } from '../../store/modules/user/actions';
 import { RootState } from '../../store/modules/rootReducer';
-import { database, ModelMessage } from '../../database';
+// import { database, ModelMessage } from '../../database';
 
 const SingnIn: React.FC = () => {
   const dispatch = useDispatch();
-  const passwordRef = useRef();
+  const passwordRef = useRef<TextInput>();
   const navigation = useNavigation();
 
   const { signinError, loadingSingin } = useSelector(
@@ -38,16 +39,16 @@ const SingnIn: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const loadMessages = async (): Promise<void> => {
-    const messageCollection = database.get<ModelMessage>('messages');
-    const messages = await messageCollection.query().fetch();
+  // const loadMessages = async (): Promise<void> => {
+  //   const messageCollection = database.get<ModelMessage>('messages');
+  //   const messages = await messageCollection.query().fetch();
 
-    console.tron(messages);
-  };
+  //   console.tron(messages);
+  // };
 
-  useEffect(() => {
-    loadMessages();
-  }, []);
+  // useEffect(() => {
+  //   loadMessages();
+  // }, []);
 
   useEffect(() => {
     if (__DEV__) {
@@ -60,27 +61,27 @@ const SingnIn: React.FC = () => {
     dispatch(signInRequest(email, password));
   }, [email, password, dispatch]);
 
-  async function handleCreateMessage(): Promise<void> {
-    try {
-      const messageCollection = database.get<ModelMessage>('messages');
+  // async function handleCreateMessage(): Promise<void> {
+  //   try {
+  //     const messageCollection = database.get<ModelMessage>('messages');
 
-      await database.action(async () => {
-        await messageCollection.create(newMessage => {
-          newMessage.user = '12312asdasdasd12313';
-          newMessage.toUser = '123123asdadasdads123123';
-          newMessage.message = 'OLAAAAAAAAAAAAAAAAAAAA';
-          newMessage.readed = 'true';
-          newMessage.date = new Date();
-          newMessage.name = 'que';
-        });
-      });
-    } catch (error) {
-      console.tron(error);
-    }
-  }
-  function handleLoadMessages(): void {
-    loadMessages();
-  }
+  //     await database.action(async () => {
+  //       await messageCollection.create(newMessage => {
+  //         newMessage.user = '12312asdasdasd12313';
+  //         newMessage.toUser = '123123asdadasdads123123';
+  //         newMessage.message = 'OLAAAAAAAAAAAAAAAAAAAA';
+  //         newMessage.readed = 'true';
+  //         newMessage.date = new Date();
+  //         newMessage.name = 'que';
+  //       });
+  //     });
+  //   } catch (error) {
+  //     console.tron(error);
+  //   }
+  // }
+  // function handleLoadMessages(): void {
+  //   loadMessages();
+  // }
   return (
     <Container>
       <FormContainer>
@@ -139,12 +140,12 @@ const SingnIn: React.FC = () => {
           <ForgotPassword>Esqueci minha senha</ForgotPassword>
         </ForgotPasswordButton>
       </FormContainer>
-      <Button onPress={handleCreateMessage} loading={false}>
+      {/* <Button onPress={handleCreateMessage} loading={false}>
         <ButtonText>Create message</ButtonText>
       </Button>
       <Button onPress={handleLoadMessages} loading={false}>
         <ButtonText>Load messages</ButtonText>
-      </Button>
+      </Button> */}
       <CreateAccountContainer onPress={() => navigation.navigate('SingnUp')}>
         <Feather name="log-in" size={24} color="#de595c" />
         <CreateAccountText>Criar uma conta</CreateAccountText>
