@@ -1,10 +1,8 @@
 import axios from 'axios';
-
-const { BASE_URL_DEV } = process.env;
-const { BASE_URL_PRO } = process.env;
+import { BASE_URL } from '../components/config';
 
 const api = axios.create({
-  baseURL: !__DEV__ ? BASE_URL_DEV : BASE_URL_PRO,
+  baseURL: BASE_URL,
 });
 
 export default api;
