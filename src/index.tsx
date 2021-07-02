@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar, UIManager } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
@@ -23,6 +23,18 @@ Sentry.init({
 });
 
 OneSignal.setAppId(ONESIGNAL_KEY as string);
+
+OneSignal.setNotificationWillShowInForegroundHandler(notifReceivedEvent => {
+  const notif = notifReceivedEvent.getNotification();
+  notifReceivedEvent.complete(notif);
+});
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const Main: React.FC = () => {
   const [fontsLoaded] = useFonts({
