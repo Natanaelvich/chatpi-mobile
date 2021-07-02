@@ -4,7 +4,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
-import { LayoutAnimation, Platform, UIManager } from 'react-native';
+import { LayoutAnimation } from 'react-native';
 import {
   Container,
   Title,
@@ -29,13 +29,6 @@ import {
 import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
 import ModalProVerification from './ModalProVerification';
-
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
