@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { fireEvent, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
 
 import SingnUp from '../../pages/SingnUp';
-import { renderWithReduxAndTheme } from '../test-utils';
 import api from '../../services/api';
+import RenderWithProviders from '../RenderWithProviders';
 
 const mockedNavigate = jest.fn();
 const mockedGoback = jest.fn();
@@ -17,8 +17,8 @@ jest.mock('@react-navigation/native', () => ({
 
 describe('SignUp page', () => {
   it('Should contains name/email/password inputs', async () => {
-    const { getByPlaceholderText } = renderWithReduxAndTheme(<SingnUp />, {
-      initialState: {},
+    const { getByPlaceholderText } = render(<SingnUp />, {
+      wrapper: RenderWithProviders,
     });
 
     expect(getByPlaceholderText('Nome')).toBeTruthy();
@@ -27,8 +27,8 @@ describe('SignUp page', () => {
   });
 
   it('Should to able navigate to back signin', () => {
-    const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
-      initialState: {},
+    const { getByText } = render(<SingnUp />, {
+      wrapper: RenderWithProviders,
     });
 
     const buttonElement = getByText('Voltar para login');
@@ -39,10 +39,9 @@ describe('SignUp page', () => {
   });
 
   it('Should to able to signup', () => {
-    const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
-      initialState: {},
+    const { getByText } = render(<SingnUp />, {
+      wrapper: RenderWithProviders,
     });
-
     const buttonElement = getByText('Cadastrar');
 
     fireEvent.press(buttonElement);
@@ -58,8 +57,8 @@ describe('SignUp page', () => {
       clerk: '',
     });
 
-    const { getByText } = renderWithReduxAndTheme(<SingnUp />, {
-      initialState: {},
+    const { getByText } = render(<SingnUp />, {
+      wrapper: RenderWithProviders,
     });
 
     const buttonElementSignup = getByText('Cadastrar');
