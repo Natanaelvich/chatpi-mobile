@@ -7,6 +7,7 @@ import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
 import * as Sentry from '@sentry/react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message';
+import OneSignal from 'react-native-onesignal';
 
 import Routes from './routes';
 import { persistor, store } from './store';
@@ -16,7 +17,10 @@ import env from '../env';
 Sentry.init({
   dsn: env.SENTRY_DNS,
   debug: false,
+  enabled: !__DEV__,
 });
+
+OneSignal.setAppId(env.ONESIGNAL_KEY);
 
 const Main: React.FC = () => {
   const [fontsLoaded] = useFonts({
