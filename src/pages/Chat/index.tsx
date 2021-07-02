@@ -27,9 +27,10 @@ import {
 } from './styles';
 import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
-import env from '../../../env';
+
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { UserContent } from '../../store/modules/user/reducer';
+import { BASE_URL } from '../../components/config';
 
 type ParamList = {
   Chat: {
@@ -124,7 +125,7 @@ const Chat: React.FC = () => {
               source={{
                 uri:
                   getAvatarUrl(userParam.avatar_url) ||
-                  `${env.API_URL}/myAvatars/${userParam.id}`,
+                  `${BASE_URL}/myAvatars/${userParam.id}`,
               }}
             />
             <ContainerText>

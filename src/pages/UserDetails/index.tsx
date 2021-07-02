@@ -14,8 +14,8 @@ import {
   IconBack,
 } from './styles';
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import env from '../../../env';
 import ModalComponent from '../../components/Modal';
+import { BASE_URL } from '../../components/config';
 
 const UserDetails: React.FC = () => {
   const router = useRoute();
@@ -43,7 +43,7 @@ const UserDetails: React.FC = () => {
             source={{
               uri:
                 getAvatarUrl(user?.avatar_url) ||
-                `${env.API_URL}/myAvatars/${user?.id}`,
+                `${BASE_URL}/myAvatars/${user?.id}`,
             }}
           />
         </AvatarContainer>
@@ -67,7 +67,7 @@ const UserDetails: React.FC = () => {
           source={{
             uri:
               getAvatarUrl(user?.avatar_url) ||
-              `${env.API_URL}/myAvatars/${user?.id}`,
+              `${BASE_URL}/myAvatars/${user?.id}`,
           }}
         />
       </ModalComponent>

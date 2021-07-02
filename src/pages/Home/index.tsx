@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Constants, Permissions } from 'react-native-unimodules';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
-import { Alert, LayoutAnimation, Platform, UIManager } from 'react-native';
-import * as Notifications from 'expo-notifications';
+import { LayoutAnimation, Platform, UIManager } from 'react-native';
 
 import {
   Container,
@@ -39,7 +37,7 @@ import {
   deleteMessage,
   deleteAllMessage,
 } from '../../store/modules/messages/actions';
-import env from '../../../env';
+
 import {
   addSocket,
   addTypers,
@@ -49,6 +47,7 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalDelete from '../../components/ModalDelete';
 import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
+import { BASE_URL } from '../../components/config';
 
 if (
   Platform.OS === 'android' &&
@@ -78,52 +77,6 @@ const Home: React.FC = () => {
       query: { user: user?.user.id },
     });
   }, [user]);
-
-  // const registerForPushNotificationsAsync = useCallback(async () => {
-  //   if (Constants.isDevice) {
-  //     const { status: existingStatus } = await Permissions.getAsync(
-  //       Permissions.NOTIFICATIONS,
-  //     );
-  //     let finalStatus = existingStatus;
-  //     if (existingStatus !== 'granted') {
-  //       const { status } = await Permissions.askAsync(
-  //         Permissions.NOTIFICATIONS,
-  //       );
-  //       finalStatus = status;
-  //     }
-  //     if (finalStatus !== 'granted') {
-  //       Alert.alert('Failed to get push token for push notification!');
-  //       return;
-  //     }
-  //     const tokenExpo = await Notifications.getExpoPushTokenAsync();
-  //     socket.emit('expoToken', tokenExpo.data);
-  //   } else {
-  //     const tokenExpo = await Notifications.getExpoPushTokenAsync();
-  //     socket.emit('expoToken', tokenExpo.data);
-  //   }
-
-  //   if (Platform.OS === 'android') {
-  //     Notifications.setNotificationChannelAsync('default', {
-  //       name: 'default',
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //     });
-
-  //     Notifications.setNotificationHandler({
-  //       handleNotification: async () => ({
-  //         shouldShowAlert: true,
-  //         shouldPlaySound: false,
-  //         shouldSetBadge: false,
-  //       }),
-  //     });
-
-  //     Notifications.dismissAllNotificationsAsync();
-  //   }
-  // }, [socket]);
-
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync();
-  // }, [registerForPushNotificationsAsync]);
 
   useEffect(() => {
     dispatch(addSocket(socket));
@@ -275,7 +228,7 @@ const Home: React.FC = () => {
                     source={{
                       uri:
                         getAvatarUrl(a.avatar_url) ||
-                        `${env.API_URL}/myAvatars/${a.id}`,
+                        `${BASE_URL}/myAvatars/${a.id}`,
                     }}
                     resizeMode="cover"
                   />

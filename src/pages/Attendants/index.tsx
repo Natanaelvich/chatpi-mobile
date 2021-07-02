@@ -22,8 +22,8 @@ import {
   getUsers,
 } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
-import env from '../../../env';
 import getAvatarUrl from '../../utils/getAvatarUrl';
+import { BASE_URL } from '../../components/config';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const Attendants: React.FC = () => {
                   source={{
                     uri:
                       getAvatarUrl(a.avatar_url) ||
-                      `${env.API_URL}/myAvatars/${a.id}`,
+                      `${BASE_URL}/myAvatars/${a.id}`,
                   }}
                   resizeMode="cover"
                 />
@@ -94,7 +94,7 @@ const Attendants: React.FC = () => {
                   source={{
                     uri:
                       getAvatarUrl(a.avatar_url) ||
-                      `${env.API_URL}/myAvatars/${a.id}`,
+                      `${BASE_URL}/myAvatars/${a.id}`,
                   }}
                   resizeMode="cover"
                 />

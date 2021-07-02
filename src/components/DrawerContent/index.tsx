@@ -8,7 +8,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { RootState } from '../../store/modules/rootReducer';
-import env from '../../../env';
 import {
   Avatar,
   DrawerContent as DrawerContentStyle,
@@ -27,6 +26,7 @@ import { signOut } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
+import { BASE_URL } from '../config';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
                 source={{
                   uri:
                     getAvatarUrl(user?.user.avatar_url) ||
-                    `${env.API_URL}/myAvatars/${user?.user.id}`,
+                    `${BASE_URL}/myAvatars/${user?.user.id}`,
                 }}
               />
               <View

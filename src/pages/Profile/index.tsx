@@ -39,10 +39,11 @@ import {
 } from '../SingnUp/styles';
 import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import env from '../../../env';
+
 import ModalComponent from '../../components/Modal';
 import { updateAvatar, updateUser } from '../../store/modules/user/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
+import { BASE_URL } from '../../components/config';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
@@ -194,7 +195,7 @@ const Profile: React.FC = () => {
                 source={{
                   uri:
                     getAvatarUrl(user?.user.avatar_url) ||
-                    `${env.API_URL}/myAvatars/${user?.user.id}`,
+                    `${BASE_URL}/myAvatars/${user?.user.id}`,
                 }}
               />
               <ButtonCamera onPress={pickImage}>
@@ -285,7 +286,7 @@ const Profile: React.FC = () => {
           source={{
             uri:
               getAvatarUrl(user?.user.avatar_url) ||
-              `${env.API_URL}/myAvatars/${user?.user.id}`,
+              `${BASE_URL}/myAvatars/${user?.user.id}`,
           }}
         />
       </ModalComponent>
