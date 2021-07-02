@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import io from 'socket.io-client';
-import { LayoutAnimation, Platform, UIManager } from 'react-native';
+import { LayoutAnimation } from 'react-native';
 
+import OneSignal from 'react-native-onesignal';
 import {
   Container,
   Content,
@@ -49,13 +50,6 @@ import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
 import { BASE_URL } from '../../components/config';
 
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
-
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -73,7 +67,7 @@ const Home: React.FC = () => {
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
   const socket = useMemo(() => {
-    return io('https://api.pi.mundotech.dev', {
+    return io(BASE_URL as string, {
       query: { user: user?.user.id },
     });
   }, [user]);
@@ -107,6 +101,21 @@ const Home: React.FC = () => {
       );
     });
   }, [socket, dispatch]);
+
+  useEffect(() => {
+    async function getOneSignalSubscribeData(): Promise<void> {
+      OneSignal.addSubscriptionObserver(event => {
+        socket.emit('player_id_onesignal', event?.from.userId);
+      });
+
+      const state = await OneSignal.getDeviceState();
+      if (state?.userId) {
+        socket.emit('player_id_onesignal', state?.userId);
+      }
+    }
+
+    getOneSignalSubscribeData();
+  }, [socket]);
 
   const getLastMessage = useCallback(
     userMessage => {
@@ -152,6 +161,7 @@ const Home: React.FC = () => {
     setDeleteModeMessage(false);
   }
 
+  console.tron(messagesUsers);
   return (
     <Container>
       <Content>
