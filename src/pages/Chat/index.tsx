@@ -1,5 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
+import { ScrollView } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +41,7 @@ type ParamList = {
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollView>();
   const router = useRoute<RouteProp<ParamList, 'Chat'>>();
 
   const { goBack, navigate } = useNavigation();
@@ -76,12 +77,14 @@ const Chat: React.FC = () => {
   const sendMessage = useCallback(() => {
     if (userParam) {
       const messageJsonString = JSON.stringify({
-        user: user?.user.id,
-        toUser: userParam.id,
+        user: user?.user?.id,
+        toUser: userParam?.id,
         message,
         readed: false,
         date: new Date(),
-        name: user?.user.name,
+        name: user?.user?.name,
+        largeIcon:
+          user?.user?.avatar_url || `${BASE_URL}/myAvatars/${user?.user?.id}`,
       });
 
       if (socket) {
@@ -148,7 +151,7 @@ const Chat: React.FC = () => {
       </Header>
       <Content>
         <Messages
-          ref={scrollRef}
+          ref={scrollRef as any}
           onContentSizeChange={() => {
             scrollRef.current?.scrollToEnd({ animated: true });
           }}
