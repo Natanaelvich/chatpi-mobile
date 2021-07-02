@@ -12,15 +12,17 @@ import OneSignal from 'react-native-onesignal';
 import Routes from './routes';
 import { persistor, store } from './store';
 import GlobalStyles from './styles';
-import env from '../env';
+
+const { SENTRY_DNS } = process.env;
+const { ONESIGNAL_KEY } = process.env;
 
 Sentry.init({
-  dsn: env.SENTRY_DNS,
+  dsn: SENTRY_DNS,
   debug: false,
   enabled: !__DEV__,
 });
 
-OneSignal.setAppId(env.ONESIGNAL_KEY);
+OneSignal.setAppId(ONESIGNAL_KEY as string);
 
 const Main: React.FC = () => {
   const [fontsLoaded] = useFonts({
