@@ -4,7 +4,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
-import { LayoutAnimation } from 'react-native';
+import { LayoutAnimation, TextInput } from 'react-native';
 import {
   Container,
   Title,
@@ -32,8 +32,8 @@ import ModalProVerification from './ModalProVerification';
 
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -145,7 +145,7 @@ const SingnUp: React.FC = () => {
               LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
               setAttendant(e);
             }}
-            color="#DE595C"
+            tintColors={{ true: '#DE595C' }}
           />
         </CheckBoxContainer>
 
@@ -153,7 +153,9 @@ const SingnUp: React.FC = () => {
           <SelectContainer>
             <Select
               selectedValue={attendantType}
-              onValueChange={setAttendantType}
+              onValueChange={(value, _) => {
+                setAttendantType(value as string);
+              }}
             >
               <Select.Item
                 label="Selecione uma opção"
