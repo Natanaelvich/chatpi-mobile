@@ -53,14 +53,20 @@ export const LabelCheckBox = styled.Text`
   margin-right: ${RFValue(6)}px;
   letter-spacing: ${RFValue(0.89)}px;
 `;
-export const SelectContainer = styled.View`
+export const SelectContainer = styled.View<{ error: boolean }>`
   width: 100%;
   height: ${RFValue(50)}px;
   background: #9c9ab1;
   color: #f00;
-  margin-bottom: ${RFValue(12)}px;
   border-radius: ${RFValue(12)}px;
   justify-content: center;
+
+  ${({ error }) =>
+    error &&
+    css`
+      border-width: 2px;
+      border-color: ${({ theme }) => theme.colors.danger};
+    `}
 `;
 export const Select = styled(Picker)`
   flex: 1;
@@ -80,6 +86,7 @@ export const Button = styled(RectButton)<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: ${RFValue(6)}px;
 `;
 export const ButtonText = styled.Text`
   font-size: ${RFValue(14)}px;
@@ -111,7 +118,7 @@ export const InputContainer = styled.View<{ error: boolean }>`
   background: #9c9ab1;
   border-radius: ${RFValue(10)}px;
 
-  padding: 0 ${RFValue(8)}px;
+  padding: 0 ${RFValue(8)}px 0 0;
   border-width: ${RFValue(1)}px;
   border-color: transparent;
 
@@ -152,7 +159,7 @@ export const IconUser = styled(Feather).attrs(props => ({
 export const MessageErrorValidation = styled.Text`
   margin-bottom: ${RFValue(4)}px;
   align-self: flex-start;
-  padding-left: ${RFValue(24)}px;
+  padding-left: ${RFValue(16)}px;
   font-size: ${RFValue(12)}px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.danger};

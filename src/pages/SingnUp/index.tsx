@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Checkbox from '@react-native-community/checkbox';
-import Toast from 'react-native-toast-message';
+// import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
 import { Formik } from 'formik';
 
@@ -41,7 +41,10 @@ const SingnUp: React.FC = () => {
 
   const [attendant, setAttendant] = useState(false);
   const [attendantType, setAttendantType] = useState('');
-
+  const [errorValidationAttendant, setErrorValidationAttendant] = useState({
+    error: false,
+    message: '',
+  });
   const [loading, setLoading] = useState(false);
   const [errorSingnUp, setErrorSingnUp] = useState(false);
   const [messageError, setMessageError] = useState('');
@@ -79,6 +82,20 @@ const SingnUp: React.FC = () => {
   //   }
   // }, [name, email, password, navigation, attendantType, attendant]);
 
+  function validationAttendant(): void {
+    if (attendant && !attendantType) {
+      setErrorValidationAttendant({
+        error: true,
+        message: 'Tipo de atendente é obrigatório',
+      });
+    } else {
+      setErrorValidationAttendant({
+        error: false,
+        message: '',
+      });
+    }
+  }
+
   function handleSave(values: any) {
     console.log(values);
   }
@@ -111,9 +128,9 @@ const SingnUp: React.FC = () => {
           onSubmit={handleSave}
           validationSchema={getSchema()}
         >
-          {({ values, handleChange, errors, handleSubmit }) => (
+          {({ values, handleChange, errors, handleSubmit, touched }) => (
             <>
-              <InputContainer error={!!errors.name && !!values.name}>
+              <InputContainer error={!!touched.name && !!errors.name}>
                 <Input
                   value={values.name}
                   onChangeText={handleChange('name')}
@@ -126,9 +143,9 @@ const SingnUp: React.FC = () => {
                 <IconUser />
               </InputContainer>
               <MessageErrorValidation>
-                {!!values.name && errors?.name}
+                {!!touched.name && errors?.name}
               </MessageErrorValidation>
-              <InputContainer error={!!errors.email && !!values.email}>
+              <InputContainer error={!!touched.email && !!errors.email}>
                 <Input
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -142,9 +159,9 @@ const SingnUp: React.FC = () => {
                 <IconMail />
               </InputContainer>
               <MessageErrorValidation>
-                {!!values.email && errors?.email}
+                {!!touched.email && errors?.email}
               </MessageErrorValidation>
-              <InputContainer error={!!errors.password && !!values.password}>
+              <InputContainer error={!!touched.password && !!errors.password}>
                 <Input
                   value={values.password}
                   onChangeText={handleChange('password')}
@@ -157,7 +174,7 @@ const SingnUp: React.FC = () => {
                 <IconKey />
               </InputContainer>
               <MessageErrorValidation>
-                {!!values.password && errors?.password}
+                {!!touched.password && errors?.password}
               </MessageErrorValidation>
 
               <CheckBoxContainer>
@@ -176,36 +193,43 @@ const SingnUp: React.FC = () => {
               </CheckBoxContainer>
 
               {attendant && (
-                <SelectContainer>
-                  <Select
-                    selectedValue={attendantType}
-                    onValueChange={(value, _) => {
-                      setAttendantType(value as string);
-                    }}
-                  >
-                    <Select.Item
-                      label="Selecione uma opção"
-                      value=""
-                      color="#343152"
-                    />
-                    <Select.Item
-                      label="Enfermeiro(a)"
-                      value="enf"
-                      color="#343152"
-                    />
-                    <Select.Item
-                      label="Psicólogo(a)"
-                      value="psic"
-                      color="#343152"
-                    />
-                  </Select>
-                </SelectContainer>
+                <>
+                  <SelectContainer error={errorValidationAttendant.error}>
+                    <Select
+                      selectedValue={attendantType}
+                      onValueChange={(value, _) => {
+                        setAttendantType(value as string);
+                      }}
+                    >
+                      <Select.Item
+                        label="Selecione uma opção"
+                        value=""
+                        color="#343152"
+                      />
+                      <Select.Item
+                        label="Enfermeiro(a)"
+                        value="enf"
+                        color="#343152"
+                      />
+                      <Select.Item
+                        label="Psicólogo(a)"
+                        value="psic"
+                        color="#343152"
+                      />
+                    </Select>
+                  </SelectContainer>
+                  <MessageErrorValidation>
+                    {errorValidationAttendant.error &&
+                      errorValidationAttendant.message}
+                  </MessageErrorValidation>
+                </>
               )}
 
               <Button
                 loading={loading}
                 onPress={() => {
                   console.log(errors);
+                  validationAttendant();
                   handleSubmit();
                 }}
               >
