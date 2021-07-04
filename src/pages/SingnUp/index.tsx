@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Checkbox from '@react-native-community/checkbox';
-// import Toast from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
 import { Formik } from 'formik';
 
@@ -47,57 +47,61 @@ const SingnUp: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [errorSingnUp, setErrorSingnUp] = useState(false);
-  const [messageError, setMessageError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [valuesForm, setValuesForm] = useState();
 
-  // const hanleSignUp = useCallback(async () => {
-  //   try {
-  //     setLoading(true);
+  const hanleSignUp = useCallback(async () => {
+    try {
+      setLoading(true);
 
-  //     if (attendant && attendantType === '') {
-  //       setErrorSingnUp(true);
-  //       setMessageError('Selecione o tipo de atendente que você deseja ser.');
-  //       return;
-  //     }
+      const {
+        name,
+        email,
+        password,
+        attedantType: attedantTypeForm,
+      } = valuesForm as any;
 
-  //     await api.post('users', {
-  //       name,
-  //       email,
-  //       password,
-  //       clerk: attendantType !== '' ? attendantType : null,
-  //     });
-  //     setErrorSingnUp(false);
-  //     navigation.navigate('SingnIn');
-  //     Toast.show({
-  //       text1: 'Parabéns',
-  //       text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
-  //       visibilityTime: 3000,
-  //       type: 'success',
-  //     });
-  //   } catch (error) {
-  //     setErrorSingnUp(true);
-  //   } finally {
-  //     setLoading(false);
-  //     setModalVisible(false);
-  //   }
-  // }, [name, email, password, navigation, attendantType, attendant]);
+      await api.post('users', {
+        name,
+        email,
+        password,
+        clerk: attedantTypeForm || null,
+      });
 
-  function validationAttendant(): void {
+      setErrorSingnUp(false);
+      navigation.navigate('SingnIn');
+
+      Toast.show({
+        text1: 'Parabéns',
+        text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
+        visibilityTime: 3000,
+        type: 'success',
+      });
+    } catch (error) {
+      setErrorSingnUp(true);
+    } finally {
+      setLoading(false);
+      setModalVisible(false);
+    }
+  }, [valuesForm, navigation]);
+
+  function validationAttendant(): boolean {
     if (attendant && !attendantType) {
       setErrorValidationAttendant({
         error: true,
         message: 'Tipo de atendente é obrigatório',
       });
-    } else {
-      setErrorValidationAttendant({
-        error: false,
-        message: '',
-      });
+      return false;
     }
+    setErrorValidationAttendant({
+      error: false,
+      message: '',
+    });
+    return true;
   }
 
-  function handleSave(values: any) {
-    console.log(values);
+  function handleSave(values: any): void {
+    setValuesForm({ ...values, attendantType });
   }
   function handleOpenModal(): void {
     setModalVisible(true);
@@ -113,8 +117,7 @@ const SingnUp: React.FC = () => {
           <ErrorLogin>
             <MaterialIcons name="error" size={32} color="#E04848" />
             <ErrorLoginText>
-              {messageError ||
-                'Falha ao se cadastrar, tente novamente mas tarde!'}
+              Falha ao se cadastrar, tente novamente mas tarde!
             </ErrorLoginText>
           </ErrorLogin>
         )}
@@ -128,7 +131,14 @@ const SingnUp: React.FC = () => {
           onSubmit={handleSave}
           validationSchema={getSchema()}
         >
-          {({ values, handleChange, errors, handleSubmit, touched }) => (
+          {({
+            values,
+            handleChange,
+            errors,
+            handleSubmit,
+            touched,
+            isValid,
+          }) => (
             <>
               <InputContainer error={!!touched.name && !!errors.name}>
                 <Input
@@ -228,9 +238,12 @@ const SingnUp: React.FC = () => {
               <Button
                 loading={loading}
                 onPress={() => {
-                  console.log(errors);
-                  validationAttendant();
+                  const attenndantIsValid = validationAttendant();
                   handleSubmit();
+
+                  if (attenndantIsValid && isValid) {
+                    handleOpenModal();
+                  }
                 }}
               >
                 <ButtonText>
@@ -249,7 +262,7 @@ const SingnUp: React.FC = () => {
 
       {modalVisible && (
         <ModalProVerification
-          // handleVerification={hanleSignUp}
+          handleVerification={hanleSignUp}
           visible={modalVisible}
           changeSetVisible={setModalVisible}
         />
