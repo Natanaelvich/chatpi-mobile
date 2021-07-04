@@ -48,7 +48,7 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalDelete from '../../components/ModalDelete';
 import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
-import { BASE_URL } from '../../components/config';
+import { BASE_URL } from '../../config';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();

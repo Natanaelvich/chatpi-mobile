@@ -23,7 +23,7 @@ import {
 } from '../../store/modules/attendants/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import { BASE_URL } from '../../components/config';
+import { BASE_URL } from '../../config';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();

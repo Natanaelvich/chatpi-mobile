@@ -31,7 +31,7 @@ import { addMessage, readMessage } from '../../store/modules/messages/actions';
 
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { UserContent } from '../../store/modules/user/reducer';
-import { BASE_URL } from '../../components/config';
+import { BASE_URL } from '../../config';
 
 type ParamList = {
   Chat: {

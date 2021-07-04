@@ -26,7 +26,7 @@ import { signOut } from '../../store/modules/user/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
-import { BASE_URL } from '../config';
+import { BASE_URL } from '../../config';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();

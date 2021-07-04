@@ -43,7 +43,7 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalComponent from '../../components/Modal';
 import { updateAvatar, updateUser } from '../../store/modules/user/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
-import { BASE_URL } from '../../components/config';
+import { BASE_URL } from '../../config';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();

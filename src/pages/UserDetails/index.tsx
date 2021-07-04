@@ -15,7 +15,7 @@ import {
 } from './styles';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalComponent from '../../components/Modal';
-import { BASE_URL } from '../../components/config';
+import { BASE_URL } from '../../config';
 
 const UserDetails: React.FC = () => {
   const router = useRoute();
