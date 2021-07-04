@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { TextInputProps } from 'react-native';
 import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ButtonProps extends RectButtonProperties {
@@ -101,7 +101,7 @@ export const ErrorLoginText = styled.Text`
   color: #e04848;
   margin-left: ${RFValue(6)}px;
 `;
-export const InputContainer = styled.View`
+export const InputContainer = styled.View<{ error: boolean }>`
   width: 100%;
   height: ${RFValue(50)}px;
 
@@ -110,10 +110,17 @@ export const InputContainer = styled.View`
 
   background: #9c9ab1;
   border-radius: ${RFValue(10)}px;
-  margin-bottom: ${RFValue(8)}px;
+
   padding: 0 ${RFValue(8)}px;
   border-width: ${RFValue(1)}px;
   border-color: transparent;
+
+  ${({ error }) =>
+    error &&
+    css`
+      border-width: 2px;
+      border-color: ${({ theme }) => theme.colors.danger};
+    `}
 `;
 export const Input = styled.TextInput.attrs(
   props =>
@@ -141,3 +148,12 @@ export const IconUser = styled(Feather).attrs(props => ({
   size: 23,
   color: props.theme.colors.primary,
 }))``;
+
+export const MessageErrorValidation = styled.Text`
+  margin-bottom: ${RFValue(4)}px;
+  align-self: flex-start;
+  padding-left: ${RFValue(24)}px;
+  font-size: ${RFValue(12)}px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.danger};
+`;

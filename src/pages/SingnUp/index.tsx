@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
+import { Formik } from 'formik';
+
 import {
   Container,
   Title,
@@ -24,20 +26,19 @@ import {
   LabelCheckBox,
   Select,
   SelectContainer,
+  MessageErrorValidation,
 } from './styles';
 
 import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
 import ModalProVerification from './ModalProVerification';
+import { getSchema } from './shemas/ValidationSchema';
 
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, sePassword] = useState('');
   const [attendant, setAttendant] = useState(false);
   const [attendantType, setAttendantType] = useState('');
 
@@ -46,38 +47,41 @@ const SingnUp: React.FC = () => {
   const [messageError, setMessageError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  const hanleSignUp = useCallback(async () => {
-    try {
-      setLoading(true);
+  // const hanleSignUp = useCallback(async () => {
+  //   try {
+  //     setLoading(true);
 
-      if (attendant && attendantType === '') {
-        setErrorSingnUp(true);
-        setMessageError('Selecione o tipo de atendente que você deseja ser.');
-        return;
-      }
+  //     if (attendant && attendantType === '') {
+  //       setErrorSingnUp(true);
+  //       setMessageError('Selecione o tipo de atendente que você deseja ser.');
+  //       return;
+  //     }
 
-      await api.post('users', {
-        name,
-        email,
-        password,
-        clerk: attendantType !== '' ? attendantType : null,
-      });
-      setErrorSingnUp(false);
-      navigation.navigate('SingnIn');
-      Toast.show({
-        text1: 'Parabéns',
-        text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
-        visibilityTime: 3000,
-        type: 'success',
-      });
-    } catch (error) {
-      setErrorSingnUp(true);
-    } finally {
-      setLoading(false);
-      setModalVisible(false);
-    }
-  }, [name, email, password, navigation, attendantType, attendant]);
+  //     await api.post('users', {
+  //       name,
+  //       email,
+  //       password,
+  //       clerk: attendantType !== '' ? attendantType : null,
+  //     });
+  //     setErrorSingnUp(false);
+  //     navigation.navigate('SingnIn');
+  //     Toast.show({
+  //       text1: 'Parabéns',
+  //       text2: 'Seu cadastro foi realizado com sucesso 🎉🎉',
+  //       visibilityTime: 3000,
+  //       type: 'success',
+  //     });
+  //   } catch (error) {
+  //     setErrorSingnUp(true);
+  //   } finally {
+  //     setLoading(false);
+  //     setModalVisible(false);
+  //   }
+  // }, [name, email, password, navigation, attendantType, attendant]);
 
+  function handleSave(values: any) {
+    console.log(values);
+  }
   function handleOpenModal(): void {
     setModalVisible(true);
   }
@@ -98,79 +102,120 @@ const SingnUp: React.FC = () => {
           </ErrorLogin>
         )}
 
-        <InputContainer>
-          <Input
-            value={name}
-            onChangeText={setName}
-            autoCapitalize="words"
-            placeholder="Nome"
-            returnKeyType="next"
-            onSubmitEditing={() => emailRef.current?.focus()}
-          />
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+          }}
+          onSubmit={handleSave}
+          validationSchema={getSchema()}
+        >
+          {({ values, handleChange, errors, handleSubmit }) => (
+            <>
+              <InputContainer error={!!errors.name && !!values.name}>
+                <Input
+                  value={values.name}
+                  onChangeText={handleChange('name')}
+                  autoCapitalize="words"
+                  placeholder="Nome"
+                  returnKeyType="next"
+                  onSubmitEditing={() => emailRef.current?.focus()}
+                />
 
-          <IconUser />
-        </InputContainer>
-        <InputContainer>
-          <Input
-            value={email}
-            onChangeText={setEmail}
-            autoCorrect={false}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            placeholder="E-mail"
-            returnKeyType="next"
-            onSubmitEditing={() => passwordRef.current?.focus()}
-          />
-          <IconMail />
-        </InputContainer>
-        <InputContainer>
-          <Input
-            value={password}
-            onChangeText={sePassword}
-            secureTextEntry
-            placeholder="Senha"
-            returnKeyType="send"
-            onSubmitEditing={hanleSignUp}
-            ref={passwordRef}
-          />
-          <IconKey />
-        </InputContainer>
+                <IconUser />
+              </InputContainer>
+              <MessageErrorValidation>
+                {!!values.name && errors?.name}
+              </MessageErrorValidation>
+              <InputContainer error={!!errors.email && !!values.email}>
+                <Input
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  placeholder="E-mail"
+                  returnKeyType="next"
+                  onSubmitEditing={() => passwordRef.current?.focus()}
+                />
+                <IconMail />
+              </InputContainer>
+              <MessageErrorValidation>
+                {!!values.email && errors?.email}
+              </MessageErrorValidation>
+              <InputContainer error={!!errors.password && !!values.password}>
+                <Input
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  secureTextEntry
+                  placeholder="Senha"
+                  returnKeyType="send"
+                  // onSubmitEditing={hanleSignUp}
+                  ref={passwordRef}
+                />
+                <IconKey />
+              </InputContainer>
+              <MessageErrorValidation>
+                {!!values.password && errors?.password}
+              </MessageErrorValidation>
 
-        <CheckBoxContainer>
-          <LabelCheckBox>Atendente</LabelCheckBox>
-          <Checkbox
-            disabled={false}
-            value={attendant}
-            onValueChange={e => {
-              LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-              setAttendant(e);
-            }}
-            tintColors={{ true: '#DE595C' }}
-          />
-        </CheckBoxContainer>
+              <CheckBoxContainer>
+                <LabelCheckBox>Atendente</LabelCheckBox>
+                <Checkbox
+                  disabled={false}
+                  value={attendant}
+                  onValueChange={e => {
+                    LayoutAnimation.configureNext(
+                      LayoutAnimation.Presets.spring,
+                    );
+                    setAttendant(e);
+                  }}
+                  tintColors={{ true: '#DE595C' }}
+                />
+              </CheckBoxContainer>
 
-        {attendant && (
-          <SelectContainer>
-            <Select
-              selectedValue={attendantType}
-              onValueChange={(value, _) => {
-                setAttendantType(value as string);
-              }}
-            >
-              <Select.Item
-                label="Selecione uma opção"
-                value=""
-                color="#343152"
-              />
-              <Select.Item label="Enfermeiro(a)" value="enf" color="#343152" />
-              <Select.Item label="Psicólogo(a)" value="psic" color="#343152" />
-            </Select>
-          </SelectContainer>
-        )}
+              {attendant && (
+                <SelectContainer>
+                  <Select
+                    selectedValue={attendantType}
+                    onValueChange={(value, _) => {
+                      setAttendantType(value as string);
+                    }}
+                  >
+                    <Select.Item
+                      label="Selecione uma opção"
+                      value=""
+                      color="#343152"
+                    />
+                    <Select.Item
+                      label="Enfermeiro(a)"
+                      value="enf"
+                      color="#343152"
+                    />
+                    <Select.Item
+                      label="Psicólogo(a)"
+                      value="psic"
+                      color="#343152"
+                    />
+                  </Select>
+                </SelectContainer>
+              )}
 
-        <Button loading={loading} onPress={handleOpenModal}>
-          <ButtonText>{loading ? 'Cadastrando...' : 'Cadastrar'}</ButtonText>
-        </Button>
+              <Button
+                loading={loading}
+                onPress={() => {
+                  console.log(errors);
+                  handleSubmit();
+                }}
+              >
+                <ButtonText>
+                  {loading ? 'Cadastrando...' : 'Cadastrar'}
+                </ButtonText>
+              </Button>
+            </>
+          )}
+        </Formik>
       </FormContainer>
 
       <ReturnLoginContainer onPress={() => navigation.goBack()}>
@@ -180,7 +225,7 @@ const SingnUp: React.FC = () => {
 
       {modalVisible && (
         <ModalProVerification
-          handleVerification={hanleSignUp}
+          // handleVerification={hanleSignUp}
           visible={modalVisible}
           changeSetVisible={setModalVisible}
         />
