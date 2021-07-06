@@ -1,4 +1,3 @@
-
 <h1 align='center'> CHAT PI </h1>
 
 ### College integrator project system mobile ⚡️
@@ -6,27 +5,31 @@
 ## ScreenShots
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/121285392-b8800c00-c8b4-11eb-9cf1-05b057a58cc7.png' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/121285393-b918a280-c8b4-11eb-8f15-5e3577e3ba37.png' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/121285394-b918a280-c8b4-11eb-984e-9d36de19147d.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/124626624-38b67480-de55-11eb-89d7-b8a5b9e8adea.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124626957-8337f100-de55-11eb-9fa2-2b81001fcc16.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124627083-a2cf1980-de55-11eb-87f3-bf2da0a3205a.png' width='290'>
 </p>
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/121286130-c97d4d00-c8b5-11eb-8b5b-2c27a483b709.png' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/121286222-ea45a280-c8b5-11eb-9683-978155de4ad8.png' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/121286226-eade3900-c8b5-11eb-8e5f-575d5b5c909b.png' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/124627528-035e5680-de56-11eb-8e1a-62ca185dbc52.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124627745-31439b00-de56-11eb-8144-4662da7aad86.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124628138-926b6e80-de56-11eb-8fbc-e62d251665b7.png' width='290'/>
 </p>
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/121285396-b9b13900-c8b4-11eb-84f4-95d46da428ea.png' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/121285398-b9b13900-c8b4-11eb-8d3b-eaa8a5f85e7a.png' width='240' />
- <img src='https://user-images.githubusercontent.com/52014318/104669819-92658f80-56b9-11eb-9481-8b26bf65e60c.jpg' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/124628168-9ac3a980-de56-11eb-8226-7b30c3a63d65.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124628223-a4e5a800-de56-11eb-8f2c-3b8afb16014b.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124628280-b038d380-de56-11eb-9da8-05dedfd562dd.png' width='290'/>
 </p>
 
 <p align='center'>
-<img src='https://user-images.githubusercontent.com/52014318/104669831-97c2da00-56b9-11eb-8440-406fc8d3719f.jpg' width='240' />
-<img src='https://user-images.githubusercontent.com/52014318/104669838-9b566100-56b9-11eb-8eed-6a52e650a036.jpg' width='240' />
-  <img src='https://user-images.githubusercontent.com/52014318/104669810-8ed20880-56b9-11eb-9228-257cdab806a3.jpg' width='240' />
+<img src='https://user-images.githubusercontent.com/52014318/124628346-c2b30d00-de56-11eb-9015-d4f99e896be7.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124628366-c8a8ee00-de56-11eb-8f5b-e9a35193cc60.png' width='290'/>
+<img src='https://user-images.githubusercontent.com/52014318/124628398-cfcffc00-de56-11eb-9702-ea4cbf3bbf92.png' width='290'/>
+</p>
+
+<p align='center'>
+<img src='https://user-images.githubusercontent.com/52014318/124628724-250c0d80-de57-11eb-9ca6-136f32ff1203.png' width='290'/>
 </p>
 
 ## Install
