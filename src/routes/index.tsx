@@ -17,6 +17,7 @@ import { UpdateContainer, UpdateText } from '../styles/global';
 import DrawerContent from '../components/DrawerContent';
 import SingnUp from '../pages/SingnUp';
 import ForgotPassword from '../pages/ForgotPassword';
+import { navigationRef } from '../services/rootNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -73,7 +74,7 @@ const Routes: React.FC = () => {
           <ActivityIndicator size="large" color="#343152" />
         </UpdateContainer>
       ) : (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           {user ? (
             <Drawer.Navigator
               drawerContent={props => <DrawerContent {...props} />}
