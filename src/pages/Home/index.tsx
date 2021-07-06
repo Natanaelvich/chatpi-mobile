@@ -105,10 +105,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function getOneSignalSubscribeData(): Promise<void> {
       OneSignal.addSubscriptionObserver(event => {
+        console.log(event);
         socket.emit('player_id_onesignal', event?.from.userId);
       });
 
       const state = await OneSignal.getDeviceState();
+      console.log(state);
       if (state?.userId) {
         socket.emit('player_id_onesignal', state?.userId);
       }
@@ -116,6 +118,16 @@ const Home: React.FC = () => {
 
     getOneSignalSubscribeData();
   }, [socket]);
+
+  useEffect(() => {
+    OneSignal.setNotificationOpenedHandler(openedEvent => {
+      const { notification } = openedEvent;
+      const { user: userNotification } = notification?.additionalData as any;
+      navigation.navigate('Chat', {
+        user: userNotification,
+      });
+    });
+  }, [navigation]);
 
   const getLastMessage = useCallback(
     userMessage => {
@@ -161,7 +173,6 @@ const Home: React.FC = () => {
     setDeleteModeMessage(false);
   }
 
-  console.tron(messagesUsers);
   return (
     <Container>
       <Content>
