@@ -12,6 +12,7 @@ import OneSignal from 'react-native-onesignal';
 import Routes from './routes';
 import { persistor, store } from './store';
 import GlobalStyles from './styles';
+import { BASE_URL } from './config';
 
 const { SENTRY_DNS } = process.env;
 const { ONESIGNAL_KEY } = process.env;
@@ -19,6 +20,11 @@ const { ONESIGNAL_KEY } = process.env;
 Sentry.init({
   dsn: SENTRY_DNS,
   debug: false,
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      tracingOrigins: [BASE_URL as string, /^\//],
+    }),
+  ],
   enabled: !__DEV__,
 });
 
