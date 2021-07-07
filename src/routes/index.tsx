@@ -31,7 +31,7 @@ const { SENTRY_DNS } = process.env;
 
 Sentry.init({
   dsn: SENTRY_DNS,
-  debug: true,
+  debug: false,
   tracesSampleRate: 1.0,
   autoSessionTracking: true,
   sessionTrackingIntervalMillis: 5000,
