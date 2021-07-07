@@ -105,12 +105,10 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function getOneSignalSubscribeData(): Promise<void> {
       OneSignal.addSubscriptionObserver(event => {
-        console.log(event);
         socket.emit('player_id_onesignal', event?.from.userId);
       });
 
       const state = await OneSignal.getDeviceState();
-      console.log(state);
       if (state?.userId) {
         socket.emit('player_id_onesignal', state?.userId);
       }
