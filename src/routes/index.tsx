@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import * as Sentry from '@sentry/react-native';
+
 import MyTabs from './tabs';
 import SingnIn from '../pages/SingnIn';
 import { RootState } from '../store/modules/rootReducer';
@@ -18,6 +20,32 @@ import DrawerContent from '../components/DrawerContent';
 import SingnUp from '../pages/SingnUp';
 import ForgotPassword from '../pages/ForgotPassword';
 import { navigationRef } from '../services/rootNavigation';
+
+const reactNavigationV5Instrumentation = new Sentry.ReactNavigationV5Instrumentation(
+  {
+    routeChangeTimeoutMs: 500,
+  },
+);
+
+const { SENTRY_DNS } = process.env;
+
+Sentry.init({
+  dsn: SENTRY_DNS,
+  debug: true,
+  tracesSampleRate: 1.0,
+  autoSessionTracking: true,
+  sessionTrackingIntervalMillis: 5000,
+
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      idleTimeout: 5000,
+      routingInstrumentation: reactNavigationV5Instrumentation,
+      tracingOrigins: ['localhost', /^\//, /^https:\/\//],
+    }),
+  ],
+
+  // enabled: !__DEV__,
+});
 
 const Drawer = createDrawerNavigator();
 
@@ -74,7 +102,14 @@ const Routes: React.FC = () => {
           <ActivityIndicator size="large" color="#343152" />
         </UpdateContainer>
       ) : (
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            reactNavigationV5Instrumentation.registerNavigationContainer(
+              navigationRef,
+            );
+          }}
+        >
           {user ? (
             <Drawer.Navigator
               drawerContent={props => <DrawerContent {...props} />}
