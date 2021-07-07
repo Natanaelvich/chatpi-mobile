@@ -4,7 +4,7 @@ import { Platform, StatusBar, UIManager } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 import { useFonts, Redressed_400Regular } from '@expo-google-fonts/redressed';
-import * as Sentry from '@sentry/react-native';
+
 import { PersistGate } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message';
 import OneSignal from 'react-native-onesignal';
@@ -12,21 +12,8 @@ import OneSignal from 'react-native-onesignal';
 import Routes from './routes';
 import { persistor, store } from './store';
 import GlobalStyles from './styles';
-import { BASE_URL } from './config';
 
-const { SENTRY_DNS } = process.env;
 const { ONESIGNAL_KEY } = process.env;
-
-Sentry.init({
-  dsn: SENTRY_DNS,
-  debug: false,
-  integrations: [
-    new Sentry.ReactNativeTracing({
-      tracingOrigins: [BASE_URL as string, /^\//],
-    }),
-  ],
-  enabled: !__DEV__,
-});
 
 OneSignal.setAppId(ONESIGNAL_KEY as string);
 
