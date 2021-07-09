@@ -8809,6 +8809,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-blurhash@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.4.tgz#820afd0ef1cea3b1d322d0448f92964286b85843"
+  integrity sha512-lQFDVzrRGU0r3kC7I66MEiGKlzMeRVUm5Jt50rGZnXkm+kLK+LQDOwqEGxxn2Y2OMoDylzrccdX7mP9bf5BnLA==
+
 react-native-flipper@^0.34.0:
   version "0.34.0"
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.34.0.tgz#7df1f38ba5d97a9321125fe0fccbe47d99e6fa1d"
