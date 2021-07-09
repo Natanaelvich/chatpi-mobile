@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-
+import { reducer as offline } from 'redux-offline-queue';
 import user from './user/reducer';
 import attendants from './attendants/reducer';
 import messages from './messages/reducer';
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   options,
   socket,
   utils,
+  offline,
 });
 
 export default rootReducer;
