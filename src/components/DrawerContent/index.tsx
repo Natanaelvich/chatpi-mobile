@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootState } from '../../store/modules/rootReducer';
 import {
   Avatar,
@@ -34,8 +35,10 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const { user } = useSelector((state: RootState) => state.user);
   const { darkMode } = useSelector((state: RootState) => state.options);
 
-  function handleSiginout(): void {
+  async function handleSiginout(): Promise<void> {
     props.navigation.closeDrawer();
+
+    await AsyncStorage.removeItem('@user:data');
     dispatch(signOut());
   }
 
