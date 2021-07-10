@@ -3,23 +3,15 @@ import { ActivityIndicator } from 'react-native';
 import * as Updates from 'expo-updates';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as Sentry from '@sentry/react-native';
 
-import MyTabs from './tabs';
-import SingnIn from '../pages/SingnIn';
 import { RootState } from '../store/modules/rootReducer';
-import Profile from '../pages/Profile';
-import Chat from '../pages/Chat';
-import UserDetails from '../pages/UserDetails';
 import { isConnected } from '../utils/netInfo';
 import { UpdateContainer, UpdateText } from '../styles/global';
 
-import DrawerContent from '../components/DrawerContent';
-import SingnUp from '../pages/SingnUp';
-import ForgotPassword from '../pages/ForgotPassword';
 import { navigationRef } from '../services/rootNavigation';
+import DrawerRoutes from './drawer';
+import { AuthStackRoutes } from './authStack';
 
 const reactNavigationV5Instrumentation = new Sentry.ReactNavigationV5Instrumentation(
   {
@@ -47,28 +39,8 @@ Sentry.init({
   // enabled: !__DEV__,
 });
 
-const Drawer = createDrawerNavigator();
-
-const Stack = createStackNavigator();
-
 const Routes: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
-
-  function Stacks(): JSX.Element {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          cardStyle: { backgroundColor: '#343152' },
-        }}
-      >
-        <Stack.Screen name="MyTabs" component={MyTabs} />
-        <Stack.Screen name="Chat" component={Chat} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="UserDetails" component={UserDetails} />
-      </Stack.Navigator>
-    );
-  }
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
@@ -110,24 +82,7 @@ const Routes: React.FC = () => {
             );
           }}
         >
-          {user ? (
-            <Drawer.Navigator
-              drawerContent={props => <DrawerContent {...props} />}
-            >
-              <Drawer.Screen name="Main" component={Stacks} />
-            </Drawer.Navigator>
-          ) : (
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-                cardStyle: { backgroundColor: '#343152' },
-              }}
-            >
-              <Stack.Screen name="SingnIn" component={SingnIn} />
-              <Stack.Screen name="SingnUp" component={SingnUp} />
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            </Stack.Navigator>
-          )}
+          {user ? <DrawerRoutes /> : <AuthStackRoutes />}
         </NavigationContainer>
       )}
     </>
