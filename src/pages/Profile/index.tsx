@@ -177,7 +177,6 @@ const Profile: React.FC = () => {
     }
   }, [name, email, oldPassword, password, dispatch]);
 
-  console.log(teste);
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
