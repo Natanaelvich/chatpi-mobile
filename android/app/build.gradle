@@ -1,3 +1,15 @@
+
+// ONE_SIGNAL
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+// FIREBASE
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+// FIREBASE CRASHLYTICS
+apply plugin: 'com.google.firebase.crashlytics'
+// FIREBASE FIREBASE_PERF
+apply plugin: 'com.google.firebase.firebase-perf'
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -7,15 +19,6 @@ buildscript {
     }
 }
 
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
-
-apply plugin: "com.android.application"
-
-// FIREBASE
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-// FIREBASE CRASHLYTICS
-apply plugin: 'com.google.firebase.crashlytics'
 
 import com.android.build.OutputFile
 
@@ -221,6 +224,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    // FIREBASE FIREBASE_PERF
+    implementation project(path: ":@react-native-firebase_perf")
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
