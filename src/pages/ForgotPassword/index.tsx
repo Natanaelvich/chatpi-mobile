@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
-
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import {
   Container,
   Title,
@@ -43,6 +44,7 @@ const ForgotPassword: React.FC = () => {
         type: 'success',
       });
     } catch (error) {
+      crashlytics().recordError(error);
       setErrorSingnUp(true);
     } finally {
       setLoading(false);

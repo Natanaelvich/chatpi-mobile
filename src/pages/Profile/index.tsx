@@ -13,6 +13,7 @@ import { useTheme } from 'styled-components';
 import Toast from 'react-native-toast-message';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import api from '../../services/api';
 
@@ -110,6 +111,8 @@ const Profile: React.FC = () => {
           type: 'success',
         });
       } catch (error) {
+        crashlytics().recordError(error);
+
         Toast.show({
           text1: 'Ops',
           text2: 'Falha ao atualizar sua foto de perfil 😔',
@@ -164,6 +167,7 @@ const Profile: React.FC = () => {
       setErrorUpdate(false);
       setMessageErrorUpdate('');
     } catch (err) {
+      crashlytics().recordError(err);
       setErrorUpdate(true);
       setMessageErrorUpdate(
         'Falha ao atualizar, verifique os dados e tente novamente',
@@ -173,6 +177,7 @@ const Profile: React.FC = () => {
     }
   }, [name, email, oldPassword, password, dispatch]);
 
+  console.log(teste);
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"

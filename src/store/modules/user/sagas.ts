@@ -3,6 +3,8 @@ import { all, takeLatest, put, call } from 'redux-saga/effects';
 import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SagaIterator } from '@redux-saga/core';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import {
   signInSuccess,
   setLoadingSingin,
@@ -56,6 +58,7 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
     const { token } = response.data;
     api.defaults.headers.authorization = `Bearer ${token}`;
   } catch (error) {
+    crashlytics().recordError(error);
     yield put(signInError(true));
   } finally {
     yield put(setLoadingSingin(false));

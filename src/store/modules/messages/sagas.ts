@@ -1,6 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import api from '../../../services/api';
 import { addAttendants } from '../attendants/actions';
 
@@ -10,6 +12,7 @@ export function* sendMessage(): SagaIterator {
 
     yield put(addAttendants(response.data));
   } catch (error) {
+    crashlytics().recordError(error);
     // if error 401 auto logout
   }
 }

@@ -6,6 +6,7 @@ import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
 import { Formik } from 'formik';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import {
   Container,
@@ -78,6 +79,7 @@ const SingnUp: React.FC = () => {
         type: 'success',
       });
     } catch (error) {
+      crashlytics().recordError(error);
       setErrorSingnUp(true);
     } finally {
       setLoading(false);
