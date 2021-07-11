@@ -11,6 +11,12 @@ apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 apply plugin: "com.android.application"
 
+// FIREBASE
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+// FIREBASE CRASHLYTICS
+apply plugin: 'com.google.firebase.crashlytics'
+
 import com.android.build.OutputFile
 
 /**
@@ -89,7 +95,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true
+    enableHermes: false
 ]
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -185,6 +191,12 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+            // FIREBASE CRASHLYTICS
+            firebaseCrashlytics {
+              nativeSymbolUploadEnabled true
+              unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
+            }
         }
     }
 
