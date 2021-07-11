@@ -158,8 +158,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        // Multidex
-        multiDexEnabled true
     }
     splits {
         abi {
@@ -222,14 +220,16 @@ android {
 }
 
 dependencies {
-    // Multidex
-    implementation 'androidx.multidex:multidex:2.0.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     // FIREBASE FIREBASE_PERF
     implementation project(path: ":@react-native-firebase_perf")
+
+    // FIREBASE CRASHLYTICS
+    implementation project(path: ":@react-native-firebase_crashlytics")
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
