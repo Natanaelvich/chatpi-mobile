@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "188098615511",
+    "project_id": "chat-pi-899d7",
+    "storage_bucket": "chat-pi-899d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188098615511:android:db6a6850ab30ebc17d3892",
+        "android_client_info": {
+          "package_name": "com.mundotech.chatpi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188098615511-b2fgbmuhee3g5h16jfa8iecah0r0hon0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mundotech.chatpi",
+            "certificate_hash": "b580f9704fdef5cdd66476f4227d6ba9fdccb811"
+          }
+        },
+        {
+          "client_id": "188098615511-27dag7g420tgd2hq4o7q4t98mvupn7tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADItaPTdgGX-gKBy2PQf2cUNvj-iWs_iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188098615511-27dag7g420tgd2hq4o7q4t98mvupn7tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
