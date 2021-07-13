@@ -14,13 +14,13 @@ interface ReducerProps {
   type: string;
   signinError: boolean;
   loadingSingin: boolean;
-  user: UserProps;
+  data: UserProps;
   userContent: UserContent;
   avatar_url: string;
 }
 interface InitialStateUserProps {
   signedIn: boolean;
-  user: UserProps | null;
+  data: UserProps | null;
   signinError: boolean;
   loadingSingin: boolean;
   socketId: string | null;
@@ -29,7 +29,7 @@ interface InitialStateUserProps {
 
 const initialState = {
   signedIn: false,
-  user: null,
+  data: null,
   signinError: false,
   loadingSingin: false,
   socketId: null,
@@ -42,7 +42,7 @@ export default (
     type,
     signinError,
     loadingSingin,
-    user,
+    data,
     avatar_url,
     userContent,
   }: ReducerProps,
@@ -51,25 +51,25 @@ export default (
     case '@user/UPDATE_AVATAR':
       return {
         ...state,
-        user: {
-          ...state.user,
-          user: { ...state.user.user, avatar_url },
+        data: {
+          ...state.data,
+          user: { ...state.data.user, avatar_url },
         },
       };
     case '@user/SIGN_IN_SUCCESS':
       return {
         ...state,
         signedIn: true,
-        user,
+        data,
       };
     case '@user/UPDATE_USER':
       return {
         ...state,
-        user: { ...state.user, user: userContent },
+        user: { ...state.data, user: userContent },
       };
 
     case '@user/SIGN_OUT':
-      return { ...state, signedIn: false, user: null };
+      return { ...state, signedIn: false, data: null };
 
     case '@user/SIGN_ERROR':
       return { ...state, signinError };

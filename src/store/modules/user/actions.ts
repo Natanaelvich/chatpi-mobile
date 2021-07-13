@@ -20,13 +20,13 @@ export const signInRequest = (
   payload: { email, password },
 });
 export const signInSuccess = (
-  user: Record<string, unknown>,
+  data: Record<string, unknown>,
 ): {
   type: string;
-  user: Record<string, unknown>;
+  data: Record<string, unknown>;
 } => ({
   type: '@user/SIGN_IN_SUCCESS',
-  user,
+  data,
 });
 
 export const signOut = (): { type: string } => ({
