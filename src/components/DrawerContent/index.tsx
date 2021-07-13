@@ -32,7 +32,7 @@ import { BASE_URL } from '../../config';
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.user);
   const { darkMode } = useSelector((state: RootState) => state.options);
 
   async function handleSiginout(): Promise<void> {

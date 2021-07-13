@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.user);
 
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);

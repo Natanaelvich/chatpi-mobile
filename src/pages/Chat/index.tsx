@@ -45,7 +45,7 @@ const Chat: React.FC = () => {
   const router = useRoute<RouteProp<ParamList, 'Chat'>>();
 
   const { goBack, navigate } = useNavigation();
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.user);
   const { messages } = useSelector((state: RootState) => state.messages);
   const { typers, usersLoggeds, socket } = useSelector(
     (state: RootState) => state.socket,
