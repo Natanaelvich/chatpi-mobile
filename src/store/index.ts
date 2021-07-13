@@ -1,22 +1,18 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { createWhitelistFilter } from 'redux-persist-transform-filter';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import {
   offlineMiddleware,
   suspendSaga,
   consumeActionMiddleware,
 } from 'redux-offline-queue';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistStore } from 'redux-persist';
 
 import rootReducer from './modules/rootReducer';
 import rootSaga from './modules/rootSaga';
 import { reactotron } from '../config/reactotronConfig';
-
-const persistConfig = {
-  key: 'user',
-  storage: AsyncStorage,
-  whitelist: ['user', 'messages', 'attendants', 'options'],
-};
+import persistReducers from './persistReducers';
 
 const middlewares = [];
 const sagaMiddleware = createSagaMiddleware();
@@ -24,7 +20,7 @@ middlewares.push(offlineMiddleware());
 middlewares.push(suspendSaga(sagaMiddleware));
 middlewares.push(consumeActionMiddleware());
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducers(rootReducer);
 
 const reactotronMiddleware = __DEV__ ? reactotron.createEnhancer() : null;
 
