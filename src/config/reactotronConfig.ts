@@ -1,6 +1,8 @@
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import { NativeModules } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import reactotronSaga from 'reactotron-redux-saga';
 
 // eslint-disable-next-line import/no-mutable-exports
 let reactotron = null;
@@ -10,15 +12,15 @@ if (__DEV__) {
   const address = scriptURL.split('://')[1].split('/')[0];
   const hostname = address.split(':')[0];
 
-  reactotron = Reactotron.configure({
-    name: 'react-native',
-    host: hostname,
-    port: 9090,
-  })
-    .useReactNative({
-      overlay: false,
+  reactotron = Reactotron.setAsyncStorageHandler(AsyncStorage)
+    .configure({
+      name: 'react-native',
+      host: hostname,
+      port: 9090,
     })
+    .useReactNative()
     .use(reactotronRedux())
+    .use(reactotronSaga())
     .connect();
 
   console.tron = Reactotron.log;
