@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import jwt from 'jwt-decode';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { SagaIterator } from '@redux-saga/core';
 import crashlytics from '@react-native-firebase/crashlytics';
 
@@ -25,16 +25,16 @@ export function* initCheck(): SagaIterator {
       exp: number;
     } = jwt(token);
 
-    const dateNow = new Date().getTime() / 1000;
+    // const dateNow = new Date().getTime() / 1000;
 
-    if (decodedToken.exp < dateNow) {
-      yield put(signOut());
-      return;
-    }
+    // if (decodedToken.exp < dateNow) {
+    //   yield put(signOut());
+    //   return;
+    // }
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+    // api.defaults.headers.authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(user));
+    // yield put(signInSuccess(user));
   }
 }
 
@@ -65,6 +65,11 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
 
     if (error?.response?.status >= 500) {
       messageError = 'Problemas no servidor, tente novamente mais tarde!';
+    }
+
+    if (error?.message === 'Network Error') {
+      messageError =
+        'Problemas na rede, verifique sua conexão e tente novamente!';
     }
 
     yield put(signInError({ error: true, messageError }));
