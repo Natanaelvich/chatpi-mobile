@@ -92,12 +92,10 @@ const SingnIn: React.FC = () => {
         <LogoText>Chat PI</LogoText>
         <Title>Faça seu logon</Title>
 
-        {signinError && (
+        {signinError.error && (
           <ErrorLogin>
             <MaterialIcons name="error" size={32} color="#E04848" />
-            <ErrorLoginText>
-              Usuário ou senha incorretos, verifique e tente novamente!
-            </ErrorLoginText>
+            <ErrorLoginText>{signinError.messageError}</ErrorLoginText>
           </ErrorLogin>
         )}
 
