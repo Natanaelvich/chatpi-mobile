@@ -11,8 +11,11 @@ import { persistStore } from 'redux-persist';
 
 import rootReducer from './modules/rootReducer';
 import rootSaga from './modules/rootSaga';
-import { reactotron } from '../config/reactotronConfig';
 import persistReducers from './persistReducers';
+
+import { reactotron } from '../config/reactotronConfig';
+
+const reactotronMiddleware = __DEV__ ? reactotron.createEnhancer() : null;
 
 const middlewares = [];
 const sagaMiddleware = createSagaMiddleware();
@@ -20,15 +23,11 @@ middlewares.push(offlineMiddleware());
 middlewares.push(suspendSaga(sagaMiddleware));
 middlewares.push(consumeActionMiddleware());
 
-const persistedReducer = persistReducers(rootReducer);
-
-const reactotronMiddleware = __DEV__ ? reactotron.createEnhancer() : null;
-
 const enhancer = __DEV__
   ? compose(reactotronMiddleware, applyMiddleware(...middlewares))
   : applyMiddleware(...middlewares);
 
-const store = createStore(persistedReducer, enhancer);
+const store = createStore(persistReducers(rootReducer), enhancer);
 
 const persistor = persistStore(store);
 
