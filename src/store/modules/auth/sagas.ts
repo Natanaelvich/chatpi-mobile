@@ -25,16 +25,16 @@ export function* initCheck(): SagaIterator {
       exp: number;
     } = jwt(token);
 
-    // const dateNow = new Date().getTime() / 1000;
+    const dateNow = new Date().getTime() / 1000;
 
-    // if (decodedToken.exp < dateNow) {
-    //   yield put(signOut());
-    //   return;
-    // }
+    if (decodedToken.exp < dateNow) {
+      yield put(signOut());
+      return;
+    }
 
-    // api.defaults.headers.authorization = `Bearer ${token}`;
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
-    // yield put(signInSuccess(user));
+    yield put(signInSuccess(user));
   }
 }
 
