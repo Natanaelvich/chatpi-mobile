@@ -6,7 +6,7 @@ import { RootState } from '../../store/modules/rootReducer';
 import { Container, Title, ButtonHeader, IconMenu, IconUser } from './styles';
 
 const Header: React.FC = () => {
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
   const navigation = useNavigation();
 
   if (!user) {

@@ -30,7 +30,7 @@ import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
 
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import { UserContent } from '../../store/modules/user/reducer';
+import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
 
 type ParamList = {
@@ -45,7 +45,7 @@ const Chat: React.FC = () => {
   const router = useRoute<RouteProp<ParamList, 'Chat'>>();
 
   const { goBack, navigate } = useNavigation();
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
   const { messages } = useSelector((state: RootState) => state.messages);
   const { typers, usersLoggeds, socket } = useSelector(
     (state: RootState) => state.socket,

@@ -1,4 +1,4 @@
-import { UserProps } from '../user/reducer';
+import { UserProps } from '../auth/reducer';
 
 export const addAttendants = (
   attendants: UserProps[],

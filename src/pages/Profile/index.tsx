@@ -42,7 +42,7 @@ import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 
 import ModalComponent from '../../components/Modal';
-import { updateAvatar, updateUser } from '../../store/modules/user/actions';
+import { updateAvatar, updateUser } from '../../store/modules/auth/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 import { BASE_URL } from '../../config';
 
@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
 
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);

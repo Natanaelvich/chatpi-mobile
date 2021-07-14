@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { RootState } from '../../store/modules/rootReducer';
 import {
   Avatar,
@@ -23,7 +23,7 @@ import {
   IconUser,
   IconDelete,
 } from './styles';
-import { signOut } from '../../store/modules/user/actions';
+import { signOut } from '../../store/modules/auth/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
@@ -32,7 +32,7 @@ import { BASE_URL } from '../../config';
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
 
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
   const { darkMode } = useSelector((state: RootState) => state.options);
 
   async function handleSiginout(): Promise<void> {

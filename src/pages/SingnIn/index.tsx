@@ -24,7 +24,7 @@ import {
   ErrorLoginText,
   Input,
 } from './styles';
-import { signInRequest } from '../../store/modules/user/actions';
+import { signInRequest } from '../../store/modules/auth/actions';
 import { RootState } from '../../store/modules/rootReducer';
 // import { database, ModelMessage } from '../../database';
 
@@ -34,7 +34,7 @@ const SingnIn: React.FC = () => {
   const navigation = useNavigation();
 
   const { signinError, loadingSingin } = useSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.auth,
   );
 
   const [email, setEmail] = useState('');

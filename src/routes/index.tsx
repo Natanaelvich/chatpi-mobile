@@ -40,7 +40,7 @@ Sentry.init({
 });
 
 const Routes: React.FC = () => {
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
 
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 

@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 
   const { messages } = useSelector((state: RootState) => state.messages);
   const { users } = useSelector((state: RootState) => state.attendants);
-  const { data: user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useSelector((state: RootState) => state.auth);
   const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
