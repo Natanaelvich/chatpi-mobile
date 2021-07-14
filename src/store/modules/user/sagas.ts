@@ -41,13 +41,14 @@ export function* initCheck(): SagaIterator {
 function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
   try {
     yield put(setLoadingSingin(true));
+
     const response = yield call(api.post, 'sessions', {
       email: payload.email,
       password: payload.password,
     });
 
     yield put(signInSuccess(response.data));
-    yield put(signInError(false));
+    yield put(signInError({ error: false, messageError: '' }));
 
     yield call(
       [AsyncStorage, 'setItem'],
@@ -59,7 +60,14 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
     api.defaults.headers.authorization = `Bearer ${token}`;
   } catch (error) {
     crashlytics().recordError(error);
-    yield put(signInError(true));
+    let messageError =
+      'Usuário ou senha incorretos, verifique e tente novamente!';
+
+    if (error?.response?.status >= 500) {
+      messageError = 'Problemas no servidor, tente novamente mais tarde!';
+    }
+
+    yield put(signInError({ error: true, messageError }));
   } finally {
     yield put(setLoadingSingin(false));
   }
