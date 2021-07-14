@@ -33,11 +33,12 @@ export const signOut = (): { type: string } => ({
   type: '@user/SIGN_OUT',
 });
 
-export const signInError = (
-  signinError: boolean,
-): {
+export const signInError = (signinError: {
+  error: boolean;
+  messageError: string;
+}): {
   type: string;
-  signinError: boolean;
+  signinError: { error: boolean; messageError: string };
 } => ({
   type: '@user/SIGN_ERROR',
   signinError,

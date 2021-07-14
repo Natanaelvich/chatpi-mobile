@@ -12,7 +12,7 @@ export interface UserProps {
 }
 interface ReducerProps {
   type: string;
-  signinError: boolean;
+  signinError: { error: false; messageError: '' };
   loadingSingin: boolean;
   data: UserProps;
   userContent: UserContent;
@@ -21,7 +21,7 @@ interface ReducerProps {
 interface InitialStateUserProps {
   signedIn: boolean;
   data: UserProps | null;
-  signinError: boolean;
+  signinError: { error: false; messageError: '' };
   loadingSingin: boolean;
   socketId: string | null;
   token_expo: string | null;
@@ -30,7 +30,7 @@ interface InitialStateUserProps {
 const initialState = {
   signedIn: false,
   data: null,
-  signinError: false,
+  signinError: { error: false, messageError: '' },
   loadingSingin: false,
   socketId: null,
   token_expo: null,
