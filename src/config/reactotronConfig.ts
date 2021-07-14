@@ -1,7 +1,7 @@
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import { NativeModules } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import reactotronSaga from 'reactotron-redux-saga';
 
 // eslint-disable-next-line import/no-mutable-exports
