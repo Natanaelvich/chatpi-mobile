@@ -14,6 +14,7 @@ import Toast from 'react-native-toast-message';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import crashlytics from '@react-native-firebase/crashlytics';
+import Upload from 'react-native-background-upload';
 
 import api from '../../services/api';
 
@@ -84,10 +85,9 @@ const Profile: React.FC = () => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       aspect: [4, 3],
       quality: 1,
-      allowsEditing: true,
     });
 
     if (!result.cancelled) {
@@ -101,7 +101,48 @@ const Profile: React.FC = () => {
           uri: result.uri,
         });
 
-        await api.patch('/users/avatar', data);
+        // UPLOAD BACKGROUND
+        const options = {
+          url: 'https://api.pi.mundotech.dev/users/avatar',
+          path: result.uri,
+          method: 'PATCH',
+          maxRetries: 2, // set retry count (Android only). Default 2
+          headers: {
+            accept: 'application/json, text/plain, */*', // Customize content-type
+            authorization: `Bearer ${user?.token}`,
+          },
+          // Below are options only supported on Android
+          notification: {
+            enabled: true,
+          },
+          useUtf8Charset: true,
+          field: 'uploaded_media',
+          type: 'multipart',
+        };
+
+        Upload.startUpload(options)
+          .then(uploadId => {
+            console.log('Upload started');
+            Upload.addListener('progress', uploadId, data => {
+              console.log(`Progress: ${data.progress}%`);
+            });
+            Upload.addListener('error', uploadId, data => {
+              console.log(`Error: ${data.error}%`);
+            });
+            Upload.addListener('cancelled', uploadId, data => {
+              console.log(`Cancelled!`);
+            });
+            Upload.addListener('completed', uploadId, data => {
+              // data includes responseCode: number and responseBody: Object
+              console.log('Completed!');
+            });
+          })
+          .catch(err => {
+            console.log('Upload error!', err);
+          });
+        //
+
+        // await api.patch('/users/avatar', data);
         dispatch(updateAvatar(result.uri));
 
         Toast.show({
