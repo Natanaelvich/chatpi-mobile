@@ -104,18 +104,17 @@ const Profile: React.FC = () => {
         // UPLOAD BACKGROUND
         const options = {
           url: 'https://api.pi.mundotech.dev/users/avatar',
-          path: result.uri,
+          path: result.uri.replace('file://', ''), // on ios remove replace
           method: 'PATCH',
           maxRetries: 2, // set retry count (Android only). Default 2
           headers: {
-            accept: 'application/json, text/plain, */*', // Customize content-type
+            'content-type': 'multipart/form-data',
             authorization: `Bearer ${user?.token}`,
           },
           // Below are options only supported on Android
           notification: {
             enabled: true,
           },
-          useUtf8Charset: true,
           field: 'uploaded_media',
           type: 'multipart',
         };
@@ -126,8 +125,8 @@ const Profile: React.FC = () => {
             Upload.addListener('progress', uploadId, data => {
               console.log(`Progress: ${data.progress}%`);
             });
-            Upload.addListener('error', uploadId, data => {
-              console.log(`Error: ${data.error}%`);
+            Upload.addListener('error', uploadId, dataError => {
+              console.log(`Error: ${dataError.error}%`);
             });
             Upload.addListener('cancelled', uploadId, data => {
               console.log(`Cancelled!`);
