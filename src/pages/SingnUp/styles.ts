@@ -108,7 +108,7 @@ export const ErrorLoginText = styled.Text`
   color: #e04848;
   margin-left: ${RFValue(6)}px;
 `;
-export const InputContainer = styled.View<{ error: boolean }>`
+export const InputContainer = styled.View<{ error?: boolean }>`
   width: 100%;
   height: ${RFValue(50)}px;
 
