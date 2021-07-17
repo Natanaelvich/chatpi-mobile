@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import { addAttendants, addUsers } from './actions';
 import api from '../../../services/api';
+import { sendError } from '../../../services/sendError';
 
 export function* getAttendants(): SagaIterator {
   try {
@@ -12,7 +12,7 @@ export function* getAttendants(): SagaIterator {
 
     yield put(addAttendants(response.data));
   } catch (error) {
-    crashlytics().recordError(error);
+    sendError(error);
     // if error 401 auto logout
   }
 }
@@ -23,7 +23,7 @@ export function* getUsers(): SagaIterator {
 
     yield put(addUsers(response.data));
   } catch (error) {
-    crashlytics().recordError(error);
+    sendError(error);
     // if error 401 auto logout
   }
 }

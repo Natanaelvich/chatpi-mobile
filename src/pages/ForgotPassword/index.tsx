@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import {
   Container,
@@ -21,6 +20,7 @@ import {
 
 import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
+import { sendError } from '../../services/sendError';
 
 const ForgotPassword: React.FC = () => {
   const navigation = useNavigation();
@@ -44,7 +44,7 @@ const ForgotPassword: React.FC = () => {
         type: 'success',
       });
     } catch (error) {
-      crashlytics().recordError(error);
+      sendError(error);
       setErrorSingnUp(true);
     } finally {
       setLoading(false);

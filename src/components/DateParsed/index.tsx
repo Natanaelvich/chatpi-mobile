@@ -1,9 +1,9 @@
 import { formatDistanceToNow } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import React, { useMemo } from 'react';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import { Container, Title } from './styles';
+import { sendError } from '../../services/sendError';
 
 interface DateParsedProps {
   date?: Date;
@@ -19,7 +19,7 @@ const DateParsed: React.FC<DateParsedProps> = ({ date }) => {
           includeSeconds: false,
         });
       } catch (error) {
-        crashlytics().recordError(error);
+        sendError(error);
         return null;
       }
     }

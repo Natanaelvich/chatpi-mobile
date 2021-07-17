@@ -6,7 +6,6 @@ import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
 import { Formik } from 'formik';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import {
   Container,
@@ -34,6 +33,7 @@ import api from '../../services/api';
 import { LogoText } from '../SingnIn/styles';
 import ModalProVerification from './ModalProVerification';
 import { getSchema } from './shemas/ValidationSchema';
+import { sendError } from '../../services/sendError';
 
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
@@ -79,7 +79,7 @@ const SingnUp: React.FC = () => {
         type: 'success',
       });
     } catch (error) {
-      crashlytics().recordError(error);
+      sendError(error);
       setErrorSingnUp(true);
     } finally {
       setLoading(false);

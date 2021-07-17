@@ -3,7 +3,6 @@ import { all, takeLatest, put, call } from 'redux-saga/effects';
 import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SagaIterator } from '@redux-saga/core';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import {
   signInSuccess,
@@ -13,6 +12,7 @@ import {
   signOut,
 } from './actions';
 import api from '../../../services/api';
+import { sendError } from '../../../services/sendError';
 
 export function* initCheck(): SagaIterator {
   const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
@@ -59,7 +59,7 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
     const { token } = response.data;
     api.defaults.headers.authorization = `Bearer ${token}`;
   } catch (error) {
-    crashlytics().recordError(error);
+    sendError(error);
     let messageError =
       'Usuário ou senha incorretos, verifique e tente novamente!';
 

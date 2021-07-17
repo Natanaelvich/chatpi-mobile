@@ -13,7 +13,6 @@ import { useTheme } from 'styled-components';
 import Toast from 'react-native-toast-message';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
-import crashlytics from '@react-native-firebase/crashlytics';
 
 import api from '../../services/api';
 
@@ -45,6 +44,7 @@ import ModalComponent from '../../components/Modal';
 import { updateAvatar, updateUser } from '../../store/modules/auth/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 import { BASE_URL } from '../../config';
+import { sendError } from '../../services/sendError';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
@@ -110,7 +110,7 @@ const Profile: React.FC = () => {
           type: 'success',
         });
       } catch (error) {
-        crashlytics().recordError(error);
+        sendError(error);
 
         Toast.show({
           text1: 'Ops',
@@ -166,7 +166,7 @@ const Profile: React.FC = () => {
       setErrorUpdate(false);
       setMessageErrorUpdate('');
     } catch (err) {
-      crashlytics().recordError(err);
+      sendError(err);
       setErrorUpdate(true);
       setMessageErrorUpdate(
         'Falha ao atualizar, verifique os dados e tente novamente',
