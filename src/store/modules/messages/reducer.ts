@@ -1,4 +1,5 @@
 export interface MessageProps {
+  idMessage: string | number[];
   user: string | undefined;
   toUser: string;
   message: string;
@@ -6,6 +7,7 @@ export interface MessageProps {
   id: string;
   date: Date;
   name?: string;
+  sended: boolean;
 }
 interface InitialStateMessageProps {
   messages: MessageProps[];
@@ -15,6 +17,7 @@ interface ReducerProps {
   messages: string;
   user: string;
   type: string;
+  messageId: string | number[];
 }
 
 const initialState = {
@@ -23,7 +26,7 @@ const initialState = {
 
 export default (
   state = initialState,
-  { type, message, messages, user }: ReducerProps,
+  { type, message, messages, user, messageId }: ReducerProps,
 ): InitialStateMessageProps => {
   switch (type) {
     case '@messages/ADD_MESSAGE':
@@ -59,6 +62,13 @@ export default (
       return {
         ...state,
         messages: state.messages.filter(m => m.id !== user),
+      };
+    case '@messages/UPDATE_MESSAGE_SENDED':
+      return {
+        ...state,
+        messages: state.messages.map(m => {
+          return m.idMessage === messageId ? { ...m, sended: true } : m;
+        }),
       };
 
     default:

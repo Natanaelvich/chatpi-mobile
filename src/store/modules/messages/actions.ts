@@ -36,6 +36,15 @@ export const deleteMessage = (
   type: '@messages/DELETE_MESSAGE',
   user,
 });
+export const updateMessageSended = (
+  messageId: string | number[],
+): {
+  type: string;
+  messageId: string | number[];
+} => ({
+  type: '@messages/UPDATE_MESSAGE_SENDED',
+  messageId,
+});
 export const deleteAllMessage = (): {
   type: string;
 } => ({
