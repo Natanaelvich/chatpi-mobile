@@ -54,7 +54,7 @@ export const Content = styled.View`
 export const Messages = styled.ScrollView.attrs({
   contentContainerStyle: {
     justifyContent: 'flex-end',
-    padding: 20,
+    padding: RFValue(20),
     overflow: 'hidden',
     flexGrow: 1,
   },
@@ -91,7 +91,7 @@ export const Message = styled.Text<MessageProps>`
     author &&
     css`
       max-width: 90%;
-      margin-right: 12px;
+      margin-right: ${RFValue(12)}px;
     `}
 `;
 export const InputMessageCotainer = styled.View`

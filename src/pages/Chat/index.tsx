@@ -8,6 +8,7 @@ import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Keyboard, LayoutAnimation, View } from 'react-native';
 import uuid from 'react-native-uuid';
 
+import { RFValue } from 'react-native-responsive-fontsize';
 import { RootState } from '../../store/modules/rootReducer';
 
 import {
@@ -174,7 +175,11 @@ const Chat: React.FC = () => {
                   {m.message}
                 </Message>
                 {user?.user.id === m?.user && !m.sended && (
-                  <AntDesign name="clockcircleo" size={16} color="white" />
+                  <AntDesign
+                    name="clockcircleo"
+                    size={RFValue(16)}
+                    color="white"
+                  />
                 )}
               </MessageContainer>
             ))}
