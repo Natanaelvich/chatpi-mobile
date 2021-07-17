@@ -13,7 +13,7 @@ export default (reducers: any): any => {
       debug: true,
       transforms: [
         createWhitelistFilter('attendants', ['attendants', 'users']),
-        createWhitelistFilter('messages', []),
+        createWhitelistFilter('messages', ['messages']),
         createWhitelistFilter('options', []),
         createWhitelistFilter('socket', []),
         createWhitelistFilter('utils', []),
