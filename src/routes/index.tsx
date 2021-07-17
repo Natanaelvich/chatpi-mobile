@@ -36,7 +36,7 @@ Sentry.init({
     }),
   ],
 
-  // enabled: !__DEV__,
+  enabled: !__DEV__,
 });
 
 const Routes: React.FC = () => {
