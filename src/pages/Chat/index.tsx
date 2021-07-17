@@ -4,9 +4,10 @@ import { ScrollView } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Keyboard, LayoutAnimation, View } from 'react-native';
+import uuid from 'react-native-uuid';
+
 import { RootState } from '../../store/modules/rootReducer';
 
 import {
@@ -25,6 +26,7 @@ import {
   InputMessageCotainer,
   IconBrain,
   IconNurse,
+  MessageContainer,
 } from './styles';
 import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
@@ -32,6 +34,7 @@ import { addMessage, readMessage } from '../../store/modules/messages/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
+import { OfflineQueueActions } from '../../store/modules/messages/offline';
 
 type ParamList = {
   Chat: {
@@ -76,7 +79,10 @@ const Chat: React.FC = () => {
 
   const sendMessage = useCallback(() => {
     if (userParam) {
+      const idMessage = uuid.v4();
+
       const messageJsonString = JSON.stringify({
+        idMessage,
         user: user?.user?.id,
         toUser: userParam?.id,
         message,
@@ -87,13 +93,10 @@ const Chat: React.FC = () => {
           user?.user?.avatar_url || `${BASE_URL}/myAvatars/${user?.user?.id}`,
       });
 
-      if (socket) {
-        socket.emit('message', messageJsonString);
-      }
-
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       dispatch(
         addMessage({
+          idMessage,
           user: user?.user.id,
           toUser: userParam.id,
           message,
@@ -101,13 +104,16 @@ const Chat: React.FC = () => {
           id: userParam.id,
           date: new Date(),
           name: user?.user.name,
+          sended: false,
         }),
       );
+
+      dispatch(OfflineQueueActions.SendMessage(messageJsonString));
 
       setMessage('');
       Keyboard.dismiss();
     }
-  }, [message, user, userParam, dispatch, socket]);
+  }, [message, user, userParam, dispatch]);
 
   return (
     <Container>
@@ -159,9 +165,18 @@ const Chat: React.FC = () => {
           {messages
             .filter(m => m.id === userParam.id)
             .map((m, index) => (
-              <Message key={index} author={user?.user.id === m?.user}>
-                {m.message}
-              </Message>
+              <MessageContainer
+                key={index}
+                author={user?.user.id === m?.user}
+                sended={m.sended}
+              >
+                <Message author={user?.user.id === m?.user} sended={m.sended}>
+                  {m.message}
+                </Message>
+                {user?.user.id === m?.user && !m.sended && (
+                  <AntDesign name="clockcircleo" size={16} color="white" />
+                )}
+              </MessageContainer>
             ))}
 
           {typers && typers[userParam.id] && <Typing />}

@@ -9,6 +9,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 interface MessageProps {
   author: boolean;
+  sended: boolean;
 }
 interface StatusProps {
   author: boolean;
@@ -58,17 +59,16 @@ export const Messages = styled.ScrollView.attrs({
     flexGrow: 1,
   },
 })``;
-export const Message = styled.Text<MessageProps>`
-  background: ${props =>
-    props.author ? '#DE595C' : props.theme.colors.boxMessage};
-  padding: ${RFValue(16)}px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: ${RFValue(12)}px;
+export const MessageContainer = styled.View<MessageProps>`
+  flex-direction: row;
+  align-items: flex-end;
   margin-bottom: ${RFValue(12)}px;
   max-width: 80%;
   align-self: ${props => (props.author ? 'flex-end' : 'flex-start')};
   border-radius: ${RFValue(12)}px;
+  background: ${props =>
+    props.author ? '#DE595C' : props.theme.colors.boxMessage};
+  padding: ${RFValue(16)}px;
 
   ${props =>
     props.author
@@ -78,8 +78,21 @@ export const Message = styled.Text<MessageProps>`
       : css`
           border-bottom-left-radius: 0;
         `}
+`;
 
+export const Message = styled.Text<MessageProps>`
+  font-style: normal;
+  font-weight: bold;
+  font-size: ${RFValue(12)}px;
   color: ${props => (props.author ? '#FCEAEB' : props.theme.colors.text)};
+
+  ${({ sended, author }) =>
+    !sended &&
+    author &&
+    css`
+      max-width: 90%;
+      margin-right: 12px;
+    `}
 `;
 export const InputMessageCotainer = styled.View`
   flex-direction: row;
