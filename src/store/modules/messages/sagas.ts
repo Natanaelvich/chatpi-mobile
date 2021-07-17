@@ -1,16 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { all, takeLatest, put, call } from 'redux-saga/effects';
+import { all, takeLatest, select, put } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import crashlytics from '@react-native-firebase/crashlytics';
+import { updateMessageSended } from './actions';
+import { RootState } from '../rootReducer';
 
-import api from '../../../services/api';
-import { addAttendants } from '../attendants/actions';
+type Params = { messageJsonString: string; type: string };
 
-export function* sendMessage(): SagaIterator {
+function* sendMessage({ messageJsonString }: Params): SagaIterator {
   try {
-    const response = yield call(api.get, 'attendantes');
+    const socket = yield select((state: RootState) => state.socket.socket);
 
-    yield put(addAttendants(response.data));
+    socket.emit('message', messageJsonString);
+
+    const { idMessage } = JSON.parse(messageJsonString);
+
+    yield put(updateMessageSended(idMessage));
   } catch (error) {
     crashlytics().recordError(error);
     // if error 401 auto logout

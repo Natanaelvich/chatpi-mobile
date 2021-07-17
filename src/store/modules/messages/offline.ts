@@ -1,18 +1,19 @@
 import { markActionsOffline } from 'redux-offline-queue';
-import { MessageProps } from './reducer';
 
-export const OfflineQueueActions = {
+const OfflineQueueActions = {
   SendMessage: (
-    message: MessageProps,
+    messageJsonString: string,
   ): {
     type: string;
-    message: MessageProps;
+    messageJsonString: string;
   } => ({
     type: '@messages/SEND_MESSAGE',
-    message,
+    messageJsonString,
   }),
 };
 
-export const ActionsTrack = ['SendMessage'];
+const ActionsTrack = ['SendMessage'];
 
 markActionsOffline(OfflineQueueActions, ActionsTrack);
+
+export { OfflineQueueActions };
