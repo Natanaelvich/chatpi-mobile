@@ -3,6 +3,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "pod": "cd ios && pod install",
     "web": "expo start --web",
     "android:release": "cd android/ && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release",
     "android:abb": "cd android/ && ./gradlew bundleRelease && echo android/app/build/outputs/apk/budle",
