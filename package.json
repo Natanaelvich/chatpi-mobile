@@ -27,7 +27,6 @@
     "@react-native-firebase/app": "^12.1.0",
     "@react-native-firebase/crashlytics": "^12.1.0",
     "@react-native-firebase/perf": "^12.1.0",
-    "@react-native-google-signin/google-signin": "^6.0.1",
     "@react-native-picker/picker": "1.16.1",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/material-top-tabs": "^5.3.9",
