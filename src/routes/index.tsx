@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import * as Updates from 'expo-updates';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -39,6 +39,17 @@ Sentry.init({
   enabled: !__DEV__,
 });
 
+const config = {
+  screens: {
+    Profile: 'Profile',
+  },
+};
+
+const linking = {
+  prefixes: ['chatpi://'],
+  config,
+};
+
 const Routes: React.FC = () => {
   const { data: user } = useSelector((state: RootState) => state.auth);
 
@@ -76,6 +87,8 @@ const Routes: React.FC = () => {
       ) : (
         <NavigationContainer
           ref={navigationRef}
+          linking={linking}
+          fallback={<Text>Loading...</Text>}
           onReady={() => {
             reactNavigationV5Instrumentation.registerNavigationContainer(
               navigationRef,
