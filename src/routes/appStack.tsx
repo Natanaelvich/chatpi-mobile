@@ -17,7 +17,14 @@ export function AppStackRoutes(): JSX.Element {
     >
       <Stack.Screen name="MyTabs" component={MyTabs} />
       <Stack.Screen name="Chat" component={Chat} />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          animationEnabled: true,
+          gestureEnabled: true,
+        }}
+      />
       <Stack.Screen name="UserDetails" component={UserDetails} />
     </Stack.Navigator>
   );
