@@ -5,6 +5,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 import {
   Container,
@@ -62,7 +63,35 @@ const SingnIn: React.FC = () => {
       email,
     });
 
-    dispatch(signInRequest(email, password));
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+      }
+
+      if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+      }
+
+      console.error(error);
+    }
+    // dispatch(signInRequest(email, password));
+  }, [email, password, dispatch]);
+
+  const hanlelogin = useCallback(async () => {
+    await crashlytics().setAttributes({
+      email,
+    });
+
+    try {
+      const user = await auth().signInWithEmailAndPassword(email, password);
+
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+    // dispatch(signInRequest(email, password));
   }, [email, password, dispatch]);
 
   // async function handleCreateMessage(): Promise<void> {
@@ -134,6 +163,14 @@ const SingnIn: React.FC = () => {
           loading={loadingSingin}
         >
           <ButtonText>{loadingSingin ? 'Entrando...' : 'Entrar'}</ButtonText>
+        </Button>
+        <Button
+          onPress={() => {
+            hanlelogin();
+          }}
+          loading={loadingSingin}
+        >
+          <ButtonText>login</ButtonText>
         </Button>
 
         <ForgotPasswordButton
