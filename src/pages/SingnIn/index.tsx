@@ -64,7 +64,9 @@ const SingnIn: React.FC = () => {
     });
 
     try {
-      await auth().createUserWithEmailAndPassword(email, password);
+      const user = await auth().createUserWithEmailAndPassword(email, password);
+
+      console.log(user);
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         console.log('That email address is already in use!');
