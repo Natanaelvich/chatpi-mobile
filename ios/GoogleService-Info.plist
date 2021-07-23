@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>188098615511-ndkabhsf3dh68951u146muc6ht73pqhk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.188098615511-ndkabhsf3dh68951u146muc6ht73pqhk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>188098615511-b2fgbmuhee3g5h16jfa8iecah0r0hon0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBGiLiAvdlqLwSiDS1twNnFn3ajxYPEsig</string>
+	<key>GCM_SENDER_ID</key>
+	<string>188098615511</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mundotech.chatpi</string>
+	<key>PROJECT_ID</key>
+	<string>chat-pi-899d7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chat-pi-899d7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:188098615511:ios:e55fb8dc64ecc78c7d3892</string>
+</dict>
+</plist>
