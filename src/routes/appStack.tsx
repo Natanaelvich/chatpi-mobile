@@ -4,28 +4,31 @@ import Chat from '../pages/Chat';
 import Profile from '../pages/Profile';
 import UserDetails from '../pages/UserDetails';
 import MyTabs from './tabs';
+import AppProvider from '../hooks';
 
 const Stack = createStackNavigator();
 
 export function AppStackRoutes(): JSX.Element {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        cardStyle: { backgroundColor: '#343152' },
-      }}
-    >
-      <Stack.Screen name="MyTabs" component={MyTabs} />
-      <Stack.Screen name="Chat" component={Chat} />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          animationEnabled: true,
-          gestureEnabled: true,
+    <AppProvider>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyle: { backgroundColor: '#343152' },
         }}
-      />
-      <Stack.Screen name="UserDetails" component={UserDetails} />
-    </Stack.Navigator>
+      >
+        <Stack.Screen name="MyTabs" component={MyTabs} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            animationEnabled: true,
+            gestureEnabled: true,
+          }}
+        />
+        <Stack.Screen name="UserDetails" component={UserDetails} />
+      </Stack.Navigator>
+    </AppProvider>
   );
 }
