@@ -1,20 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { all, takeLatest, select, put } from 'redux-saga/effects';
+import { all, takeLatest, put } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 
 import { updateMessageSended } from './actions';
-import { RootState } from '../rootReducer';
 import { sendError } from '../../../services/sendError';
 
-type Params = { messageJsonString: string; type: string };
+type Params = {
+  payload: { message: string; socket: SocketIOClient.Socket };
+  type: string;
+};
 
-function* sendMessage({ messageJsonString }: Params): SagaIterator {
+function* sendMessage({ payload: { message, socket } }: Params): SagaIterator {
   try {
-    const socket = yield select((state: RootState) => state.socket.socket);
+    socket.emit('message', message);
 
-    socket.emit('message', messageJsonString);
-
-    const { idMessage } = JSON.parse(messageJsonString);
+    const { idMessage } = JSON.parse(message);
 
     yield put(updateMessageSended(idMessage));
   } catch (error) {
