@@ -53,11 +53,26 @@ const Home: React.FC = () => {
     (state: RootState) => state.socket,
   );
 
-  const { messagesUsers, getMessagesNoReadedsArray } = useChat();
+  const { messagesUsers, getMessagesNoReadedsArray, socket } = useChat();
 
   const [deleteModeMessage, setDeleteModeMessage] = useState(false);
   const [userSelecteds, setUserSelecteds] = useState<string[]>([]);
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+
+  useEffect(() => {
+    async function getOneSignalSubscribeData(): Promise<void> {
+      OneSignal.addSubscriptionObserver(event => {
+        socket.emit('player_id_onesignal', event?.from.userId);
+      });
+
+      const state = await OneSignal.getDeviceState();
+      if (state?.userId) {
+        socket.emit('player_id_onesignal', state?.userId);
+      }
+    }
+
+    getOneSignalSubscribeData();
+  }, [socket]);
 
   useEffect(() => {
     OneSignal.setNotificationOpenedHandler(openedEvent => {
