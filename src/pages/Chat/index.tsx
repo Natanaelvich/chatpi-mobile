@@ -36,6 +36,7 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
 import { OfflineQueueActions } from '../../store/modules/messages/offline';
+import { useChat } from '../../hooks/modules/ChatContext';
 
 type ParamList = {
   Chat: {
@@ -51,9 +52,11 @@ const Chat: React.FC = () => {
   const { goBack, navigate } = useNavigation();
   const { data: user } = useSelector((state: RootState) => state.auth);
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { typers, usersLoggeds, socket } = useSelector(
+  const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
   );
+
+  const { socket } = useChat();
 
   const [message, setMessage] = useState('');
 
@@ -109,12 +112,12 @@ const Chat: React.FC = () => {
         }),
       );
 
-      dispatch(OfflineQueueActions.SendMessage(messageJsonString));
+      dispatch(OfflineQueueActions.SendMessage(messageJsonString, socket));
 
       setMessage('');
       Keyboard.dismiss();
     }
-  }, [message, user, userParam, dispatch]);
+  }, [message, user, userParam, dispatch, socket]);
 
   return (
     <Container>

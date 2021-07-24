@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import io from 'socket.io-client';
-import { LayoutAnimation } from 'react-native';
 
 import OneSignal from 'react-native-onesignal';
 import {
@@ -33,89 +31,33 @@ import {
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
 import {
-  addMessage,
-  addMessages,
   deleteMessage,
   deleteAllMessage,
 } from '../../store/modules/messages/actions';
 
-import {
-  addSocket,
-  addTypers,
-  addUsersLoggeds,
-} from '../../store/modules/socket/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalDelete from '../../components/ModalDelete';
 import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
 import { BASE_URL } from '../../config';
+import { useChat } from '../../hooks/modules/ChatContext';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { users } = useSelector((state: RootState) => state.attendants);
-  const { data: user } = useSelector((state: RootState) => state.auth);
+
   const { modalDeleteData } = useSelector((state: RootState) => state.utils);
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
   );
 
+  const { messagesUsers, getMessagesNoReadedsArray } = useChat();
+
   const [deleteModeMessage, setDeleteModeMessage] = useState(false);
   const [userSelecteds, setUserSelecteds] = useState<string[]>([]);
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
-
-  const socket = useMemo(() => {
-    return io(BASE_URL as string, {
-      query: { user: user?.user.id },
-    });
-  }, [user]);
-
-  useEffect(() => {
-    dispatch(addSocket(socket));
-  }, [socket, dispatch]);
-
-  useEffect(() => {
-    socket.on('usersLoggeds', (usersLoggedsSocket: string) => {
-      dispatch(addUsersLoggeds(JSON.parse(usersLoggedsSocket)));
-    });
-
-    socket.on('typing', (typingSocket: string) => {
-      dispatch(addTypers(JSON.parse(typingSocket)));
-    });
-
-    socket.on('messagesCache', (messagesCache: string) => {
-      dispatch(addMessages(messagesCache));
-    });
-
-    socket.on('message', (messageSocket: string) => {
-      const messageParse = JSON.parse(messageSocket);
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      dispatch(
-        addMessage({
-          ...messageParse,
-          readed: false,
-          id: messageParse.user,
-        }),
-      );
-    });
-  }, [socket, dispatch]);
-
-  useEffect(() => {
-    async function getOneSignalSubscribeData(): Promise<void> {
-      OneSignal.addSubscriptionObserver(event => {
-        socket.emit('player_id_onesignal', event?.from.userId);
-      });
-
-      const state = await OneSignal.getDeviceState();
-      if (state?.userId) {
-        socket.emit('player_id_onesignal', state?.userId);
-      }
-    }
-
-    getOneSignalSubscribeData();
-  }, [socket]);
 
   useEffect(() => {
     OneSignal.setNotificationOpenedHandler(openedEvent => {
@@ -126,41 +68,6 @@ const Home: React.FC = () => {
       });
     });
   }, [navigation]);
-
-  const getLastMessage = useCallback(
-    userMessage => {
-      const messagesUser = messages.filter(m => m.id === userMessage.id);
-      return messagesUser[messagesUser.length - 1];
-    },
-    [messages],
-  );
-
-  const messagesUsers = useMemo(() => {
-    const usersTemp = users
-      .filter(a => !!messages.find(m => m.id === a.id))
-      .map(a => ({
-        ...a,
-        numberMessagesNoRead: messages
-          .filter(m => m.id === a.id)
-          .filter(m => m.readed === false).length,
-        lastMessage: getLastMessage(a),
-      }))
-      .sort((a, b) =>
-        getLastMessage(a)?.date > getLastMessage(b)?.date ? -1 : 1,
-      );
-
-    return usersTemp;
-  }, [users, messages, getLastMessage]);
-
-  const getMessagesNoReadedsArray = useCallback(
-    attendant => {
-      const messagesUser = messages
-        .filter(m => m.id === attendant.id)
-        .filter(m => m.readed === false);
-      return messagesUser;
-    },
-    [messages],
-  );
 
   function deleteMessages(): void {
     userSelecteds.forEach(u => {
