@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-
 import OneSignal from 'react-native-onesignal';
+import {
+  Colors,
+  ListItem,
+  Text,
+  Avatar,
+  AvatarHelper,
+  Drawer,
+  Button,
+} from 'react-native-ui-lib';
+
+import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   Container,
   Content,
@@ -129,8 +140,74 @@ const Home: React.FC = () => {
               <ContentTitle>Conversas</ContentTitle>
             )}
             {messagesUsers.map(a => (
-              <Box
+              // <Box
+              //   key={a.id}
+              //   onLongPress={() => {
+              //     if (!userSelecteds.includes(a.id)) {
+              //       setUserSelecteds(oldUsersSelecteds => [
+              //         ...oldUsersSelecteds,
+              //         a.id,
+              //       ]);
+
+              //       setDeleteModeMessage(true);
+              //     }
+              //   }}
+              //   deleteMode={userSelecteds.includes(a.id) && deleteModeMessage}
+              //   onPress={() => {
+              //     if (deleteModeMessage) {
+              //       if (!userSelecteds.includes(a.id)) {
+              //         setUserSelecteds(oldUsersSelecteds => [
+              //           ...oldUsersSelecteds,
+              //           a.id,
+              //         ]);
+
+              //         return;
+              //       }
+              //       setUserSelecteds(oldUsersSelecteds =>
+              //         oldUsersSelecteds.filter(u => u !== a.id),
+              //       );
+
+              //       return;
+              //     }
+              //     navigation.navigate('Chat', {
+              //       user: a,
+              //       messagesNoRead: getMessagesNoReadedsArray(a),
+              //     });
+              //   }}
+              // >
+              //   <BoxAvatarContainer>
+              //     <BoxAvatar
+              //       source={{
+              //         uri:
+              //           getAvatarUrl(a.avatar_url) ||
+              //           `${BASE_URL}/myAvatars/${a.id}`,
+              //       }}
+              //       resizeMode="cover"
+              //     />
+              //     {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
+              //   </BoxAvatarContainer>
+              //   <ContentBoxText>
+              //     <ViewRow>
+              //       <BoxTitle>{a.name}</BoxTitle>
+              //       {a.numberMessagesNoRead > 0 && (
+              //         <BoxCircle>
+              //           <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
+              //         </BoxCircle>
+              //       )}
+              //     </ViewRow>
+              //     <ViewRow>
+              //       {typers && typers[a.id] ? (
+              //         <TypingDesc>Digitando...</TypingDesc>
+              //       ) : (
+              //         <BoxDesc>{a.lastMessage.message}</BoxDesc>
+              //       )}
+              //       <DateParsed date={a.lastMessage.date} />
+              //     </ViewRow>
+              //   </ContentBoxText>
+              // </Box>
+              <ListItem
                 key={a.id}
+                height={75.8}
                 onLongPress={() => {
                   if (!userSelecteds.includes(a.id)) {
                     setUserSelecteds(oldUsersSelecteds => [
@@ -141,7 +218,7 @@ const Home: React.FC = () => {
                     setDeleteModeMessage(true);
                   }
                 }}
-                deleteMode={userSelecteds.includes(a.id) && deleteModeMessage}
+                // deleteMode={userSelecteds.includes(a.id) && deleteModeMessage}
                 onPress={() => {
                   if (deleteModeMessage) {
                     if (!userSelecteds.includes(a.id)) {
@@ -158,42 +235,78 @@ const Home: React.FC = () => {
 
                     return;
                   }
+
                   navigation.navigate('Chat', {
                     user: a,
-                    messagesNoRead: getMessagesNoReadedsArray(a),
                   });
                 }}
               >
-                <BoxAvatarContainer>
-                  <BoxAvatar
+                <ListItem.Part left>
+                  <Avatar
+                    size={54}
                     source={{
                       uri:
                         getAvatarUrl(a.avatar_url) ||
                         `${BASE_URL}/myAvatars/${a.id}`,
                     }}
-                    resizeMode="cover"
+                    label={a.name}
+                    containerStyle={{ marginHorizontal: 18 }}
+                    badgeProps={{
+                      backgroundColor:
+                        usersLoggeds && usersLoggeds[a.id]
+                          ? Colors.green30
+                          : 'transparent',
+                    }}
                   />
-                  {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
-                </BoxAvatarContainer>
-                <ContentBoxText>
-                  <ViewRow>
-                    <BoxTitle>{a.name}</BoxTitle>
-                    {a.numberMessagesNoRead > 0 && (
-                      <BoxCircle>
-                        <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
-                      </BoxCircle>
-                    )}
-                  </ViewRow>
-                  <ViewRow>
+                </ListItem.Part>
+
+                <ListItem.Part
+                  middle
+                  column
+                  containerStyle={{
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: Colors.dark70,
+                    paddingRight: 17,
+                  }}
+                >
+                  <ListItem.Part containerStyle={{ marginBottom: 3 }}>
+                    <Text
+                      style={{ flex: 1 }}
+                      text70
+                      color={Colors.dark10}
+                      numberOfLines={1}
+                    >
+                      {a.name}
+                    </Text>
+                    <DateParsed date={a.lastMessage.date} />
+                  </ListItem.Part>
+                  <ListItem.Part>
                     {typers && typers[a.id] ? (
                       <TypingDesc>Digitando...</TypingDesc>
                     ) : (
-                      <BoxDesc>{a.lastMessage.message}</BoxDesc>
+                      <Text
+                        style={{
+                          marginRight: 10,
+                          maxWidth: '70%',
+                          fontSize: RFValue(12),
+                        }}
+                        text80
+                        color={Colors.dark40}
+                        numberOfLines={1}
+                      >
+                        {a.lastMessage.message}
+                      </Text>
                     )}
-                    <DateParsed date={a.lastMessage.date} />
-                  </ViewRow>
-                </ContentBoxText>
-              </Box>
+
+                    {a.numberMessagesNoRead > 0 && (
+                      <Button
+                        size="small"
+                        label={String(a.numberMessagesNoRead)}
+                      />
+                    )}
+                  </ListItem.Part>
+                </ListItem.Part>
+              </ListItem>
             ))}
           </>
         )}
