@@ -5,7 +5,7 @@ const light: Theme = {
     primary: '#343152',
     secundary: '#DE595C',
 
-    background: '#f5f5f5',
+    background: '#ffff',
     text: '#343152',
     input: '#eeedf0',
     backgroundButton: '#DE595C',
