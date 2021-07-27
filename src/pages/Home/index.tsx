@@ -14,6 +14,7 @@ import {
 
 import { StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 import {
   Container,
   Content,
@@ -56,6 +57,7 @@ import { useChat } from '../../hooks/modules/ChatContext';
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const { messages } = useSelector((state: RootState) => state.messages);
 
@@ -64,7 +66,7 @@ const Home: React.FC = () => {
     (state: RootState) => state.socket,
   );
 
-  const { messagesUsers, getMessagesNoReadedsArray, socket } = useChat();
+  const { messagesUsers, socket } = useChat();
 
   const [deleteModeMessage, setDeleteModeMessage] = useState(false);
   const [userSelecteds, setUserSelecteds] = useState<string[]>([]);
@@ -140,71 +142,6 @@ const Home: React.FC = () => {
               <ContentTitle>Conversas</ContentTitle>
             )}
             {messagesUsers.map(a => (
-              // <Box
-              //   key={a.id}
-              //   onLongPress={() => {
-              //     if (!userSelecteds.includes(a.id)) {
-              //       setUserSelecteds(oldUsersSelecteds => [
-              //         ...oldUsersSelecteds,
-              //         a.id,
-              //       ]);
-
-              //       setDeleteModeMessage(true);
-              //     }
-              //   }}
-              //   deleteMode={userSelecteds.includes(a.id) && deleteModeMessage}
-              //   onPress={() => {
-              //     if (deleteModeMessage) {
-              //       if (!userSelecteds.includes(a.id)) {
-              //         setUserSelecteds(oldUsersSelecteds => [
-              //           ...oldUsersSelecteds,
-              //           a.id,
-              //         ]);
-
-              //         return;
-              //       }
-              //       setUserSelecteds(oldUsersSelecteds =>
-              //         oldUsersSelecteds.filter(u => u !== a.id),
-              //       );
-
-              //       return;
-              //     }
-              //     navigation.navigate('Chat', {
-              //       user: a,
-              //       messagesNoRead: getMessagesNoReadedsArray(a),
-              //     });
-              //   }}
-              // >
-              //   <BoxAvatarContainer>
-              //     <BoxAvatar
-              //       source={{
-              //         uri:
-              //           getAvatarUrl(a.avatar_url) ||
-              //           `${BASE_URL}/myAvatars/${a.id}`,
-              //       }}
-              //       resizeMode="cover"
-              //     />
-              //     {usersLoggeds && usersLoggeds[a.id] && <BoxCircleOnline />}
-              //   </BoxAvatarContainer>
-              //   <ContentBoxText>
-              //     <ViewRow>
-              //       <BoxTitle>{a.name}</BoxTitle>
-              //       {a.numberMessagesNoRead > 0 && (
-              //         <BoxCircle>
-              //           <BoxCircleText>{a.numberMessagesNoRead}</BoxCircleText>
-              //         </BoxCircle>
-              //       )}
-              //     </ViewRow>
-              //     <ViewRow>
-              //       {typers && typers[a.id] ? (
-              //         <TypingDesc>Digitando...</TypingDesc>
-              //       ) : (
-              //         <BoxDesc>{a.lastMessage.message}</BoxDesc>
-              //       )}
-              //       <DateParsed date={a.lastMessage.date} />
-              //     </ViewRow>
-              //   </ContentBoxText>
-              // </Box>
               <ListItem
                 key={a.id}
                 height={75.8}
@@ -301,6 +238,7 @@ const Home: React.FC = () => {
                     {a.numberMessagesNoRead > 0 && (
                       <Button
                         size="small"
+                        backgroundColor={theme.colors.secundary}
                         label={String(a.numberMessagesNoRead)}
                       />
                     )}
