@@ -6,7 +6,9 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import { CropView } from 'react-native-image-crop-tools';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
@@ -47,6 +49,7 @@ import { BASE_URL } from '../../config';
 import { sendError } from '../../services/sendError';
 
 const Profile: React.FC = () => {
+  const cropViewRef = useRef<any>();
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -67,6 +70,8 @@ const Profile: React.FC = () => {
   const [image, setimage] = useState('');
   const [modalAvatarVisible, setModalAvatarVisible] = useState(false);
   const [modalPreviewPhoto, setModalPreviewPhoto] = useState(false);
+  const [picture, setPicture] = useState('');
+  const [showCrop, setShowCrop] = useState(false);
 
   useEffect(() => {
     setName(user?.user.name || '');
@@ -90,37 +95,45 @@ const Profile: React.FC = () => {
     });
 
     if (!result.cancelled) {
-      try {
-        setloadingUpdateAvatar(true);
-        const data = new FormData();
+      setPicture(result.uri);
+      setShowCrop(true);
+    }
+  }
 
-        data.append('avatar', {
-          name: `image_${user?.user.id}.jpg`,
-          type: 'image/jpg',
-          uri: result.uri,
-        });
+  async function updateAvatarProfile(pictureCrop: {
+    uri: string;
+  }): Promise<void> {
+    try {
+      setShowCrop(false);
+      setloadingUpdateAvatar(true);
+      const data = new FormData();
 
-        await api.patch('/users/avatar', data);
-        dispatch(updateAvatar(result.uri));
+      data.append('avatar', {
+        name: `image_${user?.user.id}.jpg`,
+        type: 'image/jpg',
+        uri: pictureCrop.uri,
+      });
 
-        Toast.show({
-          text1: 'Perfil atualizado',
-          text2: 'Sua foto de perfil foi atualizada 🖼',
-          visibilityTime: 2000,
-          type: 'success',
-        });
-      } catch (error) {
-        sendError(error);
+      await api.patch('/users/avatar', data);
+      dispatch(updateAvatar(pictureCrop.uri));
 
-        Toast.show({
-          text1: 'Ops',
-          text2: 'Falha ao atualizar sua foto de perfil 😔',
-          visibilityTime: 2000,
-          type: 'error',
-        });
-      } finally {
-        setloadingUpdateAvatar(false);
-      }
+      Toast.show({
+        text1: 'Perfil atualizado',
+        text2: 'Sua foto de perfil foi atualizada 🖼',
+        visibilityTime: 2000,
+        type: 'success',
+      });
+    } catch (error) {
+      sendError(error);
+
+      Toast.show({
+        text1: 'Ops',
+        text2: 'Falha ao atualizar sua foto de perfil 😔',
+        visibilityTime: 2000,
+        type: 'error',
+      });
+    } finally {
+      setloadingUpdateAvatar(false);
     }
   }
 
@@ -324,6 +337,28 @@ const Profile: React.FC = () => {
               </ButtonPreview>
             </ContainerButtonsPreview>
           </ContainerModalPreview>
+        </ModalComponent>
+      )}
+
+      {showCrop && (
+        <ModalComponent visible={showCrop} changeSetVisible={setShowCrop}>
+          <CropView
+            sourceUrl={picture}
+            style={{
+              flex: 1,
+            }}
+            ref={cropViewRef}
+            onImageCrop={res => updateAvatarProfile(res)}
+            keepAspectRatio
+            aspectRatio={{ width: 16, height: 16 }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              cropViewRef.current?.saveImage(true, 90);
+            }}
+          >
+            <ButtonText>Get Cropped View</ButtonText>
+          </TouchableOpacity>
         </ModalComponent>
       )}
     </ScrollView>
