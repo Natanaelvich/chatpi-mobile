@@ -1,6 +1,6 @@
 <h1 align='center'> CHAT PI </h1>
 
-### College integrator project system mobile ⚡️
+### A chat that connects people to health professionals, made with react native ⚡️
 
 ## ScreenShots
 
