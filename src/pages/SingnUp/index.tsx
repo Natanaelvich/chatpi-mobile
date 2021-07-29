@@ -18,6 +18,9 @@ import {
   Typography,
 } from 'react-native-ui-lib';
 
+import { themeColors } from 'react-native-ui-lib/generatedTypes/style/colorsPalette';
+import { useTheme } from 'styled-components';
+import dropdown from '../../assets/chevronDown.png';
 import {
   Container,
   Title,
@@ -55,6 +58,7 @@ const SingnUp: React.FC = () => {
   const navigation = useNavigation();
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
+  const theme = useTheme();
 
   const [attendant, setAttendant] = useState(false);
   const [attendantType, setAttendantType] = useState('');
@@ -221,60 +225,48 @@ const SingnUp: React.FC = () => {
               </CheckBoxContainer>
 
               {attendant && (
-                <Picker
-                  placeholder="Favorite Language"
-                  floatingPlaceholder
-                  value={attendantType}
-                  enableModalBlur={false}
-                  onChange={setAttendantType}
-                  topBarProps={{ title: 'Languages' }}
-                  style={{ color: Colors.red20 }}
-                  showSearch
-                  searchPlaceholder="Search a language"
-                  searchStyle={{
-                    color: Colors.blue30,
-                    placeholderTextColor: Colors.dark50,
-                  }}
-                >
-                  {attedantesOptions.map((option, index) => (
-                    <Picker.Item
-                      key={index}
-                      value={option.value}
-                      disabled={false}
-                    />
-                  ))}
-                </Picker>
-                // <>
+                <>
+                  <SelectContainer error={errorValidationAttendant.error}>
+                    <Picker
+                      // Search
+                      placeholder="Tipo de atendente"
+                      floatingPlaceholder
+                      value={attendantType}
+                      enableModalBlur={false}
+                      onChange={setAttendantType}
+                      topBarProps={{ title: 'Atendentes' }}
+                      style={{ color: theme.colors.secundary }}
+                      showSearch
+                      searchPlaceholder="Procure por um tipo de atendente"
+                      searchStyle={{
+                        color: Colors.blue30,
+                        placeholderTextColor: Colors.dark50,
+                      }}
 
-                //   <SelectContainer error={errorValidationAttendant.error}>
-                //     <Select
-                //       selectedValue={attendantType}
-                //       onValueChange={(value, _) => {
-                //         setAttendantType(value as string);
-                //       }}
-                //     >
-                //       <Select.Item
-                //         label="Selecione uma opção"
-                //         value=""
-                //         color="#343152"
-                //       />
-                //       <Select.Item
-                //         label="Enfermeiro(a)"
-                //         value="enf"
-                //         color="#343152"
-                //       />
-                //       <Select.Item
-                //         label="Psicólogo(a)"
-                //         value="psic"
-                //         color="#343152"
-                //       />
-                //     </Select>
-                //   </SelectContainer>
-                //   <MessageErrorValidation>
-                //     {errorValidationAttendant.error &&
-                //       errorValidationAttendant.message}
-                //   </MessageErrorValidation>
-                // </>
+                      // Native Picker
+                      // title="Native Picker"
+                      // placeholder="Pick a Language"
+                      // useNativePicker
+                      // value={attendantType}
+                      // onChange={setAttendantType}
+                      // rightIconSource={dropdown}
+                      // containerStyle={{ marginTop: 20 }}
+                    >
+                      {attedantesOptions.map((option, index) => (
+                        <Picker.Item
+                          key={index}
+                          value={option.value}
+                          label={option.label}
+                          disabled={false}
+                        />
+                      ))}
+                    </Picker>
+                  </SelectContainer>
+                  <MessageErrorValidation>
+                    {errorValidationAttendant.error &&
+                      errorValidationAttendant.message}
+                  </MessageErrorValidation>
+                </>
               )}
 
               <Button

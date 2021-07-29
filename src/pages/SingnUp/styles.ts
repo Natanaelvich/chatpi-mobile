@@ -55,11 +55,6 @@ export const LabelCheckBox = styled.Text`
 `;
 export const SelectContainer = styled.View<{ error: boolean }>`
   width: 100%;
-  height: ${RFValue(50)}px;
-  background: #9c9ab1;
-  color: #f00;
-  border-radius: ${RFValue(12)}px;
-  justify-content: center;
 
   ${({ error }) =>
     error &&
