@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ButtonProps extends RectButtonProperties {
-  loading: boolean;
+  loading?: boolean;
 }
 
 export const Container = styled.ScrollView.attrs({

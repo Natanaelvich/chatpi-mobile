@@ -6,6 +6,17 @@ import Checkbox from '@react-native-community/checkbox';
 import Toast from 'react-native-toast-message';
 import { LayoutAnimation, TextInput } from 'react-native';
 import { Formik } from 'formik';
+import {
+  View,
+  Colors,
+  Dialog,
+  Text,
+  Picker,
+  Avatar,
+  Assets,
+  PanningProvider,
+  Typography,
+} from 'react-native-ui-lib';
 
 import {
   Container,
@@ -34,6 +45,11 @@ import { LogoText } from '../SingnIn/styles';
 import ModalProVerification from './ModalProVerification';
 import { getSchema } from './shemas/ValidationSchema';
 import { sendError } from '../../services/sendError';
+
+const attedantesOptions = [
+  { label: 'Enfermeiro(a)', value: 'enf' },
+  { label: 'Psicólogo(a)', value: 'psic' },
+];
 
 const SingnUp: React.FC = () => {
   const navigation = useNavigation();
@@ -205,36 +221,60 @@ const SingnUp: React.FC = () => {
               </CheckBoxContainer>
 
               {attendant && (
-                <>
-                  <SelectContainer error={errorValidationAttendant.error}>
-                    <Select
-                      selectedValue={attendantType}
-                      onValueChange={(value, _) => {
-                        setAttendantType(value as string);
-                      }}
-                    >
-                      <Select.Item
-                        label="Selecione uma opção"
-                        value=""
-                        color="#343152"
-                      />
-                      <Select.Item
-                        label="Enfermeiro(a)"
-                        value="enf"
-                        color="#343152"
-                      />
-                      <Select.Item
-                        label="Psicólogo(a)"
-                        value="psic"
-                        color="#343152"
-                      />
-                    </Select>
-                  </SelectContainer>
-                  <MessageErrorValidation>
-                    {errorValidationAttendant.error &&
-                      errorValidationAttendant.message}
-                  </MessageErrorValidation>
-                </>
+                <Picker
+                  placeholder="Favorite Language"
+                  floatingPlaceholder
+                  value={attendantType}
+                  enableModalBlur={false}
+                  onChange={setAttendantType}
+                  topBarProps={{ title: 'Languages' }}
+                  style={{ color: Colors.red20 }}
+                  showSearch
+                  searchPlaceholder="Search a language"
+                  searchStyle={{
+                    color: Colors.blue30,
+                    placeholderTextColor: Colors.dark50,
+                  }}
+                >
+                  {attedantesOptions.map((option, index) => (
+                    <Picker.Item
+                      key={index}
+                      value={option.value}
+                      disabled={false}
+                    />
+                  ))}
+                </Picker>
+                // <>
+
+                //   <SelectContainer error={errorValidationAttendant.error}>
+                //     <Select
+                //       selectedValue={attendantType}
+                //       onValueChange={(value, _) => {
+                //         setAttendantType(value as string);
+                //       }}
+                //     >
+                //       <Select.Item
+                //         label="Selecione uma opção"
+                //         value=""
+                //         color="#343152"
+                //       />
+                //       <Select.Item
+                //         label="Enfermeiro(a)"
+                //         value="enf"
+                //         color="#343152"
+                //       />
+                //       <Select.Item
+                //         label="Psicólogo(a)"
+                //         value="psic"
+                //         color="#343152"
+                //       />
+                //     </Select>
+                //   </SelectContainer>
+                //   <MessageErrorValidation>
+                //     {errorValidationAttendant.error &&
+                //       errorValidationAttendant.message}
+                //   </MessageErrorValidation>
+                // </>
               )}
 
               <Button
