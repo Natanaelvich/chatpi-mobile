@@ -42,6 +42,7 @@
     "dotenv": "^10.0.0",
     "expo": "^42.0.0",
     "expo-app-loading": "^1.0.3",
+    "expo-camera": "~11.2.2",
     "expo-font": "~9.2.1",
     "expo-image-picker": "~10.2.2",
     "expo-splash-screen": "^0.11.2",
