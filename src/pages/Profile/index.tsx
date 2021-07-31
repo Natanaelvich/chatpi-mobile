@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import {
   View,
   ScrollView,
@@ -7,6 +13,7 @@ import {
   Alert,
   ActivityIndicator,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import { CropView } from 'react-native-image-crop-tools';
 import * as ImagePicker from 'expo-image-picker';
@@ -15,7 +22,9 @@ import { useTheme } from 'styled-components';
 import Toast from 'react-native-toast-message';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
+import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
 import api from '../../services/api';
 
 import {
@@ -47,6 +56,7 @@ import { updateAvatar, updateUser } from '../../store/modules/auth/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 import { BASE_URL } from '../../config';
 import { sendError } from '../../services/sendError';
+import Camera from '../../components/Camera';
 
 const Profile: React.FC = () => {
   const cropViewRef = useRef<any>();
@@ -72,6 +82,9 @@ const Profile: React.FC = () => {
   const [modalPreviewPhoto, setModalPreviewPhoto] = useState(false);
   const [picture, setPicture] = useState('');
   const [showCrop, setShowCrop] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [photos, setPhotos] = useState<any[]>([]);
+  const [modalImageViewerVisible, setModalImageViewerVisible] = useState(false);
 
   useEffect(() => {
     setName(user?.user.name || '');
@@ -189,6 +202,25 @@ const Profile: React.FC = () => {
     }
   }, [name, email, oldPassword, password, dispatch]);
 
+  function handleOpenModalImages(): void {
+    setModalImageViewerVisible(true);
+  }
+
+  function handleOpenCamera(): void {
+    setShowCamera(true);
+  }
+
+  function changePhotos(photosParam: any[]): void {
+    setPhotos(photosParam);
+  }
+
+  const imagesModal = useMemo(() => {
+    const photosTemp = photos.map(p => ({
+      url: p.uri,
+    }));
+
+    return photosTemp as IImageInfo[];
+  }, [photos]);
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
@@ -197,7 +229,7 @@ const Profile: React.FC = () => {
       <Container>
         <AvatarContainer
           loading={loadingUpdateAvatar}
-          onPress={() => setModalAvatarVisible(true)}
+          onPress={handleOpenCamera}
         >
           {loadingUpdateAvatar ? (
             <ActivityIndicator
@@ -288,7 +320,7 @@ const Profile: React.FC = () => {
           <IconKey />
         </InputContainer>
 
-        <Button loading={loading} onPress={handleUpdateProfile}>
+        <Button loading={loading} onPress={handleOpenModalImages}>
           <ButtonText>{loading ? 'Atualizar...' : 'Atualizar'}</ButtonText>
         </Button>
       </Container>
@@ -361,6 +393,22 @@ const Profile: React.FC = () => {
           </TouchableOpacity>
         </ModalComponent>
       )}
+
+      {showCamera && (
+        <Camera setCameraOpened={setShowCamera} setPhotos={changePhotos} />
+      )}
+
+      <Modal
+        visible={modalImageViewerVisible}
+        onRequestClose={() => setModalImageViewerVisible(false)}
+        transparent
+      >
+        <ImageViewer
+          enableSwipeDown
+          onCancel={() => setModalImageViewerVisible(false)}
+          imageUrls={imagesModal}
+        />
+      </Modal>
     </ScrollView>
   );
 };

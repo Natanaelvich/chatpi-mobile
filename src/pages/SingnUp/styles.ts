@@ -1,11 +1,10 @@
 import { Feather } from '@expo/vector-icons';
-import { TextInputProps } from 'react-native';
-import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
+import { TextInputProps, TouchableOpacityProps } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-interface ButtonProps extends RectButtonProperties {
+interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
 }
 
@@ -73,7 +72,7 @@ export const ReturnLoginText = styled.Text`
 
   color: #fff;
 `;
-export const Button = styled(RectButton)<ButtonProps>`
+export const Button = styled.TouchableOpacity<ButtonProps>`
   background: ${props => (props.loading ? '#C44F51' : '#de595c')};
   border-radius: ${RFValue(10)}px;
   height: ${RFValue(50)}px;
