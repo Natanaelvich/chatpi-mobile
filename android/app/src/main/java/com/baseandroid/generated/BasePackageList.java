@@ -9,7 +9,6 @@ public class BasePackageList {
     return Arrays.<Package>asList(
         new expo.modules.splashscreen.SplashScreenPackage(),
         new expo.modules.application.ApplicationPackage(),
-        new expo.modules.camera.CameraPackage(),
         new expo.modules.constants.ConstantsPackage(),
         new expo.modules.errorrecovery.ErrorRecoveryPackage(),
         new expo.modules.filesystem.FileSystemPackage(),
