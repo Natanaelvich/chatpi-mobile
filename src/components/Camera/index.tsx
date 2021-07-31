@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 type CameraProps = {
   setCameraOpened: (cameraOpened: boolean) => void;
@@ -22,6 +23,7 @@ const windowWidth = Dimensions.get('window').width;
 const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
   const cameraRef = React.useRef<any>();
 
+  const [teste, setTeste] = React.useState(0);
   // const prepareRatio = async (): Promise<void> => {
   //   try {
   //     if (Platform.OS === 'android' && cameraRef.current) {
@@ -59,6 +61,7 @@ const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
 
   return (
     <Modal transparent onRequestClose={() => setCameraOpened(false)}>
+      <View style={{ height: RFValue(60), backgroundColor: 'blue' }} />
       <View
         style={{
           flex: 1,
@@ -66,17 +69,20 @@ const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
         }}
       >
         <RNCamera
-          style={{ width: windowWidth, height: windowWidth, marginTop: 'auto' }}
+          style={{
+            width: windowWidth,
+            height: windowWidth + RFValue(teste),
+          }}
           ref={cameraRef}
-          ratio="1:1"
+          ratio="3:4"
+          onCameraReady={() => setTeste(124)}
           captureAudio={false}
         />
 
-        <TouchableOpacity
-          onPress={takePicture}
-          style={[styles.barIcons, { alignItems: 'center' }]}
-        >
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>
+        <TouchableOpacity onPress={takePicture} style={styles.barIcons}>
+          <Text
+            style={{ fontSize: RFValue(24), fontWeight: 'bold', color: '#fff' }}
+          >
             Tirar Foto
           </Text>
         </TouchableOpacity>
@@ -90,10 +96,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   barIcons: {
-    position: 'absolute',
-    bottom: 16,
-    right: 0,
-    left: 0,
+    flex: 1,
+    backgroundColor: '#111',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textShedule: {
     fontSize: 16,
