@@ -23,13 +23,20 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <!-- CONFIG DEEP LINK  -->
-          <data
-            android:scheme="https"
-            android:host="www.chatpi.com"
-          />
+        <data android:scheme="chatpi"/>
 
       </intent-filter>
+
+        <!-- CONFIG DEEP LINK  -->
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="http" />
+        <data android:scheme="https" />
+        <data android:host="www.chatpi.com"/>
+      </intent-filter>
+
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
   </application>
