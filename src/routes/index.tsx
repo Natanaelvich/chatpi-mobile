@@ -41,12 +41,24 @@ Sentry.init({
 
 const config = {
   screens: {
-    Profile: 'Profile',
+    Main: {
+      screens: {
+        MyTabs: {
+          screens: {
+            Conversas: 'Conversas',
+            Atendentes: 'Atendentes',
+          },
+        },
+        Chat: 'Chat',
+        Profile: 'Profile',
+        UserDetails: 'UserDetails',
+      },
+    },
   },
 };
 
 const linking = {
-  prefixes: ['chatpi://'],
+  prefixes: ['chatpi://', 'https://www.chatpi.com'],
   config,
 };
 
@@ -89,6 +101,7 @@ const Routes: React.FC = () => {
           ref={navigationRef}
           linking={linking}
           fallback={<Text>Loading...</Text>}
+          onStateChange={state => console.tron.log(state)}
           onReady={() => {
             reactNavigationV5Instrumentation.registerNavigationContainer(
               navigationRef,
