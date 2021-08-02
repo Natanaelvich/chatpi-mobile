@@ -37,39 +37,55 @@ import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
 import { OfflineQueueActions } from '../../store/modules/messages/offline';
 import { useChat } from '../../hooks/modules/ChatContext';
+import { UserProps } from '../../store/modules/attendants/reducer';
 
 type ParamList = {
   Chat: {
     user: UserContent;
+    userId: string;
   };
 };
 
 const Chat: React.FC = () => {
   const dispatch = useDispatch();
   const scrollRef = useRef<ScrollView>();
-  const router = useRoute<RouteProp<ParamList, 'Chat'>>();
+  const { params } = useRoute<RouteProp<ParamList, 'Chat'>>();
 
   const { goBack, navigate } = useNavigation();
   const { data: user } = useSelector((state: RootState) => state.auth);
+  const { users } = useSelector((state: RootState) => state.attendants);
   const { messages } = useSelector((state: RootState) => state.messages);
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,
   );
+  const [userChat, setUserChat] = useState<UserProps>();
 
   const { socket } = useChat();
 
   const [message, setMessage] = useState('');
 
-  const userParam = router.params?.user;
+  const { user: userParam, userId } = params;
+
+  useEffect(() => {
+    if (userId) {
+      const userFind = users.find(u => u.id === userId);
+
+      if (userFind) {
+        setUserChat(userFind);
+      }
+    } else {
+      setUserChat(userParam);
+    }
+  }, [userId, userParam, users]);
 
   useEffect(() => {
     messages
-      .filter(m => m.id === userParam.id)
+      .filter(m => m.id === userChat?.id)
       .filter(m => m.readed === false)
       .forEach(m => {
         dispatch(readMessage(m));
       });
-  }, [dispatch, messages, userParam]);
+  }, [dispatch, messages, userChat]);
 
   useEffect(() => {
     if (user) {
@@ -82,17 +98,18 @@ const Chat: React.FC = () => {
   }, [scrollRef]);
 
   const sendMessage = useCallback(() => {
-    if (userParam) {
+    if (userChat) {
       const idMessage = uuid.v4();
 
       const messageJsonString = JSON.stringify({
         idMessage,
         user: user?.user?.id,
-        toUser: userParam?.id,
+        toUser: userChat?.id,
         message,
         readed: false,
         date: new Date(),
         name: user?.user?.name,
+        url: `https://www.chatpi.com/Chat/${user?.user?.id}`,
         largeIcon:
           user?.user?.avatar_url || `${BASE_URL}/myAvatars/${user?.user?.id}`,
       });
@@ -102,10 +119,10 @@ const Chat: React.FC = () => {
         addMessage({
           idMessage,
           user: user?.user.id,
-          toUser: userParam.id,
+          toUser: userChat.id,
           message,
           readed: true,
-          id: userParam.id,
+          id: userChat.id,
           date: new Date(),
           name: user?.user.name,
           sended: false,
@@ -117,7 +134,7 @@ const Chat: React.FC = () => {
       setMessage('');
       Keyboard.dismiss();
     }
-  }, [message, user, userParam, dispatch, socket]);
+  }, [message, user, userChat, dispatch, socket]);
 
   return (
     <Container>
@@ -129,7 +146,7 @@ const Chat: React.FC = () => {
           <RectButton
             onPress={() => {
               navigate('UserDetails', {
-                user: userParam,
+                user: userChat,
               });
             }}
             style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -137,17 +154,17 @@ const Chat: React.FC = () => {
             <Avatar
               source={{
                 uri:
-                  getAvatarUrl(userParam.avatar_url) ||
-                  `${BASE_URL}/myAvatars/${userParam.id}`,
+                  getAvatarUrl(userChat?.avatar_url) ||
+                  `${BASE_URL}/myAvatars/${userChat?.id}`,
               }}
             />
             <ContainerText>
-              <Title>{userParam.name}</Title>
-              {typers && typers[userParam.id] ? (
+              <Title>{userChat?.name}</Title>
+              {typers && userChat?.id && typers[userChat.id] ? (
                 <Status author={false}>Digitando...</Status>
               ) : (
                 <Status author>
-                  {usersLoggeds && usersLoggeds[userParam.id]
+                  {usersLoggeds && userChat?.id && usersLoggeds[userChat.id]
                     ? 'Online'
                     : 'Offline'}
                 </Status>
@@ -156,8 +173,8 @@ const Chat: React.FC = () => {
           </RectButton>
         </View>
 
-        {userParam.clerk === 'enf' && <IconNurse />}
-        {userParam.clerk === 'psic' && <IconBrain />}
+        {userChat?.clerk === 'enf' && <IconNurse />}
+        {userChat?.clerk === 'psic' && <IconBrain />}
       </Header>
       <Content>
         <Messages
@@ -167,7 +184,7 @@ const Chat: React.FC = () => {
           }}
         >
           {messages
-            .filter(m => m.id === userParam.id)
+            .filter(m => m.id === userChat?.id)
             .map((m, index) => (
               <MessageContainer
                 key={index}
@@ -187,7 +204,7 @@ const Chat: React.FC = () => {
               </MessageContainer>
             ))}
 
-          {typers && typers[userParam.id] && <Typing />}
+          {typers && userChat?.id && typers[userChat.id] && <Typing />}
         </Messages>
         <InputMessageCotainer>
           <InputMessage
@@ -203,7 +220,7 @@ const Chat: React.FC = () => {
                   JSON.stringify({
                     user: user?.user.id,
                     typing: true,
-                    toUser: userParam?.id,
+                    toUser: userChat?.id,
                   }),
                 );
               }
@@ -215,7 +232,7 @@ const Chat: React.FC = () => {
                   JSON.stringify({
                     user: user?.user.id,
                     typing: true,
-                    toUser: userParam?.id,
+                    toUser: userChat?.id,
                   }),
                 );
               }
