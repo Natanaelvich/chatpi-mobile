@@ -1,15 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { TouchableOpacityProps } from 'react-native';
 import {
   BorderlessButton,
   BorderlessButtonProperties,
 } from 'react-native-gesture-handler';
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-
-interface BoxProps extends TouchableOpacityProps {
-  deleteMode: boolean;
-}
 
 export const Container: React.FC = styled.View`
   flex: 1;
@@ -53,66 +48,6 @@ export const ContentTitle: React.FC = styled.Text`
   padding: ${RFValue(28)}px;
 `;
 
-export const Box: React.FC<BoxProps> = styled.TouchableOpacity<BoxProps>`
-  flex-direction: row;
-  align-items: center;
-  padding: ${RFValue(16)}px ${RFValue(28)}px;
-  ${props =>
-    props.deleteMode &&
-    css`
-      background: rgba(222, 89, 92, 0.39);
-    `}
-`;
-export const BoxAvatarContainer: React.FC = styled.View`
-  position: relative;
-  width: ${RFValue(60)}px;
-  height: ${RFValue(60)}px;
-  border-radius: ${RFValue(30)}px;
-`;
-export const BoxCircleOnline: React.FC = styled.View`
-  position: absolute;
-  width: ${RFValue(10)}px;
-  height: ${RFValue(10)}px;
-  border-radius: ${RFValue(5)}px;
-  background: #0aa508;
-
-  bottom: ${RFValue(5)}px;
-  right: ${RFValue(5)}px;
-`;
-export const ContentBoxText = styled.View`
-  flex: 1;
-`;
-export const ViewRow = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  padding-left: ${RFValue(12)}px;
-`;
-export const BoxAvatar = styled.Image`
-  width: ${RFValue(60)}px;
-  height: ${RFValue(60)}px;
-  border-radius: ${RFValue(30)}px;
-`;
-export const BoxTitle: React.FC = styled.Text`
-  font-style: normal;
-  font-weight: bold;
-  font-size: ${RFValue(16)}px;
-  margin-bottom: ${RFValue(6)}px;
-
-  color: ${props => props.theme.colors.text};
-`;
-export const BoxDesc: React.FC = styled.Text.attrs({
-  numberOfLines: 1,
-  ellipsizeMode: 'tail',
-})`
-  font-style: normal;
-  font-weight: bold;
-  font-size: ${RFValue(12)}px;
-  max-width: ${RFValue(100)}px;
-
-  color: #b5b5b5;
-`;
 export const TypingDesc: React.FC = styled.Text`
   font-style: normal;
   font-weight: bold;
@@ -120,23 +55,7 @@ export const TypingDesc: React.FC = styled.Text`
 
   color: #0aa508;
 `;
-export const BoxCircle: React.FC = styled.View`
-  margin: ${RFValue(12)}px;
-  width: ${RFValue(20)}px;
-  height: ${RFValue(20)}px;
-  border-radius: ${RFValue(10)}px;
-  background: #de595c;
 
-  align-items: center;
-  justify-content: center;
-  align-self: flex-end;
-`;
-export const BoxCircleText: React.FC = styled.Text`
-  font-style: normal;
-  font-weight: bold;
-  font-size: ${RFValue(12)}px;
-  color: #fceaeb;
-`;
 export const ButtonToAttendants = styled(BorderlessButton)`
   position: absolute;
   bottom: ${RFValue(24)}px;
@@ -175,3 +94,16 @@ export const IconClose: React.FC = styled(MaterialIcons).attrs(props => ({
   size: 24,
   color: props.theme.colors.danger,
 }))``;
+export const BadgeMessagesLenght = styled.View`
+  width: ${RFValue(24)}px;
+  height: ${RFValue(24)}px;
+  border-radius: ${RFValue(12)}px;
+  background: ${({ theme }) => theme.colors.secundary};
+  align-items: center;
+  justify-content: center;
+`;
+export const BadgeMessagesLenghtText = styled.Text`
+  font-weight: bold;
+  font-size: ${RFValue(12)}px;
+  color: ${({ theme }) => theme.colors.background};
+`;

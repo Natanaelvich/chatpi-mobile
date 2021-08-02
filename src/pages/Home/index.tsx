@@ -2,32 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import OneSignal from 'react-native-onesignal';
-import {
-  Colors,
-  ListItem,
-  Text,
-  Avatar,
-  AvatarHelper,
-  Drawer,
-  Button,
-} from 'react-native-ui-lib';
+import { Colors, ListItem, Text, Avatar } from 'react-native-ui-lib';
 
 import { StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components';
 import {
   Container,
   Content,
   ContentTitle,
-  Box,
-  BoxAvatar,
-  BoxDesc,
-  BoxTitle,
-  BoxCircle,
-  BoxCircleText,
   TypingDesc,
-  BoxAvatarContainer,
-  BoxCircleOnline,
   ButtonToAttendants,
   IconMessage,
   EmptyButton,
@@ -38,8 +21,8 @@ import {
   IconClose,
   IconDelete,
   HeaderDeleteMode,
-  ViewRow,
-  ContentBoxText,
+  BadgeMessagesLenght,
+  BadgeMessagesLenghtText,
 } from './styles';
 import { RootState } from '../../store/modules/rootReducer';
 import {
@@ -57,7 +40,6 @@ import { useChat } from '../../hooks/modules/ChatContext';
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const { messages } = useSelector((state: RootState) => state.messages);
 
@@ -86,16 +68,6 @@ const Home: React.FC = () => {
 
     getOneSignalSubscribeData();
   }, [socket]);
-
-  useEffect(() => {
-    OneSignal.setNotificationOpenedHandler(openedEvent => {
-      const { notification } = openedEvent;
-      const { user: userNotification } = notification?.additionalData as any;
-      navigation.navigate('Chat', {
-        user: userNotification,
-      });
-    });
-  }, [navigation]);
 
   function deleteMessages(): void {
     userSelecteds.forEach(u => {
@@ -188,6 +160,7 @@ const Home: React.FC = () => {
                     }}
                     label={a.name}
                     containerStyle={{ marginHorizontal: 18 }}
+                    badgePosition="BOTTOM_RIGHT"
                     badgeProps={{
                       backgroundColor:
                         usersLoggeds && usersLoggeds[a.id]
@@ -236,11 +209,11 @@ const Home: React.FC = () => {
                     )}
 
                     {a.numberMessagesNoRead > 0 && (
-                      <Button
-                        size="small"
-                        backgroundColor={theme.colors.secundary}
-                        label={String(a.numberMessagesNoRead)}
-                      />
+                      <BadgeMessagesLenght>
+                        <BadgeMessagesLenghtText>
+                          {a.numberMessagesNoRead}
+                        </BadgeMessagesLenghtText>
+                      </BadgeMessagesLenght>
                     )}
                   </ListItem.Part>
                 </ListItem.Part>
