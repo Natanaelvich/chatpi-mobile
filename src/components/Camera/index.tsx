@@ -8,6 +8,10 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import {
+  Camera as VisionCamera,
+  useCameraDevices,
+} from 'react-native-vision-camera';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 type CameraProps = {
@@ -22,6 +26,11 @@ const windowWidth = Dimensions.get('window').width;
 
 const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
   const cameraRef = React.useRef<any>();
+  const camera = React.useRef<VisionCamera>(null);
+
+  const devices = useCameraDevices('wide-angle-camera');
+
+  const device = devices.back;
 
   const [teste, setTeste] = React.useState(0);
   // const prepareRatio = async (): Promise<void> => {
@@ -45,15 +54,34 @@ const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
   //   prepareRatio();
   // }, []);
 
+  React.useEffect(() => {
+    async function getPermitions() {
+      try {
+        const cameraPermission = await VisionCamera.getCameraPermissionStatus();
+        const microphonePermission = await VisionCamera.getMicrophonePermissionStatus();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getPermitions();
+  }, []);
+
   const takePicture = async (): Promise<void> => {
     try {
-      const photo = await cameraRef.current.takePictureAsync({
-        quality: 0.5,
-        orientation: 'portrait',
-      });
-      console.log({ photo });
-      setPhotos((oldPhotos: any) => [...oldPhotos, photo]);
+      // const photo = await cameraRef.current.takePictureAsync({
+      //   quality: 0.5,
+      //   orientation: 'portrait',
+      // });
+      // console.log({ photo });
+      // setPhotos((oldPhotos: any) => [...oldPhotos, photo]);
       // setCameraOpened(false);
+
+      const photo = await camera.current?.takePhoto({
+        qualityPrioritization: 'speed',
+      });
+
+      console.log(photo);
     } catch (err) {
       console.log(err);
     }
@@ -68,7 +96,7 @@ const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
           position: 'relative',
         }}
       >
-        <RNCamera
+        {/* <RNCamera
           style={{
             width: windowWidth,
             height: windowWidth + RFValue(teste),
@@ -77,7 +105,15 @@ const Camera: React.FC<CameraProps> = ({ setCameraOpened, setPhotos }) => {
           ratio="3:4"
           onCameraReady={() => setTeste(124)}
           captureAudio={false}
-        />
+        /> */}
+        {device?.devices && (
+          <VisionCamera
+            ref={camera}
+            style={StyleSheet.absoluteFill}
+            device={device}
+            isActive
+          />
+        )}
 
         <TouchableOpacity onPress={takePicture} style={styles.barIcons}>
           <Text
@@ -96,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   barIcons: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#111',
     justifyContent: 'center',
     alignItems: 'center',
