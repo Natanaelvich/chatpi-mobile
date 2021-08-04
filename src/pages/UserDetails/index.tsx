@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-
-import { useNavigation, useRoute } from '@react-navigation/native';
+import Lightbox from 'react-native-lightbox';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { useTheme } from 'styled-components';
 import {
   Container,
   Title,
@@ -16,14 +17,22 @@ import {
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalComponent from '../../components/Modal';
 import { BASE_URL } from '../../config';
+import { UserProps } from '../../store/modules/auth/reducer';
+
+type ParamList = {
+  UserDetails: {
+    user: UserProps;
+  };
+};
 
 const UserDetails: React.FC = () => {
-  const router = useRoute();
+  const router = useRoute<RouteProp<ParamList, 'UserDetails'>>();
   const { goBack } = useNavigation();
+  const theme = useTheme();
 
   const [modalAvatarVisible, setModalAvatarVisible] = useState(false);
 
-  const user = router.params?.user;
+  const { user } = router.params;
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
@@ -38,14 +47,16 @@ const UserDetails: React.FC = () => {
         <IconBack />
       </BorderlessButton>
       <Container>
-        <AvatarContainer onPress={() => setModalAvatarVisible(true)}>
-          <Avatar
-            source={{
-              uri:
-                getAvatarUrl(user?.avatar_url) ||
-                `${BASE_URL}/myAvatars/${user?.id}`,
-            }}
-          />
+        <AvatarContainer>
+          <Lightbox underlayColor={theme.colors.primary}>
+            <Avatar
+              source={{
+                uri:
+                  getAvatarUrl(user?.avatar_url) ||
+                  `${BASE_URL}/myAvatars/${user?.id}`,
+              }}
+            />
+          </Lightbox>
         </AvatarContainer>
 
         <Title>Nome</Title>

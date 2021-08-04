@@ -1,11 +1,5 @@
-import styled, { css } from 'styled-components/native';
-import { ImageProps } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import styled from 'styled-components/native';
 import { FontAwesome } from '@expo/vector-icons';
-
-interface AvatarContainerProps {
-  loading: boolean;
-}
 
 export const Container = styled.View`
   flex: 1;
@@ -24,11 +18,11 @@ export const SubTitle = styled.Text`
   color: #f4ede8;
 `;
 
-export const AvatarModal: React.FC<ImageProps> = styled.Image`
+export const AvatarModal = styled.Image`
   flex: 1;
   border-radius: 22px;
 `;
-export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
+export const AvatarContainer = styled.View`
   width: 186px;
   height: 186px;
   border-radius: 98px;
@@ -36,11 +30,6 @@ export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
   align-self: center;
   align-items: center;
   justify-content: center;
-  ${props =>
-    props.loading &&
-    css`
-      background: ${props.theme.colors.background};
-    `}
 `;
 export const IconBack = styled(FontAwesome).attrs({
   name: 'angle-left',

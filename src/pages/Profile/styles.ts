@@ -40,7 +40,7 @@ export const AvatarModal = styled.Image`
   flex: 1;
   border-radius: ${RFValue(22)}px;
 `;
-export const AvatarContainer = styled(RectButton)<AvatarContainerProps>`
+export const AvatarContainer = styled.View<AvatarContainerProps>`
   width: ${RFValue(186)}px;
   height: ${RFValue(186)}px;
   border-radius: ${RFValue(98)}px;

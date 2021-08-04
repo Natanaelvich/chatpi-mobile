@@ -23,6 +23,7 @@ import Toast from 'react-native-toast-message';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import Lightbox from 'react-native-lightbox';
 
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
 import api from '../../services/api';
@@ -227,10 +228,7 @@ const Profile: React.FC = () => {
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <Container>
-        <AvatarContainer
-          loading={loadingUpdateAvatar}
-          onPress={handleOpenCamera}
-        >
+        <AvatarContainer loading={loadingUpdateAvatar}>
           {loadingUpdateAvatar ? (
             <ActivityIndicator
               color="#111"
@@ -239,13 +237,15 @@ const Profile: React.FC = () => {
             />
           ) : (
             <>
-              <Avatar
-                source={{
-                  uri:
-                    getAvatarUrl(user?.user.avatar_url) ||
-                    `${BASE_URL}/myAvatars/${user?.user.id}`,
-                }}
-              />
+              <Lightbox underlayColor={theme.colors.primary}>
+                <Avatar
+                  source={{
+                    uri:
+                      getAvatarUrl(user?.user.avatar_url) ||
+                      `${BASE_URL}/myAvatars/${user?.user.id}`,
+                  }}
+                />
+              </Lightbox>
               <ButtonCamera onPress={pickImage}>
                 <FontAwesome
                   name="camera"
