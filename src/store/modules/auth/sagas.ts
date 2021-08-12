@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { all, takeLatest, put, call } from 'redux-saga/effects';
-import jwt from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SagaIterator } from '@redux-saga/core';
 
@@ -9,7 +8,6 @@ import {
   setLoadingSingin,
   signInError,
   signInRequest,
-  signOut,
 } from './actions';
 import api from '../../../services/api';
 import { sendError } from '../../../services/sendError';
@@ -21,16 +19,6 @@ export function* initCheck(): SagaIterator {
     const user = JSON.parse(userData);
 
     const { token } = user;
-    const decodedToken: {
-      exp: number;
-    } = jwt(token);
-
-    const dateNow = new Date().getTime() / 1000;
-
-    if (decodedToken.exp < dateNow) {
-      yield put(signOut());
-      return;
-    }
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
