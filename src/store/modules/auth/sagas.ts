@@ -21,8 +21,6 @@ export function* initCheck(): SagaIterator {
     const { token } = user;
 
     api.defaults.headers.authorization = `Bearer ${token}`;
-
-    yield put(signInSuccess(user));
   }
 }
 
