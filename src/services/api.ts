@@ -13,6 +13,7 @@ const api = axios.create({
 });
 
 let isRefreshing = false;
+let failedRequestsQueue: any[] = [];
 
 api.interceptors.response.use(
   response => response,
@@ -24,7 +25,7 @@ api.interceptors.response.use(
         data: { refresh_token },
       } = state.auth as authData;
 
-      if (refresh_token && !isRefreshing) {
+      if (!isRefreshing) {
         isRefreshing = true;
 
         return api
@@ -47,16 +48,30 @@ api.interceptors.response.use(
             api.defaults.headers.Authorization = `Bearer ${token}`;
             originalConfig.headers.Authorization = `Bearer ${token}`;
 
-            return api(originalConfig);
+            failedRequestsQueue.forEach(request => request.onSuccess(token));
+            failedRequestsQueue = [];
           })
-          .catch(() => {
-            return Promise.reject(error);
+          .catch(err => {
+            failedRequestsQueue.forEach(request => request.onFailure(err));
+            failedRequestsQueue = [];
           })
           .finally(() => {
             isRefreshing = false;
           });
       }
-      return Promise.reject(error);
+
+      return new Promise((resolve, reject) => {
+        failedRequestsQueue.push({
+          onSuccess: (token: string) => {
+            originalConfig.headers.Authorization = `Bearer ${token}`;
+
+            resolve(api(originalConfig));
+          },
+          onFailure: (err: AxiosError) => {
+            reject(err);
+          },
+        });
+      });
     }
     return Promise.reject(error);
   },
