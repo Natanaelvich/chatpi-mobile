@@ -101,7 +101,6 @@ const Routes: React.FC = () => {
           ref={navigationRef}
           linking={linking}
           fallback={<Text>Loading...</Text>}
-          onStateChange={state => console.tron.log(state)}
           onReady={() => {
             reactNavigationV5Instrumentation.registerNavigationContainer(
               navigationRef,
