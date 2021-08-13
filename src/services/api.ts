@@ -1,45 +1,61 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import axios, { AxiosError } from 'axios';
-import { Alert } from 'react-native';
 import { BASE_URL } from '../config';
+import { store } from '../store';
+import { updateTokens } from '../store/modules/auth/actions';
+import { RootState } from '../store/modules/rootReducer';
 
+type authData = {
+  data: { refresh_token: string };
+};
 const api = axios.create({
   baseURL: BASE_URL,
 });
 
-const isRefreshing = false;
+let isRefreshing = false;
 
 api.interceptors.response.use(
   response => response,
   (error: AxiosError) => {
     const originalConfig = error.config;
     if (error?.response?.status === 401) {
-      Alert.alert('Error', error.message);
-      // const chatpirefreshtoken = Cookies.get('chatpirefreshtoken');
+      const state = store.getState() as RootState;
+      const {
+        data: { refresh_token },
+      } = state.auth as authData;
 
-      // if (chatpirefreshtoken && !isRefreshing) {
-      //   isRefreshing = true;
+      if (refresh_token && !isRefreshing) {
+        isRefreshing = true;
 
-      //   return api
-      //     .post(`sessions/refresh-token?token=${chatpirefreshtoken}`)
-      //     .then(response => {
-      //       const { token, refresh_token } = response.data;
+        return api
+          .post(`sessions/refresh-token?token=${refresh_token}`)
+          .then(response => {
+            const {
+              token,
+              refresh_token: refresh_token_response,
+            } = response.data;
 
-      //       Cookies.set('chatpirefreshtoken', refresh_token);
-      //       Cookies.set('chatpitoken', token);
+            store.dispatch(
+              updateTokens({ token, refresh_token: refresh_token_response }),
+            );
 
-      //       api.defaults.headers.Authorization = `Bearer ${token}`;
-      //       originalConfig.headers.Authorization = `Bearer ${token}`;
+            AsyncStorage.setItem(
+              '@user:data',
+              JSON.stringify({ token, refresh_token: refresh_token_response }),
+            );
 
-      //       return api(originalConfig);
-      //     })
-      //     .catch(() => {
-      //       signOut();
-      //       return Promise.reject(error);
-      //     })
-      //     .finally(() => {
-      //       isRefreshing = false;
-      //     });
-      // }
+            api.defaults.headers.Authorization = `Bearer ${token}`;
+            originalConfig.headers.Authorization = `Bearer ${token}`;
+
+            return api(originalConfig);
+          })
+          .catch(() => {
+            return Promise.reject(error);
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      }
       return Promise.reject(error);
     }
     return Promise.reject(error);
