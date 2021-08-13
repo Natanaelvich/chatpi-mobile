@@ -8,6 +8,7 @@ import {
   setLoadingSingin,
   signInError,
   signInRequest,
+  updateTokens,
 } from './actions';
 import api from '../../../services/api';
 import { sendError } from '../../../services/sendError';
@@ -19,6 +20,8 @@ export function* initCheck(): SagaIterator {
     const user = JSON.parse(userData);
 
     const { token } = user;
+
+    yield put(updateTokens(user));
 
     api.defaults.headers.authorization = `Bearer ${token}`;
   }
