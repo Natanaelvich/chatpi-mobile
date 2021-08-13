@@ -9,18 +9,23 @@ export interface UserContent {
 export interface UserProps {
   user: UserContent;
   token: string;
+  refresh_token: string;
 }
 interface ReducerProps {
   type: string;
   signinError: { error: false; messageError: '' };
   loadingSingin: boolean;
-  data: UserProps;
+  data: UserProps | undefined;
   userContent: UserContent;
   avatar_url: string;
+  tokens: {
+    token: string;
+    refresh_token: string;
+  };
 }
 interface InitialStateUserProps {
   signedIn: boolean;
-  data: UserProps | null;
+  data: UserProps | undefined;
   signinError: { error: false; messageError: '' };
   loadingSingin: boolean;
   socketId: string | null;
@@ -29,7 +34,7 @@ interface InitialStateUserProps {
 
 const initialState = {
   signedIn: false,
-  data: null,
+  data: undefined,
   signinError: { error: false, messageError: '' },
   loadingSingin: false,
   socketId: null,
@@ -45,10 +50,15 @@ export default (
     data,
     avatar_url,
     userContent,
+    tokens,
   }: ReducerProps,
 ): InitialStateUserProps => {
   switch (type) {
-    case '@user/UPDATE_AVATAR':
+    case '@user/UPDATE_AVATAR': {
+      if (!state.data) {
+        return state;
+      }
+
       return {
         ...state,
         data: {
@@ -56,20 +66,42 @@ export default (
           user: { ...state.data.user, avatar_url },
         },
       };
+    }
+    case '@user/UPDATE_TOKENS': {
+      if (!state.data) {
+        return state;
+      }
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...tokens,
+        },
+      };
+    }
     case '@user/SIGN_IN_SUCCESS':
       return {
         ...state,
         signedIn: true,
         data,
       };
-    case '@user/UPDATE_USER':
+    case '@user/UPDATE_USER': {
+      if (!state.data) {
+        return state;
+      }
+
       return {
         ...state,
-        user: { ...state.data, user: userContent },
+        data: {
+          ...state.data,
+          user: { ...state.data.user, ...userContent },
+        },
       };
+    }
 
     case '@user/SIGN_OUT':
-      return { ...state, signedIn: false, data: null };
+      return { ...state, signedIn: false, data: undefined };
 
     case '@user/SIGN_ERROR':
       return { ...state, signinError };

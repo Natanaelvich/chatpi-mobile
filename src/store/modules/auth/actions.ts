@@ -9,6 +9,19 @@ export const updateAvatar = (
   type: '@user/UPDATE_AVATAR',
   avatar_url,
 });
+export const updateTokens = (tokens: {
+  token: string;
+  refresh_token: string;
+}): {
+  type: string;
+  tokens: {
+    token: string;
+    refresh_token: string;
+  };
+} => ({
+  type: '@user/UPDATE_TOKENS',
+  tokens,
+});
 export const signInRequest = (
   email: string,
   password: string,
