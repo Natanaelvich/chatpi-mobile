@@ -12,7 +12,7 @@ export default (reducers: any): any => {
       stateReconciler: autoMergeLevel2,
       debug: true,
       transforms: [
-        createWhitelistFilter('attendants', ['attendants', 'users']),
+        createWhitelistFilter('users', ['users']),
         createWhitelistFilter('messages', ['messages']),
         createWhitelistFilter('options', []),
         createWhitelistFilter('socket', []),
