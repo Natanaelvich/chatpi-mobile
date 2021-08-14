@@ -6,31 +6,31 @@ export interface UserProps {
   clerk: string | null;
 }
 interface ReducerProps {
-  attendants: UserProps[];
   users: UserProps[];
+  loading: boolean;
   type: string;
 }
-interface InitialStateAttendantsProps {
-  attendants: UserProps[];
+interface InitialStateUsersProps {
   users: UserProps[];
+  loading: boolean;
 }
 
 const initialState = {
-  attendants: [],
   users: [],
-} as InitialStateAttendantsProps;
+  loading: false,
+} as InitialStateUsersProps;
 
 export default (
   state = initialState,
-  { type, attendants, users }: ReducerProps,
-): InitialStateAttendantsProps => {
+  { type, users, loading }: ReducerProps,
+): InitialStateUsersProps => {
   switch (type) {
-    case '@attendants/ADD_ATTENDANTS':
+    case '@users/SET_LOADING':
       return {
         ...state,
-        attendants,
+        loading,
       };
-    case '@attendants/ADD_USERS':
+    case '@users/ADD_USERS':
       return {
         ...state,
         users,

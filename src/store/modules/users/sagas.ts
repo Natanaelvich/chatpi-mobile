@@ -2,33 +2,22 @@
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 
-import { addAttendants, addUsers } from './actions';
+import { addUsers, setLoading } from './actions';
 import api from '../../../services/api';
 import { sendError } from '../../../services/sendError';
 
-export function* getAttendants(): SagaIterator {
-  try {
-    const response = yield call(api.get, 'attendantes');
-
-    yield put(addAttendants(response.data));
-  } catch (error) {
-    sendError(error);
-    // if error 401 auto logout
-  }
-}
-
 export function* getUsers(): SagaIterator {
   try {
+    yield put(setLoading(true));
     const response = yield call(api.get, 'users');
 
     yield put(addUsers(response.data));
   } catch (error) {
     sendError(error);
     // if error 401 auto logout
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-export default all([
-  takeLatest('@attendants/GET_ATTENDANTS', getAttendants),
-  takeLatest('@attendants/GET_USERS', getUsers),
-]);
+export default all([takeLatest('@users/GET_USERS', getUsers)]);
