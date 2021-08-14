@@ -20,15 +20,15 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     const originalConfig = error.config;
     if (error?.response?.status === 401) {
-      const state = store.getState() as RootState;
-      const {
-        data: { refresh_token },
-      } = state.auth as authData;
-
       if (!isRefreshing) {
         isRefreshing = true;
 
-        return api
+        const state = store.getState() as RootState;
+        const {
+          data: { refresh_token },
+        } = state.auth as authData;
+
+        api
           .post(`sessions/refresh-token?token=${refresh_token}`)
           .then(response => {
             const {
