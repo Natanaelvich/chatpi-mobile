@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { RefreshControl } from 'react-native';
 import {
   Container,
   Content,
@@ -17,36 +19,41 @@ import {
   IconBrain,
   IconNurse,
 } from './styles';
-import {
-  getAttendants,
-  getUsers,
-} from '../../store/modules/attendants/actions';
+import { getUsers } from '../../store/modules/users/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { BASE_URL } from '../../config';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
-  const { attendants } = useSelector((state: RootState) => state.attendants);
+  const { users, loading } = useSelector((state: RootState) => state.users);
   const { usersLoggeds } = useSelector((state: RootState) => state.socket);
   const navigation = useNavigation();
 
   useEffect(() => {
-    dispatch(getAttendants());
     dispatch(getUsers());
   }, [dispatch]);
 
   return (
     <Container>
       <Content>
-        <ContentScroll>
+        <ContentScroll
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={() => {
+                dispatch(getUsers());
+              }}
+            />
+          }
+        >
           <ContentTitle>Atendentes</ContentTitle>
 
           <Section>
             <SectionTitle>Enfermeiros(a)</SectionTitle>
             <IconNurse />
           </Section>
-          {attendants
+          {users
             .filter(a => a.clerk === 'enf')
             .map(a => (
               <Box
@@ -79,7 +86,7 @@ const Attendants: React.FC = () => {
             <SectionTitle>Psicólogos(a)</SectionTitle>
             <IconBrain />
           </Section>
-          {attendants
+          {users
             .filter(a => a.clerk === 'psic')
             .map(a => (
               <Box
