@@ -53,7 +53,11 @@ import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 
 import ModalComponent from '../../components/Modal';
-import { updateAvatar, updateUser } from '../../store/modules/auth/actions';
+import {
+  getMeRequest,
+  updateAvatar,
+  updateUser,
+} from '../../store/modules/auth/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 import { BASE_URL } from '../../config';
 import { sendError } from '../../services/sendError';
@@ -90,7 +94,9 @@ const Profile: React.FC = () => {
   useEffect(() => {
     setName(user?.user.name || '');
     setEmail(user?.user.email || '');
-  }, [user]);
+
+    dispatch(getMeRequest());
+  }, [user, dispatch]);
 
   async function pickImage(): Promise<void> {
     if (Platform.OS !== 'web') {
@@ -181,7 +187,7 @@ const Profile: React.FC = () => {
 
       const response = await api.put('/profile/update', formData);
 
-      dispatch(updateUser(response.data.user));
+      dispatch(updateUser(response.data));
 
       Toast.show({
         text1: 'Perfil atualizado com sucesso!',
