@@ -110,6 +110,7 @@ export const InputMessage = styled.TextInput.attrs({
   padding: ${RFValue(12)}px;
   color: ${props => props.theme.colors.textInput};
   background: ${props => props.theme.colors.input};
+  max-height: ${RFValue(120)}px;
 `;
 export const ButtonSendMessage = styled(BorderlessButton)`
   padding-left: ${RFValue(6)}px;
