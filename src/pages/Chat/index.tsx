@@ -37,7 +37,7 @@ import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
 import { OfflineQueueActions } from '../../store/modules/messages/offline';
 import { useChat } from '../../hooks/modules/ChatContext';
-import { UserProps } from '../../store/modules/attendants/reducer';
+import { UserProps } from '../../store/modules/users/reducer';
 
 type ParamList = {
   Chat: {
@@ -53,7 +53,7 @@ const Chat: React.FC = () => {
 
   const { goBack, navigate } = useNavigation();
   const { data: user } = useSelector((state: RootState) => state.auth);
-  const { users } = useSelector((state: RootState) => state.attendants);
+  const { users } = useSelector((state: RootState) => state.users);
   const { messages } = useSelector((state: RootState) => state.messages);
   const { typers, usersLoggeds } = useSelector(
     (state: RootState) => state.socket,

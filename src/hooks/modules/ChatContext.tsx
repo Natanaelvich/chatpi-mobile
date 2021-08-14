@@ -38,7 +38,7 @@ const ChatProvider: React.FC = ({ children }) => {
   const dispatch = useDispatch();
 
   const { messages } = useSelector((state: RootState) => state.messages);
-  const { users } = useSelector((state: RootState) => state.attendants);
+  const { users } = useSelector((state: RootState) => state.users);
   const { data: user } = useSelector((state: RootState) => state.auth);
 
   const { usersLoggeds } = useSelector((state: RootState) => state.socket);
