@@ -9,9 +9,11 @@ import {
   signInError,
   signInRequest,
   updateTokens,
+  updateUser,
 } from './actions';
 import api from '../../../services/api';
 import { sendError } from '../../../services/sendError';
+import { getUsers } from '../users/actions';
 
 export function* initCheck(): SagaIterator {
   const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
@@ -24,6 +26,19 @@ export function* initCheck(): SagaIterator {
     yield put(updateTokens(user));
 
     api.defaults.headers.authorization = `Bearer ${token}`;
+
+    yield call(getMe);
+    yield put(getUsers());
+  }
+}
+
+export function* getMe(): SagaIterator {
+  try {
+    const response = yield call(api.get, 'profile');
+
+    yield put(updateUser(response.data));
+  } catch (error) {
+    // signout
   }
 }
 
@@ -67,4 +82,7 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
   }
 }
 
-export default all([takeLatest('@user/SIGN_IN_REQUEST', signIn)]);
+export default all([
+  takeLatest('@user/SIGN_IN_REQUEST', signIn),
+  takeLatest('@user/GET_ME_REQUEST', getMe),
+]);

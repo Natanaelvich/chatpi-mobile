@@ -76,3 +76,9 @@ export const updateUser = (
   type: '@user/UPDATE_USER',
   userContent,
 });
+
+export const getMeRequest = (): {
+  type: string;
+} => ({
+  type: '@user/GET_ME_REQUEST',
+});
