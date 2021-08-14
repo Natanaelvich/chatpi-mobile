@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
@@ -29,10 +29,6 @@ const Attendants: React.FC = () => {
   const { users, loading } = useSelector((state: RootState) => state.users);
   const { usersLoggeds } = useSelector((state: RootState) => state.socket);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
 
   return (
     <Container>
