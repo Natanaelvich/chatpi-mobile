@@ -13,7 +13,7 @@ import {
 } from './actions';
 import api from '../../../services/api';
 import { sendError } from '../../../services/sendError';
-import { getUsers } from '../users/actions';
+import { addUsers } from '../users/actions';
 
 export function* initCheck(): SagaIterator {
   const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
@@ -27,19 +27,22 @@ export function* initCheck(): SagaIterator {
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
-    yield call(getMe);
-    yield put(getUsers());
+    const requests = [getMe, getUsers];
+
+    yield all(requests.map(r => call(r)));
   }
 }
 
-export function* getMe(): SagaIterator {
-  try {
-    const response = yield call(api.get, 'profile');
+export function* getUsers(): SagaIterator {
+  const response = yield call(api.get, 'users');
 
-    yield put(updateUser(response.data));
-  } catch (error) {
-    // signout
-  }
+  yield put(addUsers(response.data));
+}
+
+export function* getMe(): SagaIterator {
+  const response = yield call(api.get, 'profile');
+
+  yield put(updateUser(response.data));
 }
 
 function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
