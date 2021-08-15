@@ -16,20 +16,24 @@ import { sendError } from '../../../services/sendError';
 import { addUsers } from '../users/actions';
 
 export function* initCheck(): SagaIterator {
-  const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
+  try {
+    const userData = yield call([AsyncStorage, 'getItem'], '@user:data');
 
-  if (userData) {
-    const user = JSON.parse(userData);
+    if (userData) {
+      const user = JSON.parse(userData);
 
-    const { token } = user;
+      const { token } = user;
 
-    yield put(updateTokens(user));
+      yield put(updateTokens(user));
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+      api.defaults.headers.authorization = `Bearer ${token}`;
 
-    const requests = [getMe, getUsers];
+      const requests = [getMe, getUsers];
 
-    yield all(requests.map(r => call(r)));
+      yield all(requests.map(r => call(r)));
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
@@ -40,9 +44,13 @@ export function* getUsers(): SagaIterator {
 }
 
 export function* getMe(): SagaIterator {
-  const response = yield call(api.get, 'profile');
+  try {
+    const response = yield call(api.get, 'profile');
 
-  yield put(updateUser(response.data));
+    yield put(updateUser(response.data));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
