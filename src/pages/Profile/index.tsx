@@ -92,11 +92,13 @@ const Profile: React.FC = () => {
   const [modalImageViewerVisible, setModalImageViewerVisible] = useState(false);
 
   useEffect(() => {
+    dispatch(getMeRequest());
+  }, [dispatch]);
+
+  useEffect(() => {
     setName(user?.user.name || '');
     setEmail(user?.user.email || '');
-
-    dispatch(getMeRequest());
-  }, [user, dispatch]);
+  }, [user]);
 
   async function pickImage(): Promise<void> {
     if (Platform.OS !== 'web') {
@@ -213,9 +215,9 @@ const Profile: React.FC = () => {
     setModalImageViewerVisible(true);
   }
 
-  function handleOpenCamera(): void {
-    setShowCamera(true);
-  }
+  // function handleOpenCamera(): void {
+  //   setShowCamera(true);
+  // }
 
   function changePhotos(photosParam: any[]): void {
     setPhotos(photosParam);
