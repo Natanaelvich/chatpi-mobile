@@ -59,9 +59,9 @@ import {
   updateUser,
 } from '../../store/modules/auth/actions';
 import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
-import { BASE_URL } from '../../config';
 import { sendError } from '../../services/sendError';
 import Camera from '../../components/Camera';
+import assets from '../../assets';
 
 const Profile: React.FC = () => {
   const cropViewRef = useRef<any>();
@@ -247,11 +247,11 @@ const Profile: React.FC = () => {
             <>
               <Lightbox underlayColor={theme.colors.primary}>
                 <Avatar
-                  source={{
-                    uri:
-                      getAvatarUrl(user?.user.avatar_url) ||
-                      `${BASE_URL}/myAvatars/${user?.user.id}`,
-                  }}
+                  source={
+                    assets.avatarProfile || {
+                      uri: getAvatarUrl(user?.user.avatar_url),
+                    }
+                  }
                 />
               </Lightbox>
               <ButtonCamera onPress={pickImage}>
@@ -339,11 +339,11 @@ const Profile: React.FC = () => {
       >
         <AvatarModal
           resizeMode="center"
-          source={{
-            uri:
-              getAvatarUrl(user?.user.avatar_url) ||
-              `${BASE_URL}/myAvatars/${user?.user.id}`,
-          }}
+          source={
+            assets.avatarProfile || {
+              uri: getAvatarUrl(user?.user.avatar_url),
+            }
+          }
         />
       </ModalComponent>
 

@@ -16,13 +16,11 @@ import {
 } from './styles';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalComponent from '../../components/Modal';
-import { BASE_URL } from '../../config';
 import { UserProps } from '../../store/modules/auth/reducer';
+import assets from '../../assets';
 
 type ParamList = {
-  UserDetails: {
-    user: UserProps;
-  };
+  UserDetails: UserProps;
 };
 
 const UserDetails: React.FC = () => {
@@ -50,11 +48,11 @@ const UserDetails: React.FC = () => {
         <AvatarContainer>
           <Lightbox underlayColor={theme.colors.primary}>
             <Avatar
-              source={{
-                uri:
-                  getAvatarUrl(user?.avatar_url) ||
-                  `${BASE_URL}/myAvatars/${user?.id}`,
-              }}
+              source={
+                assets.avatarProfile || {
+                  uri: getAvatarUrl(user?.avatar_url),
+                }
+              }
             />
           </Lightbox>
         </AvatarContainer>
@@ -75,11 +73,11 @@ const UserDetails: React.FC = () => {
       >
         <AvatarModal
           resizeMode="center"
-          source={{
-            uri:
-              getAvatarUrl(user?.avatar_url) ||
-              `${BASE_URL}/myAvatars/${user?.id}`,
-          }}
+          source={
+            assets.avatarProfile || {
+              uri: getAvatarUrl(user?.avatar_url),
+            }
+          }
         />
       </ModalComponent>
     </ScrollView>

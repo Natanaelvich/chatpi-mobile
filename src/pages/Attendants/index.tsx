@@ -22,7 +22,7 @@ import {
 import { getUsers } from '../../store/modules/users/actions';
 import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import { BASE_URL } from '../../config';
+import assets from '../../assets';
 
 const Attendants: React.FC = () => {
   const dispatch = useDispatch();
@@ -61,11 +61,11 @@ const Attendants: React.FC = () => {
                 }}
               >
                 <BoxAvatar
-                  source={{
-                    uri:
-                      getAvatarUrl(a.avatar_url) ||
-                      `${BASE_URL}/myAvatars/${a.id}`,
-                  }}
+                  source={
+                    assets.avatarProfile || {
+                      uri: getAvatarUrl(user?.user.avatar_url),
+                    }
+                  }
                   resizeMode="cover"
                 />
                 <BoxTextContainer>
@@ -94,11 +94,11 @@ const Attendants: React.FC = () => {
                 }}
               >
                 <BoxAvatar
-                  source={{
-                    uri:
-                      getAvatarUrl(a.avatar_url) ||
-                      `${BASE_URL}/myAvatars/${a.id}`,
-                  }}
+                  source={
+                    assets.avatarProfile || {
+                      uri: getAvatarUrl(user?.user.avatar_url),
+                    }
+                  }
                   resizeMode="cover"
                 />
                 <BoxTextContainer>

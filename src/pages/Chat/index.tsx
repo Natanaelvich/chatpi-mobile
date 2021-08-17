@@ -38,6 +38,7 @@ import { BASE_URL } from '../../config';
 import { OfflineQueueActions } from '../../store/modules/messages/offline';
 import { useChat } from '../../hooks/modules/ChatContext';
 import { UserProps } from '../../store/modules/users/reducer';
+import assets from '../../assets';
 
 type ParamList = {
   Chat: {
@@ -152,11 +153,11 @@ const Chat: React.FC = () => {
             style={{ flexDirection: 'row', alignItems: 'center' }}
           >
             <Avatar
-              source={{
-                uri:
-                  getAvatarUrl(userChat?.avatar_url) ||
-                  `${BASE_URL}/myAvatars/${userChat?.id}`,
-              }}
+              source={
+                assets.avatarProfile || {
+                  uri: getAvatarUrl(user?.user.avatar_url),
+                }
+              }
             />
             <ContainerText>
               <Title>{userChat?.name}</Title>

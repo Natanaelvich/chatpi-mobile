@@ -2,7 +2,7 @@ import React from 'react';
 import LottieView from 'lottie-react-native';
 
 import { View } from 'react-native';
-import typing from '../../assets/typing.json';
+import assets from '../../assets';
 
 const Typing: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const Typing: React.FC = () => {
           height: 30,
         }}
         autoPlay
-        source={typing}
+        source={assets.typing}
         autoSize
       />
     </View>

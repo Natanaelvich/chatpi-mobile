@@ -27,7 +27,7 @@ import { signOut } from '../../store/modules/auth/actions';
 import { setDarkMode } from '../../store/modules/options/actions';
 import getAvatarUrl from '../../utils/getAvatarUrl';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
-import { BASE_URL } from '../../config';
+import assets from '../../assets';
 
 const DrawerContent: React.FC<DrawerContentOptions> = props => {
   const dispatch = useDispatch();
@@ -49,11 +49,11 @@ const DrawerContent: React.FC<DrawerContentOptions> = props => {
           <UserInfoSection>
             <View style={{ flexDirection: 'row', marginTop: 15 }}>
               <Avatar
-                source={{
-                  uri:
-                    getAvatarUrl(user?.user.avatar_url) ||
-                    `${BASE_URL}/myAvatars/${user?.user.id}`,
-                }}
+                source={
+                  assets.avatarProfile || {
+                    uri: getAvatarUrl(user?.user.avatar_url),
+                  }
+                }
               />
               <View
                 style={{

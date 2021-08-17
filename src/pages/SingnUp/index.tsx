@@ -20,7 +20,6 @@ import {
 
 import { themeColors } from 'react-native-ui-lib/generatedTypes/style/colorsPalette';
 import { useTheme } from 'styled-components';
-import dropdown from '../../assets/chevronDown.png';
 import {
   Container,
   Title,
@@ -48,6 +47,7 @@ import { LogoText } from '../SingnIn/styles';
 import ModalProVerification from './ModalProVerification';
 import { getSchema } from './shemas/ValidationSchema';
 import { sendError } from '../../services/sendError';
+import assets from '../../assets';
 
 const attedantesOptions = [
   { label: 'Enfermeiro(a)', value: 'enf' },
@@ -242,14 +242,13 @@ const SingnUp: React.FC = () => {
                         color: Colors.blue30,
                         placeholderTextColor: Colors.dark50,
                       }}
-
                       // Native Picker
                       // title="Native Picker"
                       // placeholder="Pick a Language"
                       // useNativePicker
                       // value={attendantType}
                       // onChange={setAttendantType}
-                      // rightIconSource={dropdown}
+                      // rightIconSource={assets.downIcon}
                       // containerStyle={{ marginTop: 20 }}
                     >
                       {attedantesOptions.map((option, index) => (

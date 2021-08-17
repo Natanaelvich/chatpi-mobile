@@ -34,8 +34,8 @@ import getAvatarUrl from '../../utils/getAvatarUrl';
 import ModalDelete from '../../components/ModalDelete';
 import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
-import { BASE_URL } from '../../config';
 import { useChat } from '../../hooks/modules/ChatContext';
+import assets from '../../assets';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
@@ -153,11 +153,11 @@ const Home: React.FC = () => {
                 <ListItem.Part left>
                   <Avatar
                     size={54}
-                    source={{
-                      uri:
-                        getAvatarUrl(a.avatar_url) ||
-                        `${BASE_URL}/myAvatars/${a.id}`,
-                    }}
+                    source={
+                      assets.avatarProfile || {
+                        uri: getAvatarUrl(user?.avatar_url),
+                      }
+                    }
                     label={a.name}
                     containerStyle={{ marginHorizontal: 18 }}
                     badgePosition="BOTTOM_RIGHT"
