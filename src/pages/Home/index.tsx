@@ -146,7 +146,7 @@ const Home: React.FC = () => {
                   }
 
                   navigation.navigate('Chat', {
-                    user: a,
+                    userId: a.id,
                   });
                 }}
               >

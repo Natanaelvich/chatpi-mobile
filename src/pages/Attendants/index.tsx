@@ -56,7 +56,7 @@ const Attendants: React.FC = () => {
                 key={a.id}
                 onPress={() => {
                   navigation.navigate('Chat', {
-                    user: a,
+                    userId: a.id,
                   });
                 }}
               >
@@ -89,7 +89,7 @@ const Attendants: React.FC = () => {
                 key={a.id}
                 onPress={() => {
                   navigation.navigate('Chat', {
-                    user: a,
+                    userId: a.id,
                   });
                 }}
               >
