@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Keyboard, LayoutAnimation, View } from 'react-native';
 import uuid from 'react-native-uuid';
+import OneSignal from 'react-native-onesignal';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import { RootState } from '../../store/modules/rootReducer';
@@ -33,7 +34,6 @@ import Typing from '../../components/Typing';
 import { addMessage, readMessage } from '../../store/modules/messages/actions';
 
 import getAvatarUrl from '../../utils/getAvatarUrl';
-import { UserContent } from '../../store/modules/auth/reducer';
 import { BASE_URL } from '../../config';
 import { OfflineQueueActions } from '../../store/modules/messages/offline';
 import { useChat } from '../../hooks/modules/ChatContext';
@@ -42,7 +42,6 @@ import assets from '../../assets';
 
 type ParamList = {
   Chat: {
-    user: UserContent;
     userId: string;
   };
 };
@@ -65,7 +64,7 @@ const Chat: React.FC = () => {
 
   const [message, setMessage] = useState('');
 
-  const { user: userParam, userId } = params;
+  const { userId } = params;
 
   useEffect(() => {
     if (userId) {
@@ -74,10 +73,8 @@ const Chat: React.FC = () => {
       if (userFind) {
         setUserChat(userFind);
       }
-    } else {
-      setUserChat(userParam);
     }
-  }, [userId, userParam, users]);
+  }, [userId, users]);
 
   useEffect(() => {
     messages
@@ -98,44 +95,56 @@ const Chat: React.FC = () => {
     scrollRef.current?.scrollToEnd({ animated: false });
   }, [scrollRef]);
 
-  const sendMessage = useCallback(() => {
-    if (userChat) {
-      const idMessage = uuid.v4();
+  const sendMessage = useCallback(
+    (messageParam = '') => {
+      if (userChat) {
+        const idMessage = uuid.v4();
 
-      const messageJsonString = JSON.stringify({
-        idMessage,
-        user: user?.user?.id,
-        toUser: userChat?.id,
-        message,
-        readed: false,
-        date: new Date(),
-        name: user?.user?.name,
-        url: `https://www.chatpi.com/Chat/${user?.user?.id}`,
-        largeIcon:
-          user?.user?.avatar_url || `${BASE_URL}/myAvatars/${user?.user?.id}`,
-      });
-
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      dispatch(
-        addMessage({
+        const messageTemp = messageParam || message;
+        const messageJsonString = JSON.stringify({
           idMessage,
-          user: user?.user.id,
-          toUser: userChat.id,
-          message,
-          readed: true,
-          id: userChat.id,
+          user: user?.user?.id,
+          toUser: userChat?.id,
+          message: messageTemp,
+          readed: false,
           date: new Date(),
-          name: user?.user.name,
-          sended: false,
-        }),
-      );
+          name: user?.user?.name,
+          url: `https://www.chatpi.com/Chat/${user?.user?.id}`,
+          largeIcon:
+            user?.user?.avatar_url || `${BASE_URL}/myAvatars/${user?.user?.id}`,
+        });
 
-      dispatch(OfflineQueueActions.SendMessage(messageJsonString, socket));
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        dispatch(
+          addMessage({
+            idMessage,
+            user: user?.user.id,
+            toUser: userChat.id,
+            message: messageTemp,
+            readed: true,
+            id: userChat.id,
+            date: new Date(),
+            name: user?.user.name,
+            sended: false,
+          }),
+        );
 
-      setMessage('');
-      Keyboard.dismiss();
-    }
-  }, [message, user, userChat, dispatch, socket]);
+        dispatch(OfflineQueueActions.SendMessage(messageJsonString, socket));
+
+        setMessage('');
+        Keyboard.dismiss();
+      }
+    },
+    [message, user, userChat, dispatch, socket],
+  );
+
+  useEffect(() => {
+    OneSignal.setNotificationOpenedHandler(event => {
+      if (event.action.type === 1) {
+        sendMessage('ola, tudo bem?');
+      }
+    });
+  }, [sendMessage]);
 
   return (
     <Container>
