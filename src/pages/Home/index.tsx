@@ -36,6 +36,7 @@ import DateParsed from '../../components/DateParsed';
 import { modalDeleteDataVisible } from '../../store/modules/utils/actions';
 import { useChat } from '../../hooks/modules/ChatContext';
 import assets from '../../assets';
+import { getUsers } from '../../store/modules/users/actions';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
@@ -53,6 +54,10 @@ const Home: React.FC = () => {
   const [deleteModeMessage, setDeleteModeMessage] = useState(false);
   const [userSelecteds, setUserSelecteds] = useState<string[]>([]);
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   useEffect(() => {
     async function getOneSignalSubscribeData(): Promise<void> {
