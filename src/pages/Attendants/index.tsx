@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {
   Container,
   Content,
@@ -60,14 +61,16 @@ const Attendants: React.FC = () => {
                   });
                 }}
               >
-                <BoxAvatar
-                  source={
-                    assets.avatarProfile || {
-                      uri: getAvatarUrl(user?.user.avatar_url),
+                <ShimmerPlaceholder visible={loading}>
+                  <BoxAvatar
+                    source={
+                      assets.avatarProfile || {
+                        uri: getAvatarUrl(user?.user.avatar_url),
+                      }
                     }
-                  }
-                  resizeMode="cover"
-                />
+                    resizeMode="cover"
+                  />
+                </ShimmerPlaceholder>
                 <BoxTextContainer>
                   <BoxTitle>{a.name}</BoxTitle>
                   <BoxDesc>
