@@ -9338,11 +9338,6 @@ react-native-screens@~3.4.0:
   dependencies:
     warn-once "^0.1.0"
 
-react-native-shimmer-placeholder@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-shimmer-placeholder/-/react-native-shimmer-placeholder-2.0.7.tgz#7530937647e0b7991b55a167ca86d4d0d9d32637"
-  integrity sha512-fqqaqIEArcDqoh/wEOAypqAf28i91jBfAUdYVi8vUBFfbApqTjbWY+Np5lVvKYpDYUhlicNUou3q5/f9OCHnWQ==
-
 react-native-slider@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"
