@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Feather } from '@expo/vector-icons';
-import { TextInputProps, TouchableOpacityProps } from 'react-native';
+import {
+  ScrollViewProps,
+  TextInputProps,
+  TouchableOpacityProps,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -8,7 +13,7 @@ interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
 }
 
-export const Container = styled.ScrollView.attrs({
+export const Container = styled.ScrollView.attrs<any, ScrollViewProps>({
   contentContainerStyle: {
     flexGrow: 1,
     justifyContent: 'space-between',
@@ -43,7 +48,7 @@ export const CheckBoxContainer = styled.View`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin-bottom: ${RFValue(12)}px;
+  margin: ${RFValue(16)}px 0 ${RFValue(8)}px;
 `;
 export const LabelCheckBox = styled.Text`
   ${props => props.theme.typograph.textH1Normal}
@@ -52,7 +57,7 @@ export const LabelCheckBox = styled.Text`
   margin-right: ${RFValue(6)}px;
   letter-spacing: ${RFValue(0.89)}px;
 `;
-export const SelectContainer = styled.View<{ error: boolean }>`
+export const SelectContainer = styled.View<{ error?: boolean }>`
   width: 100%;
 
   ${({ error }) =>
@@ -80,7 +85,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: ${RFValue(6)}px;
+  margin-top: auto;
 `;
 export const ButtonText = styled.Text`
   font-size: ${RFValue(14)}px;
