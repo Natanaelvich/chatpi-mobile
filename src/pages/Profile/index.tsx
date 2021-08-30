@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useRef,
   useCallback,
@@ -14,7 +15,9 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Modal,
+  LayoutAnimation,
 } from 'react-native';
+import Checkbox from '@react-native-community/checkbox';
 import { CropView } from 'react-native-image-crop-tools';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +29,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import Lightbox from 'react-native-lightbox';
 
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
+import { Picker } from 'react-native-ui-lib';
 import api from '../../services/api';
 
 import {
@@ -43,11 +47,14 @@ import {
 import {
   Button,
   ButtonText,
+  CheckBoxContainer,
   IconKey,
   IconMail,
   IconUser,
   Input,
   InputContainer,
+  LabelCheckBox,
+  SelectContainer,
 } from '../SingnUp/styles';
 import { RootState } from '../../store/modules/rootReducer';
 import getAvatarUrl from '../../utils/getAvatarUrl';
@@ -62,6 +69,11 @@ import { ErrorLogin, ErrorLoginText } from '../SingnIn/styles';
 import { sendError } from '../../services/sendError';
 import Camera from '../../components/Camera';
 import assets from '../../assets';
+
+const attedantesOptions = [
+  { label: 'Enfermeiro(a)', value: 'enf' },
+  { label: 'Psicólogo(a)', value: 'psic' },
+];
 
 const Profile: React.FC = () => {
   const cropViewRef = useRef<any>();
@@ -90,6 +102,9 @@ const Profile: React.FC = () => {
   const [showCamera, setShowCamera] = useState(false);
   const [photos, setPhotos] = useState<any[]>([]);
   const [modalImageViewerVisible, setModalImageViewerVisible] = useState(false);
+
+  const [attendant, setAttendant] = useState(!!user?.user.clerk);
+  const [attendantType, setAttendantType] = useState(user?.user.clerk || '');
 
   useEffect(() => {
     dispatch(getMeRequest());
@@ -165,6 +180,12 @@ const Profile: React.FC = () => {
 
   const handleUpdateProfile = useCallback(async () => {
     try {
+      if (attendant && !attendantType) {
+        Alert.alert('Erro da validação', 'Escolha um tipo de atendente');
+
+        return;
+      }
+
       setLoading(true);
 
       if (
@@ -191,6 +212,14 @@ const Profile: React.FC = () => {
 
       dispatch(updateUser(response.data));
 
+      if (attendant && attendantType) {
+        const responseUptadeClerkUSer = await api.put('/profile/update/clerk', {
+          clerk: attendantType,
+        });
+
+        dispatch(updateUser(responseUptadeClerkUSer.data));
+      }
+
       Toast.show({
         text1: 'Perfil atualizado com sucesso!',
         text2: 'As informações do perfil foram atualizadas.',
@@ -209,11 +238,11 @@ const Profile: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [name, email, oldPassword, password, dispatch]);
+  }, [name, email, oldPassword, password, dispatch, attendant, attendantType]);
 
-  function handleOpenModalImages(): void {
-    setModalImageViewerVisible(true);
-  }
+  // function handleOpenModalImages(): void {
+  //   setModalImageViewerVisible(true);
+  // }
 
   // function handleOpenCamera(): void {
   //   setShowCamera(true);
@@ -233,7 +262,7 @@ const Profile: React.FC = () => {
   return (
     <ScrollView
       keyboardShouldPersistTaps="always"
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flexGrow: 1, paddingTop: 24 }}
     >
       <Container>
         <AvatarContainer loading={loadingUpdateAvatar}>
@@ -248,9 +277,11 @@ const Profile: React.FC = () => {
               <Lightbox underlayColor={theme.colors.primary}>
                 <Avatar
                   source={
-                    assets.avatarProfile || {
-                      uri: getAvatarUrl(user?.user.avatar_url),
-                    }
+                    user?.user.avatar_url
+                      ? {
+                          uri: getAvatarUrl(user?.user.avatar_url),
+                        }
+                      : assets.avatarProfile
                   }
                 />
               </Lightbox>
@@ -303,6 +334,10 @@ const Profile: React.FC = () => {
           />
           <IconMail />
         </InputContainer>
+
+        <View>
+          <Title>Atualizar Senha (Opcional)</Title>
+        </View>
         <InputContainer>
           <Input
             value={oldPassword}
@@ -322,13 +357,49 @@ const Profile: React.FC = () => {
             secureTextEntry
             placeholder="Nova Senha"
             returnKeyType="send"
-            onSubmitEditing={handleUpdateProfile}
             ref={newPasswordRef}
           />
           <IconKey />
         </InputContainer>
 
-        <Button loading={loading} onPress={handleOpenModalImages}>
+        <CheckBoxContainer>
+          <LabelCheckBox>Ser um atendente?</LabelCheckBox>
+          <Checkbox
+            disabled={false}
+            value={attendant}
+            onValueChange={e => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+              setAttendant(e);
+            }}
+            tintColors={{ true: '#DE595C' }}
+          />
+        </CheckBoxContainer>
+
+        {attendant && (
+          <>
+            <SelectContainer>
+              <Picker
+                placeholder="Escolha o tipo de atendente"
+                useNativePicker
+                value={attendantType}
+                onChange={setAttendantType}
+                rightIconSource={assets.downIcon}
+                style={{ color: theme.colors.secundary }}
+              >
+                {attedantesOptions.map((option, index) => (
+                  <Picker.Item
+                    key={index}
+                    value={option.value}
+                    label={option.label}
+                    disabled={false}
+                  />
+                ))}
+              </Picker>
+            </SelectContainer>
+          </>
+        )}
+
+        <Button loading={loading} onPress={handleUpdateProfile}>
           <ButtonText>{loading ? 'Atualizar...' : 'Atualizar'}</ButtonText>
         </Button>
       </Container>
@@ -340,9 +411,11 @@ const Profile: React.FC = () => {
         <AvatarModal
           resizeMode="center"
           source={
-            assets.avatarProfile || {
-              uri: getAvatarUrl(user?.user.avatar_url),
-            }
+            user?.user.avatar_url
+              ? {
+                  uri: getAvatarUrl(user?.user.avatar_url),
+                }
+              : assets.avatarProfile
           }
         />
       </ModalComponent>
