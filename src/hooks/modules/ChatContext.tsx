@@ -47,7 +47,8 @@ const ChatProvider: React.FC = ({ children }) => {
     return io(BASE_URL as string, {
       query: { user: user?.user.id },
     });
-  }, [user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.user?.id]);
 
   useEffect(() => {
     socket.on('usersLoggeds', (usersLoggedsSocket: string) => {
