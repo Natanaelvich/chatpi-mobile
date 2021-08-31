@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { FontAwesome } from '@expo/vector-icons';
 
 interface AvatarContainerProps {
   loading: boolean;
@@ -11,6 +12,17 @@ export const Container = styled.View`
   justify-content: center;
   padding: 0 ${RFValue(30)}px ${RFValue(24)}px;
 `;
+
+export const ButtonBack = styled.TouchableOpacity`
+  width: ${RFValue(34)}px;
+  height: ${RFValue(34)}px;
+`;
+
+export const IconBack = styled(FontAwesome).attrs({
+  name: 'angle-left',
+  size: 31,
+  color: '#fff',
+})``;
 
 export const Title = styled.Text`
   font-size: ${RFValue(24)}px;

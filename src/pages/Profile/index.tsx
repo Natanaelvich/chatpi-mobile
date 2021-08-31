@@ -30,6 +30,7 @@ import Lightbox from 'react-native-lightbox';
 
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type';
 import { Picker } from 'react-native-ui-lib';
+import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 import {
@@ -43,6 +44,8 @@ import {
   ContainerButtonsPreview,
   ContainerModalPreview,
   TextPreview,
+  ButtonBack,
+  IconBack,
 } from './styles';
 import {
   Button,
@@ -79,6 +82,7 @@ const Profile: React.FC = () => {
   const cropViewRef = useRef<any>();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const { goBack } = useNavigation();
 
   const { data: user } = useSelector((state: RootState) => state.auth);
 
@@ -265,6 +269,9 @@ const Profile: React.FC = () => {
       contentContainerStyle={{ flexGrow: 1, paddingTop: 24 }}
     >
       <Container>
+        <ButtonBack onPress={goBack}>
+          <IconBack />
+        </ButtonBack>
         <AvatarContainer loading={loadingUpdateAvatar}>
           {loadingUpdateAvatar ? (
             <ActivityIndicator
