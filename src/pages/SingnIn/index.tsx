@@ -5,7 +5,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { MotiView } from 'moti';
 
 import {
   Container,
@@ -40,16 +40,6 @@ const SingnIn: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const loadMessages = async (): Promise<void> => {
-  //   const messageCollection = database.get<ModelMessage>('messages');
-  //   const messages = await messageCollection.query().fetch();
-
-  //   console.tron(messages);
-  // };
-
-  // useEffect(() => {
-  //   loadMessages();
-  // }, []);
 
   useEffect(() => {
     if (__DEV__) {
@@ -63,64 +53,27 @@ const SingnIn: React.FC = () => {
       email,
     });
 
-    try {
-      const user = await auth().createUserWithEmailAndPassword(email, password);
-
-      console.log(user);
-    } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      console.error(error);
-    }
-    // dispatch(signInRequest(email, password));
+    dispatch(signInRequest(email, password));
   }, [email, password, dispatch]);
 
-  const hanlelogin = useCallback(async () => {
-    await crashlytics().setAttributes({
-      email,
-    });
-
-    try {
-      const user = await auth().signInWithEmailAndPassword(email, password);
-
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    }
-    // dispatch(signInRequest(email, password));
-  }, [email, password, dispatch]);
-
-  // async function handleCreateMessage(): Promise<void> {
-  //   try {
-  //     const messageCollection = database.get<ModelMessage>('messages');
-
-  //     await database.action(async () => {
-  //       await messageCollection.create(newMessage => {
-  //         newMessage.user = '12312asdasdasd12313';
-  //         newMessage.toUser = '123123asdadasdads123123';
-  //         newMessage.message = 'OLAAAAAAAAAAAAAAAAAAAA';
-  //         newMessage.readed = 'true';
-  //         newMessage.date = new Date();
-  //         newMessage.name = 'que';
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.tron(error);
-  //   }
-  // }
-  // function handleLoadMessages(): void {
-  //   loadMessages();
-  // }
   return (
     <Container>
       <FormContainer>
-        <LogoText>Chat PI</LogoText>
+        <MotiView
+          from={{
+            opacity: 0,
+            scale: 0.5,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            type: 'timing',
+          }}
+        >
+          <LogoText>Chat PI</LogoText>
+        </MotiView>
         <Title>Faça seu logon</Title>
 
         {signinError.error && (
@@ -166,14 +119,6 @@ const SingnIn: React.FC = () => {
         >
           <ButtonText>{loadingSingin ? 'Entrando...' : 'Entrar'}</ButtonText>
         </Button>
-        <Button
-          onPress={() => {
-            hanlelogin();
-          }}
-          loading={loadingSingin}
-        >
-          <ButtonText>login</ButtonText>
-        </Button>
 
         <ForgotPasswordButton
           onPress={() => navigation.navigate('ForgotPassword')}
@@ -181,12 +126,7 @@ const SingnIn: React.FC = () => {
           <ForgotPassword>Esqueci minha senha</ForgotPassword>
         </ForgotPasswordButton>
       </FormContainer>
-      {/* <Button onPress={handleCreateMessage} loading={false}>
-        <ButtonText>Create message</ButtonText>
-      </Button>
-      <Button onPress={handleLoadMessages} loading={false}>
-        <ButtonText>Load messages</ButtonText>
-      </Button> */}
+
       <CreateAccountContainer onPress={() => navigation.navigate('SingnUp')}>
         <Feather name="log-in" size={24} color="#de595c" />
         <CreateAccountText>Criar uma conta</CreateAccountText>
