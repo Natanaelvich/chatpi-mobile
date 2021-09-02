@@ -77,18 +77,24 @@ const SingnIn: React.FC = () => {
         </MotiView>
         <Title>Faça seu logon</Title>
 
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
           {signinError.error && (
             <MotiView
               from={{
                 height: 0,
+                opacity: 0,
               }}
               animate={{
                 height: 70,
+                opacity: 1,
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
               }}
               transition={{
                 type: 'timing',
-                duration: 1000,
+                duration: 600,
               }}
             >
               <ErrorLogin>
