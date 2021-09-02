@@ -57,6 +57,8 @@ function* signIn({ payload }: ReturnType<typeof signInRequest>): SagaIterator {
   try {
     yield put(setLoadingSingin(true));
 
+    yield put(signInError({ error: false, messageError: '' }));
+
     const response = yield call(api.post, 'sessions', {
       email: payload.email,
       password: payload.password,
