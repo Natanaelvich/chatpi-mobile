@@ -111,7 +111,7 @@ export const ErrorLogin = styled.View`
   flex-direction: row;
   align-items: center;
   align-self: center;
-  margin: ${RFValue(12)}px 0;
+  margin: ${RFValue(12)}px 0 0 ${RFValue(12)}px;
 `;
 export const ErrorLoginText = styled.Text`
   font-style: normal;
