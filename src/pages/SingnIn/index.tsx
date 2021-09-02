@@ -5,7 +5,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native';
-import { MotiView } from 'moti';
+import { AnimatePresence, MotiView } from 'moti';
 
 import {
   Container,
@@ -44,7 +44,7 @@ const SingnIn: React.FC = () => {
   useEffect(() => {
     if (__DEV__) {
       setEmail('taelima1997@gmail.com');
-      setPassword('123123');
+      setPassword('1231233');
     }
   }, []);
 
@@ -70,18 +70,34 @@ const SingnIn: React.FC = () => {
           }}
           transition={{
             type: 'timing',
+            duration: 3000,
           }}
         >
           <LogoText>Chat PI</LogoText>
         </MotiView>
         <Title>Faça seu logon</Title>
 
-        {signinError.error && (
-          <ErrorLogin>
-            <MaterialIcons name="error" size={32} color="#E04848" />
-            <ErrorLoginText>{signinError.messageError}</ErrorLoginText>
-          </ErrorLogin>
-        )}
+        <AnimatePresence>
+          {signinError.error && (
+            <MotiView
+              from={{
+                height: 0,
+              }}
+              animate={{
+                height: 70,
+              }}
+              transition={{
+                type: 'timing',
+                duration: 1000,
+              }}
+            >
+              <ErrorLogin>
+                <MaterialIcons name="error" size={32} color="#E04848" />
+                <ErrorLoginText>{signinError.messageError}</ErrorLoginText>
+              </ErrorLogin>
+            </MotiView>
+          )}
+        </AnimatePresence>
 
         <InputContainer>
           <Input
