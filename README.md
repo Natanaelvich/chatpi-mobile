@@ -2,6 +2,8 @@
 
 ### A chat that connects people to health professionals, made with react native ⚡️
 
+![Capa](https://user-images.githubusercontent.com/52014318/132079727-8fbdb309-adc6-42a2-8694-32721e3e1e23.png)
+
 ## ScreenShots
 
 <p align='center'>
