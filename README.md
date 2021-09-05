@@ -1,6 +1,6 @@
 <h1 align='center'> CHAT PI </h1>
 
-### A chat that connects people to health professionals, made with react native ⚡️
+### A chat that connects people to health professionals, made with react native ⚡️ <code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png"></code>
 
 ![Capa (3)](https://user-images.githubusercontent.com/52014318/132080117-d2b278fb-99f8-4191-a8a3-6f86df25c4b0.png)
 
