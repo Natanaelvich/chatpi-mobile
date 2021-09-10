@@ -5,8 +5,6 @@ apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 // FIREBASE
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-// FIREBASE CRASHLYTICS
-apply plugin: 'com.google.firebase.crashlytics'
 // FIREBASE FIREBASE_PERF
 apply plugin: 'com.google.firebase.firebase-perf'
 
@@ -197,11 +195,6 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
-            // FIREBASE CRASHLYTICS
-            firebaseCrashlytics {
-              nativeSymbolUploadEnabled true
-              unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
-            }
         }
     }
 
@@ -228,9 +221,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     // FIREBASE FIREBASE_PERF
     implementation project(path: ":@react-native-firebase_perf")
-
-    // FIREBASE CRASHLYTICS
-    implementation project(path: ":@react-native-firebase_crashlytics")
 
     // FIX OkHttp Dispatcher
     implementation "com.squareup.okhttp3:okhttp:4.4.1"
