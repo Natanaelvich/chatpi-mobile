@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import crashlytics from '@react-native-firebase/crashlytics';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native';
@@ -49,10 +48,6 @@ const SingnIn: React.FC = () => {
   }, []);
 
   const hanleSignIn = useCallback(async () => {
-    await crashlytics().setAttributes({
-      email,
-    });
-
     dispatch(signInRequest(email, password));
   }, [email, password, dispatch]);
 
